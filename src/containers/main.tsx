@@ -1,12 +1,19 @@
 import * as React from 'react';
+import * as ReactRedux from 'react-redux';
+import * as Immutable from 'immutable';
+
+const { Map } = Immutable;
+const { connect } = ReactRedux;
 
 interface MainProps {
   name: string;
   dispatch: any;
 }
 
-export default class Main extends React.Component<MainProps, any> {
-  name: string;
+@connect(function(state: Map) {
+
+})
+class Main extends React.Component<MainProps, any> {
 
   render() {
     const { name } = this.props;
@@ -17,3 +24,5 @@ export default class Main extends React.Component<MainProps, any> {
     );
   }
 }
+
+export default Main;
