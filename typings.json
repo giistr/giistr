@@ -5,12 +5,12 @@
     "immutable": "registry:npm/immutable#3.7.6+20160411060006"
   },
   "globalDependencies": {
-    "react": "registry:dt/react#0.14.0+20160423065914",
+    "react": "registry:dt/react#0.14.0+20160805125551",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "react-redux": "registry:dt/react-redux#4.4.0+20160406115600",
+    "react-redux": "registry:dt/react-redux#4.4.0+20160724070751",
     "react-router": "registry:dt/react-router#2.0.0+20160621215300",
     "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160724070902",
-    "redux": "registry:dt/redux#3.3.1+20160326112656",
-    "redux-thunk": "registry:dt/redux-thunk#2.0.1+20160317120654"
+    "redux": "registry:dt/redux#3.5.2+20160703092728",
+    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921"
   }
 }

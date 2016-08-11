@@ -1,8 +1,8 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/c2bfaedeee7ae4ed5e0f01ebcf4af7acfe2c77c3/redux/redux.d.ts",
-    "raw": "registry:dt/redux#3.3.1+20160326112656",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/c2bfaedeee7ae4ed5e0f01ebcf4af7acfe2c77c3/redux/redux.d.ts"
+    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/15ddcf312782faf9e7fdfe724a3a29382a5825d7/redux/redux.d.ts",
+    "raw": "registry:dt/redux#3.5.2+20160703092728",
+    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/15ddcf312782faf9e7fdfe724a3a29382a5825d7/redux/redux.d.ts"
   }
 }
