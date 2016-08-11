@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "sourceMap": true,
-        "removeComments": true,
-        "jsx": "react",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
-    },
-    "exclude": [
-        "node_modules",
-        "typings/main",
-        "typings/main.d.ts"
-    ]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": true,
+    "removeComments": true,
+    "jsx": "react",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
+  ]
 }

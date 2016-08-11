@@ -12,10 +12,10 @@ const reposReducer: Redux.Reducer<RepoState> = (state: RepoState, action: Action
   const { type, payload } = action;
 
   switch(type) {
-      case ADD_REPO:
-          return state.set(payload.get("id"), payload);
-      default:
-          return state;
+    case ADD_REPO:
+      return state.set(payload.get("id"), payload);
+    default:
+      return state;
   }
 }
 

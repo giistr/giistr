@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as ReactRedux from 'react-redux';
-import * as Immutable from 'immutable';
+import { Map } from 'immutable';
 
-const { Map } = Immutable;
 const { connect } = ReactRedux;
 
 interface MainProps {};
