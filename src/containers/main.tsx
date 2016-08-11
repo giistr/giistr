@@ -5,21 +5,15 @@ import * as Immutable from 'immutable';
 const { Map } = Immutable;
 const { connect } = ReactRedux;
 
-interface MainProps {
-  name: string;
-  dispatch: any;
-}
+interface MainProps {};
 
-@connect(function(state: Map<string, any>) {
-
-})
 class Main extends React.Component<MainProps, any> {
 
   render() {
-    const { name } = this.props;
 
     return (
       <div>
+        <h1>TEST</h1>
       </div>
     );
   }

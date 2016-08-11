@@ -7,13 +7,13 @@ import thunk from 'redux-thunk';
 
 import Main from './containers/main';
 import Logger from './common/Logger';
-import reducers from './reducers/index';
+import reposReducer from './reducers/repos';
 
-var store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reducers, Immutable.Map());
+var store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reposReducer, Immutable.Map());
 
 ReactDOM.render(
     <ReactRedux.Provider store={store}>
-        <Main />
+        <Main/>
     </ReactRedux.Provider>,
     document.getElementById('content')
 );
