@@ -10,7 +10,7 @@ interface MainProps {
   dispatch: any;
 }
 
-@connect(function(state: Map) {
+@connect(function(state: Map<string, any>) {
 
 })
 class Main extends React.Component<MainProps, any> {
