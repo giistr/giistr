@@ -1,13 +1,19 @@
-import * as Immutable from 'immutable';
+import { OrderedMap } from 'immutable';
 import * as Redux from 'redux';
+import { Action } from '../interface';
 
 const ADD_REPO = 'ADD_REPO';
 const REMOVE_REPO = 'REMOVE_REPO';
 
-const reposReducer: Redux.Reducer<any> = (state: Immutable.Map<string, any>, action: any) => {
-  switch( action.type ) {
+type RepoState = OrderedMap<string, any>;
+
+const reposReducer: Redux.Reducer<RepoState> = (state: RepoState, action: Action) => {
+
+  const { type, payload } = action;
+
+  switch(type) {
       case ADD_REPO:
-          return state;
+          return state.set(payload.get("id"), payload);
       default:
           return state;
   }
