@@ -1,12 +1,15 @@
 import { connect } from 'react-redux';
 import { OrderedMap } from 'immutable';
-import { getRepos } from '../actions/actions';
+import { getRepos } from '../actions/repositories';
+import { getIssues } from '../actions/issues';
+
 import { Repository } from '../reducers/repository';
 
 interface MainProps {
   fetchRepos: any;
   dispatch: any;
   getRepos: any;
+  getIssues: any;
   repositories: OrderedMap<number, Repository>;
 };
 
@@ -29,6 +32,13 @@ class Main extends React.Component<MainProps, any> {
     });
   };
 
+  _onClickRepository(id) {
+    const { dispatch, getIssues, repositories } = this.props;
+    const repo = repositories.get(id);
+
+    dispatch(getIssues(repo.get('full_name'), id));
+  }
+
   public render() {
     const { repositories } = this.props;
 
@@ -39,10 +49,10 @@ class Main extends React.Component<MainProps, any> {
         <ul>
           {
             repositories.map(repo => (
-              <li>
+              <li onClick={this._onClickRepository.bind(this, repo.get('id'))}>
                 { repo.get('full_name') }
               </li>
-            ))
+            )).toArray()
           }
         </ul>
       </div>
@@ -54,6 +64,7 @@ export default
 connect((state, props) => ({
   repositories: state.get('repository')
 }), dispatch => ({
+  getIssues,
   getRepos,
   dispatch
 }))(Main);
