@@ -9,7 +9,7 @@ import Main from './containers/main';
 import Logger from './common/Logger';
 import reposReducer from './reducers/repos';
 
-var store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reposReducer, Immutable.Map());
+const store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reposReducer, Immutable.Map());
 
 ReactDOM.render(
   <ReactRedux.Provider store={store}>

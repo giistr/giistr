@@ -29,7 +29,10 @@ module.exports = {
       }
     ],
     preLoaders: [
-      { test: /\.js$/, loader: 'source-map-loader' }
+      {
+        test: /\.tsx?$/,
+        loader: 'tslint'
+      }
     ]
   },
   externals: {

@@ -1,5 +1,5 @@
-import * as qs from 'qs';
 import { fromJS } from 'immutable';
+import * as qs from 'qs';
 
 function makeUrl(endpoint: string): string {
   return `https://api.github.com/${endpoint}`;
@@ -18,7 +18,7 @@ export function request(method: string, endpoint: string, args: any) {
   if (shallow) {
     url += '?' + qs.stringify(args);
   } else {
-    console.error("POST request not working yet");
+    console.error('POST request not working yet');
   }
 
   return fetch(url)
