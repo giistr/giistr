@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports={
   entry: [
+    'whatwg-fetch',
     path.join(__dirname, "src/App"),
     "webpack/hot/only-dev-server",
     "webpack-dev-server/client?http://localhost:8080"

@@ -12,6 +12,7 @@
     "react-router": "registry:dt/react-router#2.0.0+20160621215300",
     "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160724070902",
     "redux": "registry:dt/redux#3.5.2+20160703092728",
-    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921"
+    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921",
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160728142841"
   }
 }

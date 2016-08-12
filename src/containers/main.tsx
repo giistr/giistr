@@ -1,14 +1,17 @@
 import * as React from 'react';
-import * as ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
 import { Map } from 'immutable';
+import { getRepos } from '../actions/actions';
 
-const { connect } = ReactRedux;
-
-interface MainProps {};
+interface MainProps {
+  fetchRepos: any
+};
 
 class Main extends React.Component<MainProps, any> {
 
   render() {
+
+    console.log(this.props.fetchRepos);
 
     return (
       <div>
@@ -18,4 +21,6 @@ class Main extends React.Component<MainProps, any> {
   }
 }
 
-export default Main;
+export default connect((state) => state, (dispatch) => {
+  fetchRepos: () => dispatch(getRepos)
+})(Main);

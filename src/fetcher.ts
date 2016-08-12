@@ -5,11 +5,6 @@ function makeUrl(endpoint: string): string {
   return `https://api.github.com/${endpoint}`;
 }
 
-const baseHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-};
-
 const shallowRequest = (method: string) => (
   method === 'GET' ||
   method === 'REMOVE' ||
@@ -18,21 +13,15 @@ const shallowRequest = (method: string) => (
 
 export function request(method: string, endpoint: string, args: any) {
   const shallow = shallowRequest(method);
-  const body = !shallow && args;
   let url = makeUrl(endpoint);
 
   if (shallow) {
     url += '?' + qs.stringify(args);
+  } else {
+    console.error("POST request not working yet");
   }
 
-  return fetch(url, {
-    headers: {
-      ...baseHeaders
-    },
-    body,
-    method,
-    mode: 'cors'
-  })
+  return fetch(url)
   .then(res => {
     if (res.status >= 400) {
       throw res;
@@ -43,7 +32,7 @@ export function request(method: string, endpoint: string, args: any) {
   .then(data => fromJS(data));
 }
 
-export function get(endpoint: string, args: any) {
+export function get(endpoint: string, args?: any) {
   return request('GET', endpoint, args);
 }
 
