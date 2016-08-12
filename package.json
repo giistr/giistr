@@ -21,6 +21,7 @@
     "ts-loader": "^0.8.2",
     "tslint": "^3.14.0",
     "tslint-loader": "^2.1.5",
+    "tslint-react": "^0.4.0",
     "typescript": "^1.8.10",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.0",
@@ -36,6 +37,7 @@
     "react-router": "^2.6.1",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
+    "redux-immutable": "3.0.6",
     "redux-thunk": "^2.0.1",
     "url-join": "^1.1.0"
   }

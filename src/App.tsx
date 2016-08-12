@@ -1,17 +1,19 @@
-import * as Redux from 'redux';
-import * as ReactRedux from 'react-redux';
-import * as Immutable from 'immutable';
+// tslint:disable-next-line
+/// <reference path="globals.d.ts" />
+import { applyMiddleware, createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { Map } from 'immutable';
 import thunk from 'redux-thunk';
 
 import Main from './containers/main';
 import Logger from './common/Logger';
-import reposReducer from './reducers/repos';
+import rootReducer from './reducers';
 
-const store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reposReducer, Immutable.Map());
+const store = createStore(rootReducer, Map(), applyMiddleware(Logger, thunk));
 
 ReactDOM.render(
-  <ReactRedux.Provider store={store}>
+  <Provider store={store}>
     <Main/>
-  </ReactRedux.Provider>,
+  </Provider>,
   document.getElementById('content')
 );

@@ -1,4 +1,3 @@
-import { Action } from '../interface';
 import { get } from '../fetcher';
 
 export const getRepos = username => {
