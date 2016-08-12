@@ -12,8 +12,8 @@ import reposReducer from './reducers/repos';
 var store = (Redux.applyMiddleware(Logger, thunk)(Redux.createStore))(reposReducer, Immutable.Map());
 
 ReactDOM.render(
-    <ReactRedux.Provider store={store}>
-        <Main/>
-    </ReactRedux.Provider>,
-    document.getElementById('content')
+  <ReactRedux.Provider store={store}>
+    <Main/>
+  </ReactRedux.Provider>,
+  document.getElementById('content')
 );

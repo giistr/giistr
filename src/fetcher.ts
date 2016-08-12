@@ -22,14 +22,14 @@ export function request(method: string, endpoint: string, args: any) {
   }
 
   return fetch(url)
-  .then(res => {
-    if (res.status >= 400) {
-      throw res;
-    }
+    .then(res => {
+      if (res.status >= 400) {
+        throw res;
+      }
 
-    return res.json();
-  })
-  .then(data => fromJS(data));
+      return res.json();
+    })
+    .then(data => fromJS(data));
 }
 
 export function get(endpoint: string, args?: any) {
