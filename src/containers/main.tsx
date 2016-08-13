@@ -40,15 +40,16 @@ interface MainProps {
 class Main extends React.Component<MainProps, any> {
 
   public state = {
+    page: 1,
     username: '',
     selected: env === 'dev' ? Set([ '29943859' ]) : Set()
   };
 
-  private onGetRepository = () => {
+  private onGetRepository(page) {
     const { username } = this.state;
     const { dispatch, getRepos } = this.props;
 
-    dispatch(getRepos(username));
+    dispatch(getRepos(username, page));
   };
 
   private onUserQuery = evt => {
@@ -77,6 +78,15 @@ class Main extends React.Component<MainProps, any> {
     }
   }
 
+  private onNext(page) {
+    if(this.state.username) {
+      this.setState({ page });
+      this.onGetRepository(page);
+    } else {
+      console.warn("Please enter a valid username");
+    }
+  };
+
   private clearList = () => {
     const { dispatch, clear } = this.props;
     dispatch(clear());
@@ -84,14 +94,15 @@ class Main extends React.Component<MainProps, any> {
 
   public render() {
     const { repositories } = this.props;
-    const { selected } = this.state;
+    const { selected, page } = this.state;
 
     return (
       <div>
         <ToolBar
           onClear={this.clearList}
           onUserQuery={this.onUserQuery}
-          onGetRepository={this.onGetRepository}/>
+          onGetRepository={this.onGetRepository.bind(this, page)}
+          onNext={this.onNext.bind(this, page + 1)}/>
         <ul style={styles.mainList}>
           {
             repositories.map((repo, key) => (

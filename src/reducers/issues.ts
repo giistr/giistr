@@ -27,6 +27,7 @@ export interface IssueAction {
 
 export default (state = initialState, action: IssueAction) => {
   const { type, payload, repoId } = action;
+
   switch (type) {
     case ADD_ISSUE:
       if (List.isList(payload)) {

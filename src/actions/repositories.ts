@@ -20,9 +20,9 @@ function add(repos) {
   };
 }
 
-export const getRepos = username => {
+export const getRepos = (username, page) => {
   return dispatch => {
-    get(`users/${username}/starred`, {})
+    get(`users/${username}/starred`, { page })
       .then((repos: List<Repository>) => add(repos)(dispatch));
   };
 };
