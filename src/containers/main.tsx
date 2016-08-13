@@ -5,6 +5,10 @@ import { getIssues } from '../actions/issues';
 
 import { Repository } from '../reducers/repository';
 
+const style = {
+
+};
+
 interface MainProps {
   fetchRepos: any;
   dispatch: any;
@@ -36,7 +40,9 @@ class Main extends React.Component<MainProps, any> {
     const { dispatch, getIssues, repositories } = this.props;
     const repo = repositories.get(id);
 
-    dispatch(getIssues(repo.get('full_name'), id));
+    if(repo.get('open_issues') > 0) {
+      dispatch(getIssues(repo.get('full_name'), id));
+    }
   }
 
   public render() {

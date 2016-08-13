@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var env = process.env.NODE_ENV;
 
 module.exports = {
   entry: [
@@ -26,6 +27,10 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
+      {
+        test: /\.json$/,
+        loader: "json-loader"
       }
     ],
     preLoaders: [
@@ -36,6 +41,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('css/[name].css')
+    new ExtractTextPlugin('css/style.css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"' + env + '"'
+      }
+    })
   ]
 };

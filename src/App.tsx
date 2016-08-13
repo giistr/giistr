@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import Main from './containers/main';
 import Logger from './common/Logger';
 import rootReducer from './reducers';
+import './common.css';
 
 const store = createStore(rootReducer, Map(), applyMiddleware(Logger, thunk));
 
