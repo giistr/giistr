@@ -48,8 +48,8 @@ class Main extends React.Component<MainProps, any> {
         <button onClick={this.onGetRepository}>Search</button>
         <ul>
           {
-            repositories.map(repo => (
-              <li onClick={this.onClickRepository.bind(this, repo.get('id'))}>
+            repositories.map((repo, key) => (
+              <li key={key} onClick={this.onClickRepository.bind(this, repo.get('id'))}>
                 { repo.get('full_name') }
               </li>
             )).toArray()
