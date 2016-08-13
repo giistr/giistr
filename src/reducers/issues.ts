@@ -1,5 +1,21 @@
-import { OrderedMap, List, Map } from 'immutable';
+import { OrderedMap, List, Map, fromJS } from 'immutable';
 import { ADD_ISSUE } from '../constants/issues';
+
+declare var process: any;
+const env = process.env.NODE_ENV;
+let initialState: OrderedMap<number, Issue>;
+
+// Move the dev logic to a separated service that inject all the mocked data
+if(env === 'dev') {
+  /// <reference path="require.d.ts" />
+  const repositories = fromJS(require('!json!../mock-data/issues.json'));
+  initialState = repositories.reduce((acc, next) => {
+    return acc.set(next.get('id'), next);
+  }, OrderedMap<any, Issue>());
+
+} else {
+  initialState = OrderedMap<number, Issue>();
+}
 
 export type Issue = Map<string, any>;
 
@@ -8,8 +24,6 @@ export interface IssueAction {
   payload?: List<Issue>;
   repoId: string;
 }
-
-const initialState: OrderedMap<number, Issue> = OrderedMap<number, Issue>();
 
 export default (state = initialState, action: IssueAction) => {
   const { type, payload, repoId } = action;
