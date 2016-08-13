@@ -1,5 +1,8 @@
 // tslint:disable-next-line
 /// <reference path="globals.d.ts" />
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';

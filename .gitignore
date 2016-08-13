@@ -3,6 +3,7 @@
 # dependencies
 node_modules
 typings
+dist
 
 # production
 build

@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 interface MainProps {
   issues: any;
 };
@@ -16,11 +18,11 @@ class Issues extends React.Component<MainProps, any> {
     return (
       <ul style={styles.container}>
         {
-          issues.map(issue => (
-            <li>
+          issues.map((issue, key) => (
+            <li key={key}>
               { issue.get('title') }
             </li>
-          ))
+          )).toArray()
         }
       </ul>
     )
