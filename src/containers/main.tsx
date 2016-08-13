@@ -15,24 +15,24 @@ interface MainProps {
 
 class Main extends React.Component<MainProps, any> {
 
-  state = {
-    username: ""
+  public state = {
+    username: ''
   };
 
-  _onGetRepository = () => {
+  private onGetRepository = () => {
     const { username } = this.state;
     const { dispatch, getRepos } = this.props;
 
     dispatch(getRepos(username));
   };
 
-  _onUserQuery = evt => {
+  private onUserQuery = evt => {
     this.setState({
       username: evt.target.value
     });
   };
 
-  _onClickRepository(id) {
+  private onClickRepository(id) {
     const { dispatch, getIssues, repositories } = this.props;
     const repo = repositories.get(id);
 
@@ -44,12 +44,12 @@ class Main extends React.Component<MainProps, any> {
 
     return (
       <div>
-        <input type="text" placeholder="Enter github user account" onChange={this._onUserQuery}/>
-        <button onClick={this._onGetRepository}>Search</button>
+        <input type="text" placeholder="Enter github user account" onChange={this.onUserQuery}/>
+        <button onClick={this.onGetRepository}>Search</button>
         <ul>
           {
             repositories.map(repo => (
-              <li onClick={this._onClickRepository.bind(this, repo.get('id'))}>
+              <li onClick={this.onClickRepository.bind(this, repo.get('id'))}>
                 { repo.get('full_name') }
               </li>
             )).toArray()

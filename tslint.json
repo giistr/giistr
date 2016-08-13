@@ -3,7 +3,7 @@
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "ordered-imports": false,
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "interface-name": [true, "never-prefix"]
   }
 }

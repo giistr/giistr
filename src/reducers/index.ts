@@ -3,6 +3,6 @@ import repositoryReducer from './repository';
 import issuesReducer from './issues';
 
 export default combineReducers({
-  repository: repositoryReducer,
-  issues: issuesReducer
+  issues: issuesReducer,
+  repository: repositoryReducer
 });
