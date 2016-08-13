@@ -7,7 +7,12 @@ interface MainProps {
 const styles = {
   container: {
     margin: '10px auto',
-    minHeight: 10
+    minHeight: 10,
+    backgroundColor: '#F4F4F4'
+  },
+  issueItem: {
+    padding: 10,
+    borderBottom: '1px dashed #bbbbbb'
   }
 };
 
@@ -19,8 +24,11 @@ class Issues extends React.Component<MainProps, any> {
       <ul style={styles.container}>
         {
           issues.map((issue, key) => (
-            <li key={key}>
+            <li
+              style={styles.issueItem}
+              key={key}>
               { issue.get('title') }
+              <a href={issue.get('html_url')} target="_blank">Link</a>
             </li>
           )).toArray()
         }

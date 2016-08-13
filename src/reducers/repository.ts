@@ -1,5 +1,5 @@
 import { OrderedMap, List, Map } from 'immutable';
-import { ADD_REPO } from '../constants/repos';
+import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 import { fromJS } from 'immutable';
 
 declare var process: any;
@@ -28,6 +28,7 @@ export interface RepositoryAction {
 
 export default (state = initialState, action: RepositoryAction) => {
   const { type, payload } = action;
+
   switch (type) {
     case ADD_REPO:
       if (List.isList(payload)) {
@@ -37,6 +38,9 @@ export default (state = initialState, action: RepositoryAction) => {
 
         return state.merge(payloadBis);
       }
+
+    case CLEAR_REPO:
+      return OrderedMap<number, Repository>();
 
     default:
       return state;

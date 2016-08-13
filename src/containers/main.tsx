@@ -2,13 +2,13 @@ import * as React from 'react';
 
 import { connect } from 'react-redux';
 import { OrderedMap, Set } from 'immutable';
-import { getRepos } from '../actions/repositories';
+import { getRepos, clear } from '../actions/repositories';
 import { getIssues } from '../actions/issues';
 import { Repository } from '../reducers/repository';
 import { Issue } from '../reducers/issues';
 
 import { Colors } from '../style';
-
+import ToolBar from '../components/toolbar';
 import Issues from '../components/issues';
 
 const styles = {
@@ -30,12 +30,11 @@ declare var process: any;
 const env = process.env.NODE_ENV;
 
 interface MainProps {
-  fetchRepos: any;
+  clear: any;
   dispatch: any;
   getRepos: any;
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
-  issues: OrderedMap<number, Issue>;
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -78,14 +77,21 @@ class Main extends React.Component<MainProps, any> {
     }
   }
 
+  private clearList = () => {
+    const { dispatch, clear } = this.props;
+    dispatch(clear());
+  };
+
   public render() {
-    const { repositories, issues } = this.props;
+    const { repositories } = this.props;
     const { selected } = this.state;
 
     return (
       <div>
-        <input type="text" placeholder="Enter github user account" onChange={this.onUserQuery}/>
-        <button onClick={this.onGetRepository}>Search</button>
+        <ToolBar
+          onClear={this.clearList}
+          onUserQuery={this.onUserQuery}
+          onGetRepository={this.onGetRepository}/>
         <ul style={styles.mainList}>
           {
             repositories.map((repo, key) => (
@@ -122,5 +128,6 @@ connect((state, props) => ({
 }), dispatch => ({
   getIssues,
   getRepos,
+  clear,
   dispatch
 }))(Main);

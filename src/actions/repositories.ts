@@ -1,7 +1,15 @@
 import { get } from '../fetcher';
-import { ADD_REPO } from '../constants/repos';
+import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 import { List } from 'immutable';
 import { Repository } from '../reducers/repository';
+
+export function clear() {
+  return dispatch => {
+    dispatch({
+      type: CLEAR_REPO
+    });
+  };
+}
 
 function add(repos) {
   return dispatch => {
