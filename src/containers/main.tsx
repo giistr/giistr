@@ -5,15 +5,16 @@ import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
 import { getIssues } from '../actions/issues';
 import { Repository } from '../reducers/repository';
+import { User } from '../reducers/user';
 
 import ToolBar from '../components/toolbar';
 import RepoColumn from '../components/repo-column';
+import NavigationBar from '../components/navigation-bar';
 
 const styles = {
   mainList: {
     display: 'flex',
-    margin: '0px auto',
-    marginTop: 100
+    margin: '0px auto'
   }
 };
 
@@ -26,7 +27,7 @@ interface MainProps {
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
   labels: List<string>;
-  username: string
+  user: User
 };
 
 const initialState = {
@@ -44,9 +45,9 @@ class Main extends React.Component<MainProps, any> {
   }
 
   private onGetRepository(page) {
-    const { dispatch, getRepos, username } = this.props;
+    const { dispatch, getRepos, user } = this.props;
 
-    dispatch(getRepos(username, page));
+    dispatch(getRepos(user.get('login'), page));
   };
 
   private onClickRepository = (id) => {
@@ -70,19 +71,15 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onNext(page) {
-    if (this.props.username) {
-      this.setState({ page });
-      this.onGetRepository(page);
-    } else {
-      console.warn('Please enter a valid username');
-    }
+    this.setState({ page });
+    this.onGetRepository(page);
   };
 
   private onGetAll = () => {
-    const { getAllRepos, dispatch, username } = this.props;
+    const { getAllRepos, dispatch, user } = this.props;
     const { page } = this.state;
 
-    dispatch(getAllRepos(username, page));
+    dispatch(getAllRepos(user.get('login'), page));
   };
 
   private selectLanguage = languageFilter => {
@@ -108,21 +105,22 @@ class Main extends React.Component<MainProps, any> {
 
     return (
       <div>
-        <ToolBar
-          onSelectLanguage={this.selectLanguage}
-          onClear={this.clearList}
-          onNext={this.onNext.bind(this, page + 1)}
-          onGetAll={this.onGetAll}
-          languages={languages}/>
+        <NavigationBar/>
         <div style={styles.mainList}>
-        <RepoColumn
-          selected={selected}
-          repositories={firstColumn}
-          onClickRepository={this.onClickRepository}/>
-        <RepoColumn
-          selected={selected}
-          repositories={secondColumn}
-          onClickRepository={this.onClickRepository}/>
+          <RepoColumn
+            selected={selected}
+            repositories={firstColumn}
+            onClickRepository={this.onClickRepository}/>
+          <RepoColumn
+            selected={selected}
+            repositories={secondColumn}
+            onClickRepository={this.onClickRepository}/>
+          <ToolBar
+            onSelectLanguage={this.selectLanguage}
+            onClear={this.clearList}
+            onNext={this.onNext.bind(this, page + 1)}
+            onGetAll={this.onGetAll}
+            languages={languages}/>
         </div>
       </div>
     );
@@ -151,8 +149,8 @@ connect((state, props) => ({
     .get('repository')
     .map(repo =>
       repo.set('issues', state.get('issues').filter(issue => issue.get('repoId') === repo.get('id')))
-    )
-
+    ),
+  user: state.get('user')
 }), dispatch => ({
   getIssues,
   getRepos,

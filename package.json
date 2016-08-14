@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=dev webpack-dev-server --config ./webpack.config.js --hot --inline",
+    "start": "NODE_ENV=dev webpack-dev-server --hot --historyApiFallback --config ./webpack.config.js",
     "build": "NODE_ENV=prod webpack --config ./webpack.config.js",
     "serve": "node server.js"
   },
-  "author": "",
+  "author": "Alexandre Rieux",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.7.7",

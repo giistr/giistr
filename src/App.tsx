@@ -29,7 +29,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={Landing}/>
-      <Route path="/app/:username" component={Main}/>
+      <Route path="/app/:userId" component={Main}/>
     </Router>
   </Provider>,
   document.getElementById('content')

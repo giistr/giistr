@@ -13,16 +13,10 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
-    height: 100,
-    left: 0,
-    padding: 10,
-    position: 'fixed',
-    right: 0,
-    top: 0
+    height: '100%',
+    flex: 2
   },
-  languageFilter: {
-    display: 'inline-block'
-  }
+  languageFilter: {}
 };
 
 class Toolbar extends React.Component<MainProps, any> {
