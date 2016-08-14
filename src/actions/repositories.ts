@@ -31,10 +31,10 @@ export const getAllRepos = (username, starting) => {
   return dispatch => {
     get(`users/${username}/starred`, { page: starting })
       .then((repos: List<Repository>) => {
-        add(repos)(dispatch)
-        if(repos.size >= 30) {
+        add(repos)(dispatch);
+        if (repos.size >= 30) {
           dispatch(getAllRepos(username, starting + 1));
         }
       });
-  }
-}
+  };
+};

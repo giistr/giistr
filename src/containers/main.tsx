@@ -5,7 +5,6 @@ import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
 import { getIssues } from '../actions/issues';
 import { Repository } from '../reducers/repository';
-import { Issue } from '../reducers/issues';
 
 import ToolBar from '../components/toolbar';
 import RepoColumn from '../components/repo-column';
@@ -18,9 +17,6 @@ const styles = {
   }
 };
 
-declare var process: any;
-const env = process.env.NODE_ENV;
-
 interface MainProps {
   clear: any;
   dispatch: any;
@@ -29,14 +25,14 @@ interface MainProps {
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
-  labels: List<string>
+  labels: List<string>;
 };
 
 const initialState = {
+  languageFilter: undefined,
   page: 1,
-  username: '',
   selected: Set<string>(),
-  languageFilter: undefined
+  username: ''
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -61,11 +57,11 @@ class Main extends React.Component<MainProps, any> {
     const { dispatch, getIssues, repositories } = this.props;
     const repo = repositories.get(id);
 
-    if(repo.get('open_issues') > 0 && !selected.includes(id)) {
+    if (repo.get('open_issues') > 0 && !selected.includes(id)) {
       dispatch(getIssues(repo.get('full_name'), id));
     }
 
-    if(selected.includes(id)) {
+    if (selected.includes(id)) {
       this.setState({
         selected: selected.remove(id)
       });
@@ -77,11 +73,11 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onNext(page) {
-    if(this.state.username) {
+    if (this.state.username) {
       this.setState({ page });
       this.onGetRepository(page);
     } else {
-      console.warn("Please enter a valid username");
+      console.warn('Please enter a valid username');
     }
   };
 
@@ -106,7 +102,7 @@ class Main extends React.Component<MainProps, any> {
     let { repositories, languages } = this.props;
     const { selected, page, languageFilter } = this.state;
 
-    if(languageFilter) {
+    if (languageFilter) {
       repositories = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
     }
     const middle = Math.floor(repositories.size / 2);
@@ -140,18 +136,6 @@ class Main extends React.Component<MainProps, any> {
 
 export default
 connect((state, props) => ({
-  repositories: state
-    .get('repository')
-    .map(repo =>
-      repo.set('issues', state.get('issues').filter(issue => issue.get('repoId') === repo.get('id')))
-    ),
-  languages: Set<string>(
-    state
-      .get('repository')
-      .map(repo => repo.get('language'))
-      .toList()
-      .filter(Boolean)
-  ),
   labels: List<string>(
     state
       .get('issues')
@@ -160,7 +144,20 @@ connect((state, props) => ({
       .map(label => label.get('name'))
       .toList()
       .filter(Boolean)
-  )
+  ),
+  languages: Set<string>(
+    state
+      .get('repository')
+      .map(repo => repo.get('language'))
+      .toList()
+      .filter(Boolean)
+  ),
+  repositories: state
+    .get('repository')
+    .map(repo =>
+      repo.set('issues', state.get('issues').filter(issue => issue.get('repoId') === repo.get('id')))
+    )
+
 }), dispatch => ({
   getIssues,
   getRepos,

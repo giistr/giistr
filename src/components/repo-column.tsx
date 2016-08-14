@@ -14,23 +14,23 @@ const styles = {
   container: {
     flex: 1
   },
-  repoContainer: {
-    padding: 10,
-    margin: '10px auto',
-    border: `1px solid ${Colors.grey}`,
-    borderRadius: 5,
-    backgroundColor: Colors.lightGrey,
-    cursor: 'pointer',
-    display: 'flex'
-  },
-  name: {
-    flex: 8
+  issues: {
+    flex: 1
   },
   language: {
     flex: 3
   },
-  issues: {
-    flex: 1
+  name: {
+    flex: 8
+  },
+  repoContainer: {
+    backgroundColor: Colors.lightGrey,
+    border: `1px solid ${Colors.grey}`,
+    borderRadius: 5,
+    cursor: 'pointer',
+    display: 'flex',
+    margin: '10px auto',
+    padding: 10
   }
 };
 
@@ -65,7 +65,7 @@ class RepoColumn extends React.Component<MainProps, any> {
           )).toArray()
         }
       </div>
-    )
+    );
   }
 }
 

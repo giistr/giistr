@@ -14,13 +14,13 @@ interface MainProps {
 
 const styles = {
   container: {
+    backgroundColor: 'white',
+    height: 100,
+    left: 0,
     padding: 10,
     position: 'fixed',
-    backgroundColor: 'white',
-    left: 0,
     right: 0,
-    top: 0,
-    height: 100
+    top: 0
   },
   languageFilter: {
     display: 'inline-block'
@@ -43,7 +43,7 @@ class Issues extends React.Component<MainProps, any> {
           style={styles.languageFilter}
           list={languages}/>
       </div>
-    )
+    );
   }
 }
 

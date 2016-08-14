@@ -8,6 +8,7 @@ let initialState: OrderedMap<number, Repository>;
 
 // Move the dev logic to a separated service that inject all the mocked data
 if(env === 'dev') {
+
   /// <reference path="require.d.ts" />
   const repositories = fromJS(require('!json!../mock-data/repositories.json'));
   initialState = repositories.reduce((acc, next) => {
@@ -17,7 +18,6 @@ if(env === 'dev') {
 } else {
   initialState = OrderedMap<number, Repository>();
 }
-
 
 export type Repository = Map<string, string|number>;
 
