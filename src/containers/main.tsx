@@ -14,7 +14,8 @@ import Issues from '../components/issues';
 const styles = {
   mainList: {
     maxWidth: 600,
-    margin: '0px auto'
+    margin: '0px auto',
+    marginTop: 100
   },
   repoContainer: {
     padding: 10,
@@ -22,7 +23,17 @@ const styles = {
     border: `1px solid ${Colors.grey}`,
     borderRadius: 5,
     backgroundColor: Colors.lightGrey,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    display: 'flex'
+  },
+  name: {
+    flex: 8
+  },
+  language: {
+    flex: 3
+  },
+  issues: {
+    flex: 1
   }
 };
 
@@ -35,15 +46,19 @@ interface MainProps {
   getRepos: any;
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
+  languages: Set<string>
+};
+
+const initialState = {
+  page: 1,
+  username: '',
+  selected: Set(),
+  languageFilter: undefined
 };
 
 class Main extends React.Component<MainProps, any> {
 
-  public state = {
-    page: 1,
-    username: '',
-    selected: env === 'dev' ? Set([ '29943859' ]) : Set()
-  };
+  public state = initialState;
 
   private onGetRepository(page) {
     const { username } = this.state;
@@ -87,22 +102,33 @@ class Main extends React.Component<MainProps, any> {
     }
   };
 
+  private selectLanguage = languageFilter => {
+    this.setState({ languageFilter });
+  };
+
   private clearList = () => {
     const { dispatch, clear } = this.props;
     dispatch(clear());
+    this.setState(initialState);
   };
 
   public render() {
-    const { repositories } = this.props;
-    const { selected, page } = this.state;
+    let { repositories, languages } = this.props;
+    const { selected, page, languageFilter } = this.state;
+
+    if(languageFilter) {
+      repositories = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
+    }
 
     return (
       <div>
         <ToolBar
+          onSelectLanguage={this.selectLanguage}
           onClear={this.clearList}
           onUserQuery={this.onUserQuery}
           onGetRepository={this.onGetRepository.bind(this, page)}
-          onNext={this.onNext.bind(this, page + 1)}/>
+          onNext={this.onNext.bind(this, page + 1)}
+          languages={languages}/>
         <ul style={styles.mainList}>
           {
             repositories.map((repo, key) => (
@@ -111,9 +137,15 @@ class Main extends React.Component<MainProps, any> {
                 <div
                   style={styles.repoContainer}
                   onClick={this.onClickRepository.bind(this, repo.get('id'))}>
-                  {
-                    repo.get('full_name')
-                  }
+                  <div style={styles.name}>
+                    { repo.get('full_name') }
+                  </div>
+                  <div style={styles.language}>
+                    { repo.get('language') }
+                  </div>
+                  <div style={styles.issues}>
+                    { repo.get('open_issues') }
+                  </div>
                 </div>
                 {
                   selected
@@ -135,7 +167,14 @@ connect((state, props) => ({
     .get('repository')
     .map(repo =>
       repo.set('issues', state.get('issues').filter(issue => issue.get('repoId') === repo.get('id')))
-    )
+    ),
+  languages: Set<string>(
+    state
+      .get('repository')
+      .map(repo => repo.get('language'))
+      .toList()
+      .filter(Boolean)
+  )
 }), dispatch => ({
   getIssues,
   getRepos,
