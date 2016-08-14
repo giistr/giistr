@@ -7,6 +7,7 @@ interface MainProps {
   onUserQuery: Function;
   onClear: Function;
   onNext: Function;
+  onGetAll: Function;
   onSelectLanguage: Function;
   languages: Set<string>;
 };
@@ -28,7 +29,7 @@ const styles = {
 
 class Issues extends React.Component<MainProps, any> {
   public render() {
-    const { onGetRepository, onUserQuery, onClear, onNext, languages, onSelectLanguage } = this.props;
+    const { onGetRepository, onUserQuery, onClear, onNext, languages, onSelectLanguage, onGetAll } = this.props;
 
     return (
       <div style={styles.container}>
@@ -36,6 +37,7 @@ class Issues extends React.Component<MainProps, any> {
         <button onClick={onGetRepository}>Search</button>
         <button onClick={onClear}>clear</button>
         <button onClick={onNext}>More</button>
+        <button onClick={onGetAll}>All</button>
         <Input
           onSelect={onSelectLanguage}
           style={styles.languageFilter}

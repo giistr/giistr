@@ -17,7 +17,7 @@ declare var process: any;
 const env = process.env.NODE_ENV;
 const middlewares: Array<any> = [ thunk ];
 
-if(env === 'dev') {
+if (env === 'dev') {
   middlewares.push(Logger);
 }
 

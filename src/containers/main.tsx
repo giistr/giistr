@@ -1,39 +1,20 @@
 import * as React from 'react';
 
 import { connect } from 'react-redux';
-import { OrderedMap, Set } from 'immutable';
-import { getRepos, clear } from '../actions/repositories';
+import { OrderedMap, Set, List } from 'immutable';
+import { getRepos, clear, getAllRepos } from '../actions/repositories';
 import { getIssues } from '../actions/issues';
 import { Repository } from '../reducers/repository';
 import { Issue } from '../reducers/issues';
 
-import { Colors } from '../style';
 import ToolBar from '../components/toolbar';
-import Issues from '../components/issues';
+import RepoColumn from '../components/repo-column';
 
 const styles = {
   mainList: {
-    maxWidth: 600,
+    display: 'flex',
     margin: '0px auto',
     marginTop: 100
-  },
-  repoContainer: {
-    padding: 10,
-    margin: '10px auto',
-    border: `1px solid ${Colors.grey}`,
-    borderRadius: 5,
-    backgroundColor: Colors.lightGrey,
-    cursor: 'pointer',
-    display: 'flex'
-  },
-  name: {
-    flex: 8
-  },
-  language: {
-    flex: 3
-  },
-  issues: {
-    flex: 1
   }
 };
 
@@ -44,15 +25,17 @@ interface MainProps {
   clear: any;
   dispatch: any;
   getRepos: any;
+  getAllRepos: any;
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
-  languages: Set<string>
+  languages: Set<string>;
+  labels: List<string>
 };
 
 const initialState = {
   page: 1,
   username: '',
-  selected: Set(),
+  selected: Set<string>(),
   languageFilter: undefined
 };
 
@@ -73,7 +56,7 @@ class Main extends React.Component<MainProps, any> {
     });
   };
 
-  private onClickRepository(id) {
+  private onClickRepository = (id) => {
     const { selected } = this.state;
     const { dispatch, getIssues, repositories } = this.props;
     const repo = repositories.get(id);
@@ -91,7 +74,7 @@ class Main extends React.Component<MainProps, any> {
         selected: selected.add(id)
       });
     }
-  }
+  };
 
   private onNext(page) {
     if(this.state.username) {
@@ -100,6 +83,13 @@ class Main extends React.Component<MainProps, any> {
     } else {
       console.warn("Please enter a valid username");
     }
+  };
+
+  private onGetAll = () => {
+    const { getAllRepos, dispatch } = this.props;
+    const { username, page } = this.state;
+
+    dispatch(getAllRepos(username, page));
   };
 
   private selectLanguage = languageFilter => {
@@ -119,6 +109,9 @@ class Main extends React.Component<MainProps, any> {
     if(languageFilter) {
       repositories = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
     }
+    const middle = Math.floor(repositories.size / 2);
+    const firstColumn = repositories.take(middle).toOrderedMap();
+    const secondColumn = repositories.takeLast(middle).toOrderedMap();
 
     return (
       <div>
@@ -128,34 +121,18 @@ class Main extends React.Component<MainProps, any> {
           onUserQuery={this.onUserQuery}
           onGetRepository={this.onGetRepository.bind(this, page)}
           onNext={this.onNext.bind(this, page + 1)}
+          onGetAll={this.onGetAll}
           languages={languages}/>
-        <ul style={styles.mainList}>
-          {
-            repositories.map((repo, key) => (
-              <li
-                key={key}>
-                <div
-                  style={styles.repoContainer}
-                  onClick={this.onClickRepository.bind(this, repo.get('id'))}>
-                  <div style={styles.name}>
-                    { repo.get('full_name') }
-                  </div>
-                  <div style={styles.language}>
-                    { repo.get('language') }
-                  </div>
-                  <div style={styles.issues}>
-                    { repo.get('open_issues') }
-                  </div>
-                </div>
-                {
-                  selected
-                    .includes(repo.get('id')) &&
-                    <Issues issues={repo.get('issues')}/>
-                }
-              </li>
-            )).toArray()
-          }
-        </ul>
+        <div style={styles.mainList}>
+        <RepoColumn
+          selected={selected}
+          repositories={firstColumn}
+          onClickRepository={this.onClickRepository}/>
+        <RepoColumn
+          selected={selected}
+          repositories={secondColumn}
+          onClickRepository={this.onClickRepository}/>
+        </div>
       </div>
     );
   }
@@ -174,10 +151,20 @@ connect((state, props) => ({
       .map(repo => repo.get('language'))
       .toList()
       .filter(Boolean)
+  ),
+  labels: List<string>(
+    state
+      .get('issues')
+      .map(repo => repo.get('labels'))
+      .flatten(1)
+      .map(label => label.get('name'))
+      .toList()
+      .filter(Boolean)
   )
 }), dispatch => ({
   getIssues,
   getRepos,
+  getAllRepos,
   clear,
   dispatch
 }))(Main);
