@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Set, List } from 'immutable';
+import { Set } from 'immutable';
 
 const styles = {
   container: {
@@ -44,50 +44,53 @@ interface MainProps {
   onFocus?: Function;
   style?: Object;
   placeholder?: string;
-  list: Set<string>
+  list: Set<string>;
 };
-
 
 class Input extends React.Component<MainProps, any> {
 
-  state = {
+  public state = {
     focus: false,
     selectedIndex: undefined
   };
 
-  refs: {
+  public refs: {
     [string: string]: any;
     container: any;
-  }
+  };
 
-  componentDidMount() {
+  public componentDidMount() {
     document.addEventListener('click', this.handleClickOutside, true);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutside, true);
   }
 
-  handleClickOutside = (e) => {
+  private handleClickOutside = (e) => {
     const domNode = this.refs.container;
     if (!domNode || !domNode.contains(e.target)) {
       this.setState({ focus: false });
     }
   };
 
-  _onChange = (...args) => {
+  private onChange = (...args) => {
     const { onChange } = this.props;
-    if(typeof onChange === 'function') onChange(...args);
+    if (typeof onChange === 'function') {
+      onChange(...args);
+    }
   };
 
-  _onFocus = (...args) => {
+  private onFocus = (...args) => {
     const { onFocus } = this.props;
-    if(typeof onFocus === 'function') onFocus(...args);
+    if (typeof onFocus === 'function') {
+      onFocus(...args);
+    }
 
-    this.setState({ focus: true })
+    this.setState({ focus: true });
   };
 
-  _onChangeSelect(index) {
+  private onChangeSelect(index) {
     const { onSelect } = this.props;
 
     this.setState({
@@ -95,27 +98,27 @@ class Input extends React.Component<MainProps, any> {
       focus: false
     });
 
-    if(typeof onSelect === 'function') {
+    if (typeof onSelect === 'function') {
       onSelect(index);
     }
   }
 
-  render() {
+  public render() {
     const { placeholder, style, list } = this.props;
     const { focus, selectedIndex } = this.state;
 
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">
         <input
-          type='text'
+          type="text"
           value={selectedIndex ? list.get(selectedIndex) : ''}
           style={styles.input}
-          onFocus={this._onFocus}
-          onChange={this._onChange}
+          onFocus={this.onFocus}
+          onChange={this.onChange}
           placeholder={placeholder}/>
         {
           selectedIndex !== undefined && (
-            <div style={styles.cross} onClick={this._onChangeSelect.bind(this, undefined)}></div>
+            <div style={styles.cross} onClick={this.onChangeSelect.bind(this, undefined)}></div>
           )
         }
         {
@@ -126,7 +129,7 @@ class Input extends React.Component<MainProps, any> {
                 <li
                   key={index}
                   style={styles.listItem}
-                  onClick={this._onChangeSelect.bind(this, index)}>
+                  onClick={this.onChangeSelect.bind(this, index)}>
                   { el }
                 </li>
               ))
@@ -135,7 +138,7 @@ class Input extends React.Component<MainProps, any> {
           )
         }
       </div>
-    )
+    );
   }
 }
 

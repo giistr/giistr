@@ -3,8 +3,6 @@ import { Set } from 'immutable';
 import Input from './input-autocomplete';
 
 interface MainProps {
-  onGetRepository: Function;
-  onUserQuery: Function;
   onClear: Function;
   onNext: Function;
   onGetAll: Function;
@@ -27,14 +25,12 @@ const styles = {
   }
 };
 
-class Issues extends React.Component<MainProps, any> {
+class Toolbar extends React.Component<MainProps, any> {
   public render() {
-    const { onGetRepository, onUserQuery, onClear, onNext, languages, onSelectLanguage, onGetAll } = this.props;
+    const { onClear, onNext, languages, onSelectLanguage, onGetAll } = this.props;
 
     return (
       <div style={styles.container}>
-        <input type="text" placeholder="Enter github user account" onChange={onUserQuery}/>
-        <button onClick={onGetRepository}>Search</button>
         <button onClick={onClear}>clear</button>
         <button onClick={onNext}>More</button>
         <button onClick={onGetAll}>All</button>
@@ -47,4 +43,4 @@ class Issues extends React.Component<MainProps, any> {
   }
 }
 
-export default Issues;
+export default Toolbar;

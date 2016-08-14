@@ -26,30 +26,27 @@ interface MainProps {
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
   labels: List<string>;
+  username: string
 };
 
 const initialState = {
   languageFilter: undefined,
   page: 1,
-  selected: Set<string>(),
-  username: ''
+  selected: Set<string>()
 };
 
 class Main extends React.Component<MainProps, any> {
 
   public state = initialState;
 
+  private componentWillMount() {
+    this.onGetRepository(this.state.page);
+  }
+
   private onGetRepository(page) {
-    const { username } = this.state;
-    const { dispatch, getRepos } = this.props;
+    const { dispatch, getRepos, username } = this.props;
 
     dispatch(getRepos(username, page));
-  };
-
-  private onUserQuery = evt => {
-    this.setState({
-      username: evt.target.value
-    });
   };
 
   private onClickRepository = (id) => {
@@ -73,7 +70,7 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onNext(page) {
-    if (this.state.username) {
+    if (this.props.username) {
       this.setState({ page });
       this.onGetRepository(page);
     } else {
@@ -82,8 +79,8 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onGetAll = () => {
-    const { getAllRepos, dispatch } = this.props;
-    const { username, page } = this.state;
+    const { getAllRepos, dispatch, username } = this.props;
+    const { page } = this.state;
 
     dispatch(getAllRepos(username, page));
   };
@@ -114,8 +111,6 @@ class Main extends React.Component<MainProps, any> {
         <ToolBar
           onSelectLanguage={this.selectLanguage}
           onClear={this.clearList}
-          onUserQuery={this.onUserQuery}
-          onGetRepository={this.onGetRepository.bind(this, page)}
           onNext={this.onNext.bind(this, page + 1)}
           onGetAll={this.onGetAll}
           languages={languages}/>
