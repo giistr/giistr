@@ -13,7 +13,15 @@ import Logger from './common/Logger';
 import rootReducer from './reducers';
 import './common.css';
 
-const store = createStore(rootReducer, Map(), applyMiddleware(Logger, thunk));
+declare var process: any;
+const env = process.env.NODE_ENV;
+const middlewares: Array<any> = [ thunk ];
+
+if(env === 'dev') {
+  middlewares.push(Logger);
+}
+
+const store = createStore(rootReducer, Map(), applyMiddleware(...middlewares));
 
 ReactDOM.render(
   <Provider store={store}>

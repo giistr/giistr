@@ -2,17 +2,18 @@ var fallback = require('express-history-api-fallback');
 var express = require('express');
 var app = express();
 
-var port = 3002;
+var port = 3001;
+var rootDirectory = __dirname + '/dist'
 
-app.use(express.static(__dirname))
+app.use(express.static(rootDirectory))
 
 app.use(fallback('index.html', {
-  root: __dirname
+  root: rootDirectory
 }));
 
 app.get(function (req, res, next) {
   if (req.accepts('html')) {
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(rootDirectory + '/index.html')
   } else {
     next()
   }
