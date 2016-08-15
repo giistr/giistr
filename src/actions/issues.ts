@@ -14,7 +14,10 @@ function add(issues, repoId) {
 
 export const getIssues = (repository: string, repoId: string) => {
   return dispatch => {
-    get(`repos/${repository}/issues`, {})
-      .then((issues: List<any>) => add(issues, repoId)(dispatch));
+    return get(`repos/${repository}/issues`, {})
+      .then((issues: List<any>) => {
+        add(issues, repoId)(dispatch);
+        return issues;
+      });
   };
 };

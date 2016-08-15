@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Set } from 'immutable';
 import Input from './input-autocomplete';
+import { Colors } from '../style';
 
 interface MainProps {
   onClear: Function;
@@ -13,8 +14,8 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
-    height: '100%',
-    flex: 2
+    flex: 2,
+    borderLeft: `1px solid ${Colors.borderGrey}`
   },
   languageFilter: {}
 };

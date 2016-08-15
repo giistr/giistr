@@ -16,7 +16,8 @@ import NavigationBar from '../components/navigation-bar';
 const styles = {
   mainList: {
     display: 'flex',
-    margin: '0px auto'
+    margin: '0px auto',
+    alignItems: 'stretch'
   }
 };
 
@@ -37,7 +38,6 @@ interface MainProps {
 const initialState = {
   languageFilter: undefined,
   page: 1,
-  selected: Set<string>()
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -60,26 +60,6 @@ class Main extends React.Component<MainProps, any> {
     const { dispatch, getRepos } = this.props;
 
     dispatch(getRepos(user.get('login'), page));
-  };
-
-  private onClickRepository = (id) => {
-    const { selected } = this.state;
-    const { dispatch, getIssues, repositories } = this.props;
-    const repo = repositories.get(id);
-
-    if (repo.get('open_issues') > 0 && !selected.includes(id)) {
-      dispatch(getIssues(repo.get('full_name'), id));
-    }
-
-    if (selected.includes(id)) {
-      this.setState({
-        selected: selected.remove(id)
-      });
-    } else {
-      this.setState({
-        selected: selected.add(id)
-      });
-    }
   };
 
   private onNext(page) {
@@ -106,7 +86,7 @@ class Main extends React.Component<MainProps, any> {
 
   public render() {
     let { repositories, languages } = this.props;
-    const { selected, page, languageFilter } = this.state;
+    const { page, languageFilter } = this.state;
 
     if (languageFilter) {
       repositories = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
@@ -120,13 +100,9 @@ class Main extends React.Component<MainProps, any> {
         <NavigationBar/>
         <div style={styles.mainList}>
           <RepoColumn
-            selected={selected}
-            repositories={firstColumn}
-            onClickRepository={this.onClickRepository}/>
+            repositories={firstColumn}/>
           <RepoColumn
-            selected={selected}
-            repositories={secondColumn}
-            onClickRepository={this.onClickRepository}/>
+            repositories={secondColumn}/>
           <ToolBar
             onSelectLanguage={this.selectLanguage}
             onClear={this.clearList}
