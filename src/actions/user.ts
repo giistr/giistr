@@ -23,7 +23,10 @@ function add(user: User) {
 export const getUser = (username) => {
   return dispatch => {
     return get(`users/${username}`, {})
-      .then((user: User) => add(user)(dispatch))
+      .then((user: User) => {
+        add(user)(dispatch)
+        return user;
+      })
       .catch(() => {
         return add(Map({
           login: username,

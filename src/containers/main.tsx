@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
 import { getIssues } from '../actions/issues';
+import { getUser } from '../actions/user';
+
 import { Repository } from '../reducers/repository';
 import { User } from '../reducers/user';
 
@@ -22,12 +24,14 @@ interface MainProps {
   clear: any;
   dispatch: any;
   getRepos: any;
+  getUser: any;
   getAllRepos: any;
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
   labels: List<string>;
-  user: User
+  user: User;
+  params: any;
 };
 
 const initialState = {
@@ -41,11 +45,19 @@ class Main extends React.Component<MainProps, any> {
   public state = initialState;
 
   private componentWillMount() {
-    this.onGetRepository(this.state.page);
+    const { params, user, getUser, dispatch } = this.props;
+
+    if (user.size === 0) {
+      dispatch(getUser(params.userId)).then(user => {
+        this.onGetRepository(this.state.page, user);
+      });
+    } else {
+      this.onGetRepository(this.state.page);
+    }
   }
 
-  private onGetRepository(page) {
-    const { dispatch, getRepos, user } = this.props;
+  private onGetRepository(page, user: User = this.props.user) {
+    const { dispatch, getRepos } = this.props;
 
     dispatch(getRepos(user.get('login'), page));
   };
@@ -154,6 +166,7 @@ connect((state, props) => ({
 }), dispatch => ({
   getIssues,
   getRepos,
+  getUser,
   getAllRepos,
   clear,
   dispatch

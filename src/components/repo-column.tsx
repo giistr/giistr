@@ -29,8 +29,9 @@ const styles = {
     borderRadius: 5,
     cursor: 'pointer',
     display: 'flex',
-    margin: '10px auto',
-    padding: 10
+    margin: '10px 20px',
+    padding: 10,
+    minWidth: 400
   }
 };
 

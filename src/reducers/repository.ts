@@ -4,20 +4,7 @@ import { fromJS } from 'immutable';
 
 declare var process: any;
 const env = process.env.NODE_ENV;
-let initialState: OrderedMap<number, Repository>;
-
-// Move the dev logic to a separated service that inject all the mocked data
-if(env === 'dev') {
-
-  /// <reference path="require.d.ts" />
-  const repositories = fromJS(require('!json!../mock-data/repositories.json'));
-  initialState = repositories.reduce((acc, next) => {
-    return acc.set(next.get('id'), next);
-  }, OrderedMap<any, Repository>());
-
-} else {
-  initialState = OrderedMap<number, Repository>();
-}
+const initialState: OrderedMap<number, Repository> = OrderedMap<number, Repository>();
 
 export type Repository = Map<string, string|number>;
 
