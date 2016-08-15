@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router';
 interface MainProps {
   dispatch: any;
   getUser: any;
-  user: Map<string, string | number>
+  user: Map<string, string | number>;
 };
 
 const styles = {};
@@ -17,9 +17,9 @@ class Landing extends React.Component<MainProps, any> {
   public state = {
     username: '',
     userTimeout: true
-  }
+  };
 
-  componentWillReceiveProps(nextProps) {
+  public componentWillReceiveProps(nextProps) {
     if (!nextProps.user.get('isWrong', false)) {
       const { user } = nextProps;
 
@@ -62,7 +62,7 @@ class Landing extends React.Component<MainProps, any> {
           )
         }
       </div>
-    )
+    );
   }
 }
 

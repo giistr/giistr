@@ -17,7 +17,7 @@ class NavigationBar extends React.Component<MainProps, any> {
     return (
       <div style={styles.container}>
       </div>
-    )
+    );
   }
 }
 

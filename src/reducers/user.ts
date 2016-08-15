@@ -1,4 +1,4 @@
-import { OrderedMap, List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { ADD_USER, CLEAR_USER } from '../constants/user';
 
 export type User = Map<string, string|number>;

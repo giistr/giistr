@@ -1,9 +1,6 @@
 import { OrderedMap, List, Map } from 'immutable';
 import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
-import { fromJS } from 'immutable';
 
-declare var process: any;
-const env = process.env.NODE_ENV;
 const initialState: OrderedMap<number, Repository> = OrderedMap<number, Repository>();
 
 export type Repository = Map<string, string|number>;

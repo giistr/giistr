@@ -5,6 +5,8 @@
     "ordered-imports": false,
     "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
     "interface-name": [true, "never-prefix"],
-    "no-console": false
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "member-ordering": false
   }
 }

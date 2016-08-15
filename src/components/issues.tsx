@@ -6,13 +6,13 @@ interface MainProps {
 
 const styles = {
   container: {
+    backgroundColor: '#F4F4F4',
     margin: '10px auto',
-    minHeight: 10,
-    backgroundColor: '#F4F4F4'
+    minHeight: 10
   },
   issueItem: {
-    padding: 10,
-    borderBottom: '1px dashed #bbbbbb'
+    borderBottom: '1px dashed #bbbbbb',
+    padding: 10
   }
 };
 
@@ -33,7 +33,7 @@ class Issues extends React.Component<MainProps, any> {
           )).toArray()
         }
       </ul>
-    )
+    );
   }
 }
 

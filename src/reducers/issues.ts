@@ -1,8 +1,6 @@
-import { OrderedMap, List, Map, fromJS } from 'immutable';
+import { OrderedMap, List, Map } from 'immutable';
 import { ADD_ISSUE } from '../constants/issues';
 
-declare var process: any;
-const env = process.env.NODE_ENV;
 const initialState: OrderedMap<number, Issue> = OrderedMap<number, Issue>();
 
 export type Issue = Map<string, any>;
