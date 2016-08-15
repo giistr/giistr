@@ -6,25 +6,26 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var html = {
   template: 'index.ejs',
-  style: 'css/style.css',
-  script: 'main.js'
+  style: '/css/style.css',
+  script: '/bundle.js'
 };
 
 module.exports = {
   entry: [
     'whatwg-fetch',
-    path.join(__dirname, "src/App"),
-    "webpack/hot/only-dev-server",
-    "webpack-dev-server/client?http://localhost:8080"
+    path.join(__dirname, 'src/App'),
+    'webpack/hot/only-dev-server',
+    'webpack-dev-server/client?http://localhost:3001'
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    path: __dirname,
+    filename: 'bundle.js'
   },
   devtool: 'eval',
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.css', '.html', 'png', 'jpg']
   },
+  cache: true,
   module: {
     loaders: [
       {
@@ -37,7 +38,7 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: "json-loader"
+        loader: 'json-loader'
       }
     ],
     preLoaders: [
@@ -51,9 +52,10 @@ module.exports = {
     new ExtractTextPlugin('css/style.css'),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': '"' + env + '"'
+        'NODE_ENV': "'" + env + "'"
       }
     }),
-    new HtmlWebpackPlugin(html)
+    new HtmlWebpackPlugin(html),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
