@@ -11,9 +11,9 @@ const shallowRequest = (method: string) => (
   method === 'DELETE'
 );
 
-export function request(method: string, endpoint: string, args: any) {
+export function request(method: string, endpoint: string, args: any, fullEndpoint?: string) {
   const shallow = shallowRequest(method);
-  let url = makeUrl(endpoint);
+  let url = fullEndpoint || makeUrl(endpoint);
 
   if (shallow) {
     url += '?' + qs.stringify(args);
@@ -29,15 +29,16 @@ export function request(method: string, endpoint: string, args: any) {
 
       return res.json();
     })
-    .then(data => fromJS(data));
+    .then(data => fromJS(data))
+    .catch(res => res.json());
 }
 
-export function get(endpoint: string, args?: any) {
-  return request('GET', endpoint, args);
+export function get(endpoint: string, args?: any, fullEndpoint?: string) {
+  return request('GET', endpoint, args, fullEndpoint);
 }
 
-export function post(endpoint: string, args: any) {
-  return request('POST', endpoint, args);
+export function post(endpoint: string, args: any, fullEndpoint?: string) {
+  return request('POST', endpoint, args, fullEndpoint);
 }
 
 export function put(endpoint: string, args: any) {

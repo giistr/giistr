@@ -1,66 +1,48 @@
 import * as React from 'react';
-import { getUser } from '../actions/user';
+import { getUser, githubOauthAction } from '../actions/user';
 import { connect } from 'react-redux';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { browserHistory } from 'react-router';
+import { parse } from 'qs';
 
 interface MainProps {
   dispatch: any;
-  getUser: any;
+  githubOauthAction: any;
   user: Map<string, string | number>;
 };
 
 const styles = {};
 
+/// <reference path="require.d.ts" />
+const config = fromJS(require('!json!../config.json'));
+const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config.get('clientId')}`;
+
 class Landing extends React.Component<MainProps, any> {
 
   public state = {
-    username: '',
-    userTimeout: true
+    // username: '',
+    // userTimeout: true
   };
 
-  public componentWillReceiveProps(nextProps) {
-    if (!nextProps.user.get('isWrong', false)) {
-      const { user } = nextProps;
+  public componentWillMount() {
+    const { githubOauthAction, dispatch } = this.props;
 
-      browserHistory.push(`app/${user.get('login')}`);
+    const params = parse(location.search.replace('?', ''));
+    if (params.code) {
+      dispatch(githubOauthAction(params.code, config.get('clientId'), config.get('clientSecret')))
     }
   }
 
-  private onUserQuery = evt => {
-    this.setState({
-      username: evt.target.value
-    });
-  };
-
   private onSearch = () => {
-    const { username } = this.state;
-    const { dispatch, getUser } = this.props;
 
-    dispatch(getUser(username));
-
-    setTimeout(() => {
-      this.setState({
-        userTimeout: false
-      });
-    }, 3000);
   };
 
   public render() {
     const { user } = this.props;
-    const { userTimeout } = this.state;
 
     return (
       <div>
-        <input type="text" placeholder="Enter github user account" onChange={this.onUserQuery}/>
-        <button onClick={this.onSearch}>Search</button>
-        {
-          user.get('isWrong') && userTimeout && (
-            <div>
-              <h1>Wrong user</h1>
-            </div>
-          )
-        }
+        <a href={githubOauth}>Login with google</a>
       </div>
     );
   }
@@ -69,5 +51,5 @@ class Landing extends React.Component<MainProps, any> {
 export default connect(state => ({ user: state.get('user') }),
 dispatch => ({
   dispatch,
-  getUser
+  githubOauthAction
 }))(Landing);
