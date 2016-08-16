@@ -14,6 +14,7 @@
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
     "css-loader": "^0.23.1",
+    "eslint-config-airbnb-base": "^5.0.2",
     "express": "^4.14.0",
     "express-history-api-fallback": "^2.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
