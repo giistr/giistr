@@ -9,9 +9,25 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
-    height: 60,
-    padding: 10,
-    borderBottom: `1px solid ${Colors.borderGrey}`
+    margin: '10px 20px',
+    padding: 10
+  },
+  title: {
+    lineHeight: '34px',
+    fontSize: 28,
+    padding: '0px 2px',
+    fontWeight: 100,
+    color: Colors.grey,
+    borderRadius: 4,
+    backgroundColor: Colors.blueBackground,
+    display: 'inline-block'
+  },
+  description: {
+    marginTop: 20,
+    color: Colors.lightGrey
+  },
+  marked: {
+    color: Colors.grey
   }
 };
 
@@ -27,8 +43,8 @@ class NavigationBar extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
-        <h1>/Giistr</h1>
-        <div>Viewing about {after} of a total of {total} repositories</div>
+        <h1 style={styles.title}>/Giistr</h1>
+        <div style={styles.description}>Viewing about <span style={styles.marked}>{after}</span> of a total of <span style={styles.marked}>{total}</span> repositories</div>
       </div>
     );
   }

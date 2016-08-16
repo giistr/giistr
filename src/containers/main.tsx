@@ -85,19 +85,22 @@ class Main extends React.Component<MainProps, any> {
   };
 
   public render() {
-    let { repositories, languages } = this.props;
+    const { repositories, languages } = this.props;
     const { page, languageFilter } = this.state;
+    let filteredRepos = repositories;
 
     if (languageFilter) {
-      repositories = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
+      filteredRepos = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
     }
-    const middle = Math.floor(repositories.size / 2);
-    const firstColumn = repositories.take(middle).toOrderedMap();
-    const secondColumn = repositories.takeLast(middle).toOrderedMap();
+    const middle = Math.floor(filteredRepos.size / 2);
+    const firstColumn = filteredRepos.take(middle).toOrderedMap();
+    const secondColumn = filteredRepos.takeLast(middle).toOrderedMap();
 
     return (
       <div>
-        <NavigationBar/>
+        <NavigationBar
+          total={repositories.size}
+          after={filteredRepos.size}/>
         <div style={styles.mainList}>
           <RepoColumn
             repositories={firstColumn}/>
