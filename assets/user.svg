@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>90C216FB-3430-4421-953F-DD52CA7F31B5</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="430" height="295" rx="4"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="430" height="295" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="430" height="295" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="search-user" transform="translate(-513.000000, -478.000000)">
+            <g id="repo01-copy" transform="translate(498.000000, 108.000000)">
+                <g id="Issues-container" transform="translate(2.000000, 205.000000)">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask" stroke="#F1F1F2" mask="url(#mask-2)" stroke-width="2" fill="#FFFFFF">
+                        <use mask="url(#mask-4)" xlink:href="#path-1"></use>
+                    </g>
+                    <g id="Issue" mask="url(#mask-3)" opacity="0.4">
+                        <g transform="translate(12.000000, 115.000000)" id="icon">
+                            <g transform="translate(0.000000, 50.000000)">
+                                <g id="user">
+                                    <rect id="icon" fill-opacity="0" fill="#D0D0D0" x="0" y="0" width="18" height="18"></rect>
+                                    <path d="M9.0802446,16.4728381 C12.5031548,16.4728381 15.2779717,13.6811144 15.2779717,10.2373486 C15.2779717,6.79358284 14.4516081,5.6646563 9.0802446,5.6646563 C3.7088811,5.6646563 2.88251748,6.79358284 2.88251748,10.2373486 C2.88251748,13.6811144 5.65733443,16.4728381 9.0802446,16.4728381 Z" id="Oval" stroke-opacity="0.8" stroke="#151724" stroke-linecap="round" stroke-linejoin="round" fill="#FFFFFF"></path>
+                                    <circle id="Oval" stroke-opacity="0.8" stroke="#151724" stroke-linecap="round" stroke-linejoin="round" fill="#FFFFFF" cx="9.08181818" cy="3.84546453" r="3.27272727"></circle>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g id="Issue-title" transform="translate(0.000000, 174.000000)"></g>
+            </g>
+        </g>
+    </g>
+</svg>

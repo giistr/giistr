@@ -38,7 +38,8 @@ const styles = {
   line: {
     flex: 1,
     display: 'flex',
-    color: Colors.grey
+    color: Colors.grey,
+    fontSize: 14
   },
   secondLine: {
     flex: 1,
@@ -62,6 +63,13 @@ const styles = {
   },
   milestone: {
     marginLeft: 20
+  },
+  icon: {
+    display: 'inline-block',
+    marginRight: 5
+  },
+  convers: {
+    marginLeft: 10
   }
 };
 
@@ -100,8 +108,14 @@ class Issues extends React.Component<MainProps, any> {
                     </div>
                   </div>
                   <div style={styles.secondLine}>
-                    <div>{ issue.get('assignees').size }</div>
-                    <div>{ issue.get('comments') }</div>
+                    <div>
+                      <img style={styles.icon} src="../assets/user.svg"/>
+                      { issue.get('assignees').size }
+                    </div>
+                    <div style={styles.convers}>
+                      <img style={styles.icon} src="../assets/convers.svg"/>
+                      { issue.get('comments') }
+                    </div>
                     <div style={styles.milestone}>No Milestone</div>
                   </div>
                 </li>
