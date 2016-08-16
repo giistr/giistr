@@ -11,7 +11,7 @@ interface MainProps {
 
 const styles = {
   container: {
-    flex: 5
+    flex: 4.5
   },
   repoContainer: {
     display: 'flex',

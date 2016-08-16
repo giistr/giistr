@@ -17,7 +17,8 @@ const styles = {
   mainList: {
     display: 'flex',
     margin: '0px auto',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
+    maxWidth: 1700
   }
 };
 
@@ -85,7 +86,7 @@ class Main extends React.Component<MainProps, any> {
   };
 
   public render() {
-    const { repositories, languages } = this.props;
+    const { repositories, languages, user } = this.props;
     const { page, languageFilter } = this.state;
     let filteredRepos = repositories;
 
@@ -109,6 +110,7 @@ class Main extends React.Component<MainProps, any> {
           <ToolBar
             onSelectLanguage={this.selectLanguage}
             onClear={this.clearList}
+            user={user}
             onNext={this.onNext.bind(this, page + 1)}
             onGetAll={this.onGetAll}
             languages={languages}/>
