@@ -37,6 +37,7 @@
   "dependencies": {
     "immutable": "^3.8.1",
     "moment": "^2.14.1",
+    "object-hash": "^1.1.4",
     "qs": "^6.2.1",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",

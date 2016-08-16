@@ -22,6 +22,8 @@ const styles = {
   }
 };
 
+export type Label = Map<string, string>;
+
 interface MainProps {
   clear: any;
   dispatch: any;
@@ -31,7 +33,6 @@ interface MainProps {
   getIssues: any;
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
-  labels: List<string>;
   user: User;
   params: any;
 };
@@ -122,15 +123,6 @@ class Main extends React.Component<MainProps, any> {
 
 export default
 connect((state, props) => ({
-  labels: List<string>(
-    state
-      .get('issues')
-      .map(repo => repo.get('labels'))
-      .flatten(1)
-      .map(label => label.get('name'))
-      .toList()
-      .filter(Boolean)
-  ),
   languages: Set<string>(
     state
       .get('repository')

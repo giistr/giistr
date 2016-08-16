@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Colors } from '../style';
-import { convertHex } from '../helpers/color';
 import * as moment from 'moment';
+import { Tag } from './tag';
+import { connect } from 'react-redux';
+import { List } from 'immutable';
 
 interface MainProps {
   issues: any;
@@ -63,25 +65,6 @@ const styles = {
   }
 };
 
-function Tag({ label }) {
-  const style = {
-    padding: '0px 5px',
-    borderRadius: '10px',
-    color: `#${label.get('color')}`,
-    backgroundColor: convertHex(label.get('color'), 0.2),
-    fontSize: 12,
-    height: 24,
-    lineHeight: '24px',
-    margin: 'auto 4px'
-  };
-
-  return (
-    <div style={style}>
-      { label.get('name') }
-    </div>
-  );
-}
-
 class Issues extends React.Component<MainProps, any> {
 
   private onClickIssue(url) {
@@ -110,8 +93,8 @@ class Issues extends React.Component<MainProps, any> {
                     <div style={styles.updated}>Updated: { moment(issue.get('updated_at')).format('MMMM Do YYYY') }</div>
                     <div style={styles.tagContainer}>
                       {
-                        issue.get('labels').map(label =>
-                          <Tag label={label}/>
+                        issue.get('labelsIds').map((label, key) =>
+                          <Tag label={label} key={key}/>
                         )
                       }
                     </div>
@@ -131,4 +114,14 @@ class Issues extends React.Component<MainProps, any> {
   }
 }
 
-export default Issues;
+export default
+connect((state, props) => ({
+  issues: props.issues
+    .map(issue =>
+      issue.update('labelsIds', labelsIds => {
+        return labelsIds.map(labelId =>
+          state.getIn([ 'label', labelId ])
+        )
+      })
+    )
+}), null)(Issues);

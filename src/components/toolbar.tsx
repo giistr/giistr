@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Set } from 'immutable';
+import { Set, List } from 'immutable';
 import Input from './input-autocomplete';
 import { Colors } from '../style';
 import UserCard from './user-card';
 import { User } from '../reducers/user';
+import LabelsFilter from './labels-filter';
 
 interface MainProps {
   onClear: Function;
@@ -48,6 +49,10 @@ class Toolbar extends React.Component<MainProps, any> {
           onSelect={onSelectLanguage}
           style={styles.languageFilter}
           list={languages}/>
+        <div>
+          <h3>Labels</h3>
+          <LabelsFilter/>
+        </div>
       </div>
     );
   }
