@@ -19,7 +19,8 @@ const styles = {
     padding: '20px 10px',
     display: 'flex',
     flexDirection: 'column',
-    lineHeight: '30px'
+    lineHeight: '30px',
+    cursor: 'pointer'
   },
   title: {
     margin: '16px 20px'
@@ -37,6 +38,11 @@ const styles = {
 };
 
 class Issues extends React.Component<MainProps, any> {
+
+  private onClickIssue(url) {
+    window.open(url, '_blank');
+  }
+
   public render() {
     const { issues } = this.props;
 
@@ -50,6 +56,7 @@ class Issues extends React.Component<MainProps, any> {
 
               return (
                 <li
+                onClick={this.onClickIssue.bind(this, issue.get('html_url'))}
                 style={style}
                 key={index}>
                   <h2 style={styles.title2}>{ issue.get('title') }</h2>
