@@ -1,8 +1,9 @@
 import { fromJS } from 'immutable';
 import * as qs from 'qs';
+import { get as getFromStorage } from './localStorage';
 
 function makeUrl(endpoint: string): string {
-  return `https://api.github.com/${endpoint}`;
+  return `https://api.github.com/${endpoint}?access_token=${getFromStorage('user').access_token}&`;
 }
 
 const shallowRequest = (method: string) => (
@@ -18,7 +19,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
   let url = fullEndpoint || makeUrl(endpoint);
 
   if (shallow) {
-    url += '?' + qs.stringify(args);
+    url += qs.stringify(args);
   }
 
   const req = new Request(url, {

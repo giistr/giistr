@@ -1,5 +1,6 @@
 import { Map, Iterable, fromJS } from 'immutable';
 import { ADD_USER, CLEAR_USER } from '../constants/user';
+import { get, save } from '../localStorage';
 
 export type User = Map<string, string|number>;
 
@@ -9,24 +10,6 @@ export interface UserAction {
 };
 
 const initialState: User = fromJS(get('user')) || Map<string, string | number>();
-
-function save(key: string, obj: any) {
-  localStorage.setItem(key, JSON.stringify(typeof obj.toJS === "function" ? obj.toJS() : obj));
-}
-
-function get(key: string): any {
-  const str = localStorage.getItem(key);
-
-  if (!str) {
-    return undefined;
-  }
-
-  try {
-    return JSON.parse(str);
-  } catch(err) {
-    return undefined;
-  }
-}
 
 export default (state = initialState, action: UserAction) => {
   const { type, payload } = action;
