@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Colors } from '../style';
+import { convertHex } from '../helpers/color';
+import * as moment from 'moment';
 
 interface MainProps {
   issues: any;
@@ -34,8 +36,42 @@ const styles = {
     flex: 1,
     display: 'flex',
     color: Colors.grey
+  },
+  updated: {
+    marginLeft: 20
+  },
+  light: {
+    width: 12,
+    height: 12,
+    borderRadius: '50%',
+    display: 'inline-block',
+    backgroundColor: Colors.green,
+    marginRight: 10
+  },
+  tagContainer: {
+    display: 'flex',
+    marginLeft: 20
   }
 };
+
+function Tag({ label }) {
+  const style = {
+    padding: '0px 5px',
+    borderRadius: '10px',
+    color: `#${label.get('color')}`,
+    backgroundColor: convertHex(label.get('color'), 0.2),
+    fontSize: 12,
+    height: 24,
+    lineHeight: '24px',
+    margin: 'auto 4px'
+  };
+
+  return (
+    <div style={style}>
+      { label.get('name') }
+    </div>
+  );
+}
 
 class Issues extends React.Component<MainProps, any> {
 
@@ -56,14 +92,20 @@ class Issues extends React.Component<MainProps, any> {
 
               return (
                 <li
-                onClick={this.onClickIssue.bind(this, issue.get('html_url'))}
-                style={style}
-                key={index}>
+                  onClick={this.onClickIssue.bind(this, issue.get('html_url'))}
+                  style={style}
+                  key={index}>
                   <h2 style={styles.title2}>{ issue.get('title') }</h2>
                   <div style={styles.line}>
-                    <div>Open</div>
-                    <div>Updated at: { issue.get('updated_at') }</div>
-                    <div>Bug</div>
+                    <div><div style={styles.light}></div>Open</div>
+                    <div style={styles.updated}>Updated at: { moment(issue.get('updated_at')).format('MMMM Do YYYY') }</div>
+                    <div style={styles.tagContainer}>
+                      {
+                        issue.get('labels').map(label =>
+                          <Tag label={label}/>
+                        )
+                      }
+                    </div>
                   </div>
                   <div style={styles.line}>
                     <div>{ issue.get('assignees').size }</div>
