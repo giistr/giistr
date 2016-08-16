@@ -24,9 +24,15 @@ const styles = {
   title: {
     margin: '16px 20px'
   },
+  title2: {
+    flex: 1,
+    opacity: 0.9,
+    fontWeight: 100
+  },
   line: {
     flex: 1,
-    display: 'flex'
+    display: 'flex',
+    color: Colors.grey
   }
 };
 
@@ -46,7 +52,7 @@ class Issues extends React.Component<MainProps, any> {
                 <li
                 style={style}
                 key={index}>
-                  <div style={styles.line}>{ issue.get('title') }</div>
+                  <h2 style={styles.title2}>{ issue.get('title') }</h2>
                   <div style={styles.line}>
                     <div>Open</div>
                     <div>Updated at: { issue.get('updated_at') }</div>

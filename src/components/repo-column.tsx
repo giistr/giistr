@@ -40,7 +40,8 @@ const styles = {
   second: {
     fontSize: 14,
     marginTop: 12,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    fontWeight: 300
   },
   name: {
     backgroundColor: Colors.blueBackground,
@@ -55,7 +56,7 @@ const styles = {
     marginLeft: 20
   },
   starContainer: {
-    fontSize: 11,
+    fontSize: 14,
     color: Colors.grey
   },
   counter: {
