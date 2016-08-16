@@ -36,12 +36,13 @@ export const getUser = (username) => {
   };
 };
 
-const oauthFromToken = access_token => {
+export const oauthFromToken = access_token => {
   return dispatch => {
-    return get('/user', { access_token })
+    return get('user', { access_token })
       .then((user: User) => {
-        add(user)(dispatch);
-        return user;
+        const userBis = user.set('access_token', access_token);
+        add(userBis)(dispatch);
+        return userBis;
       });
   };
 };
