@@ -6,7 +6,7 @@ import { Colors } from '../style';
 import * as moment from 'moment';
 
 interface MainProps {
-  repositories: OrderedMap<number, Repository>;
+  repositories: OrderedMap<number, any>;
 };
 
 const styles = {
@@ -99,7 +99,9 @@ class RepoColumn extends React.Component<MainProps, any> {
                 </div>
               </div>
               {
-                <Issues issues={repo.get('issues')}/>
+                repo.get('issues').size > 0 && (
+                  <Issues issues={repo.get('issues')}/>
+                )
               }
             </li>
           )).toArray()

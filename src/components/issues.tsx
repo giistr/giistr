@@ -30,12 +30,18 @@ const styles = {
   title2: {
     flex: 1,
     opacity: 0.9,
-    fontWeight: 100
+    fontWeight: 100,
+    fontSize: 14
   },
   line: {
     flex: 1,
     display: 'flex',
     color: Colors.grey
+  },
+  secondLine: {
+    flex: 1,
+    display: 'flex',
+    color: Colors.lightGrey
   },
   updated: {
     marginLeft: 20
@@ -50,6 +56,9 @@ const styles = {
   },
   tagContainer: {
     display: 'flex',
+    marginLeft: 20
+  },
+  milestone: {
     marginLeft: 20
   }
 };
@@ -98,7 +107,7 @@ class Issues extends React.Component<MainProps, any> {
                   <h2 style={styles.title2}>{ issue.get('title') }</h2>
                   <div style={styles.line}>
                     <div><div style={styles.light}></div>Open</div>
-                    <div style={styles.updated}>Updated at: { moment(issue.get('updated_at')).format('MMMM Do YYYY') }</div>
+                    <div style={styles.updated}>Updated: { moment(issue.get('updated_at')).format('MMMM Do YYYY') }</div>
                     <div style={styles.tagContainer}>
                       {
                         issue.get('labels').map(label =>
@@ -107,10 +116,10 @@ class Issues extends React.Component<MainProps, any> {
                       }
                     </div>
                   </div>
-                  <div style={styles.line}>
+                  <div style={styles.secondLine}>
                     <div>{ issue.get('assignees').size }</div>
                     <div>{ issue.get('comments') }</div>
-                    <div>No Milestone</div>
+                    <div style={styles.milestone}>No Milestone</div>
                   </div>
                 </li>
               )
