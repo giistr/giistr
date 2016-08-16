@@ -3,7 +3,7 @@ import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
 
 function makeUrl(endpoint: string): string {
-  return `https://api.github.com/${endpoint}?access_token=${getFromStorage('user').access_token}&`;
+  return `https://api.github.com/${endpoint}?`;
 }
 
 const shallowRequest = (method: string) => (
@@ -22,8 +22,13 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     url += qs.stringify(args);
   }
 
+  const headers = new Headers({
+    'Authorization': `token ${getFromStorage('user').access_token}`
+  });
+
   const req = new Request(url, {
     method,
+    headers,
     mode: 'cors',
     body
   });

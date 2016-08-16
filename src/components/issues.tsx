@@ -8,14 +8,14 @@ interface MainProps {
 const styles = {
   container: {
     margin: '10px 20px',
-    borderTop: `1px solid ${Colors.borderGrey}`,
-    borderBottom: `1px solid ${Colors.borderGrey}`,
+    border: `1px solid ${Colors.borderGrey}`,
     overflow: 'auto',
     minHeight: 10,
-    maxHeight: 420
+    maxHeight: 420,
+    borderRadius: 5
   },
   issueItem: {
-    borderBottom: '1px dashed #bbbbbb',
+    borderBottom: `1px solid ${Colors.borderGrey}`,
     padding: '20px 10px',
     display: 'flex',
     flexDirection: 'column',
@@ -36,26 +36,30 @@ class Issues extends React.Component<MainProps, any> {
 
     return (
       <div>
-        <h3 style={styles.title}>Issues</h3>
+        <h2 style={styles.title}>Issues</h2>
         <ul style={styles.container}>
           {
-            issues.map((issue, key) => (
-              <li
-                style={styles.issueItem}
-                key={key}>
-                <div style={styles.line}>{ issue.get('title') }</div>
-                <div style={styles.line}>
-                  <div>Open</div>
-                  <div>Updated at: { issue.get('updated_at') }</div>
-                  <div>Bug</div>
-                </div>
-                <div style={styles.line}>
-                  <div>{ issue.get('assignees').size }</div>
-                  <div>{ issue.get('comments') }</div>
-                  <div>No Milestone</div>
-                </div>
-              </li>
-            )).toArray()
+            issues.toList().map((issue, index) => {
+              const style = index === issues.size - 1 ? Object.assign({}, styles.issueItem, { borderBottom: 'none' }) : styles.issueItem;
+
+              return (
+                <li
+                style={style}
+                key={index}>
+                  <div style={styles.line}>{ issue.get('title') }</div>
+                  <div style={styles.line}>
+                    <div>Open</div>
+                    <div>Updated at: { issue.get('updated_at') }</div>
+                    <div>Bug</div>
+                  </div>
+                  <div style={styles.line}>
+                    <div>{ issue.get('assignees').size }</div>
+                    <div>{ issue.get('comments') }</div>
+                    <div>No Milestone</div>
+                  </div>
+                </li>
+              )
+            })
           }
         </ul>
       </div>

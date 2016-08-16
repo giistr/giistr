@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Colors } from '../style';
 
-interface MainProps {};
+interface MainProps {
+  total?: number;
+  after?: number;
+};
 
 const styles = {
   container: {
@@ -13,11 +16,19 @@ const styles = {
 };
 
 class NavigationBar extends React.Component<MainProps, any> {
+
+  static defaultProps = {
+    total: 0,
+    after: 0
+  }
+
   public render() {
-    const {} = this.props;
+    const { after, total } = this.props;
 
     return (
       <div style={styles.container}>
+        <h1>/Giistr</h1>
+        <div>Viewing about {after} of a total of {total} repositories</div>
       </div>
     );
   }
