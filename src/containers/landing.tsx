@@ -19,10 +19,7 @@ const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config
 
 class Landing extends React.Component<MainProps, any> {
 
-  public state = {
-    // username: '',
-    // userTimeout: true
-  };
+  public state = {};
 
   public componentWillMount() {
     const { githubOauthAction, dispatch } = this.props;
@@ -32,10 +29,6 @@ class Landing extends React.Component<MainProps, any> {
       dispatch(githubOauthAction(params.code, config.get('clientId'), config.get('clientSecret')))
     }
   }
-
-  private onSearch = () => {
-
-  };
 
   public render() {
     const { user } = this.props;

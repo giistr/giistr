@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 
 var port = 3001;
-var rootDirectory = __dirname + '/dist'
+var rootDirectory = __dirname;
 
 app.use(express.static(rootDirectory))
 

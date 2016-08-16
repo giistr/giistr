@@ -13,15 +13,21 @@ const shallowRequest = (method: string) => (
 
 export function request(method: string, endpoint: string, args: any, fullEndpoint?: string) {
   const shallow = shallowRequest(method);
+  const body = !shallow && JSON.stringify(args);
+
   let url = fullEndpoint || makeUrl(endpoint);
 
   if (shallow) {
     url += '?' + qs.stringify(args);
-  } else {
-    console.error('POST request not working yet');
   }
 
-  return fetch(url)
+  const req = new Request(url, {
+    method,
+    mode: 'cors',
+    body
+  });
+
+  return fetch(req)
     .then(res => {
       if (res.status >= 400) {
         throw res;
@@ -29,8 +35,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
 
       return res.json();
     })
-    .then(data => fromJS(data))
-    .catch(res => res.json());
+    .then(data => fromJS(data));
 }
 
 export function get(endpoint: string, args?: any, fullEndpoint?: string) {
