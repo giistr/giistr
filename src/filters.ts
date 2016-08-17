@@ -4,8 +4,8 @@ const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 export function applyRepositoryFilters(filters) {
   return repository => {
-    const res = true;
 
+    // Language filter
     if (
       filters.get(languages).size > 0 &&
       repository.get("language") !== filters.get(languages).first()
@@ -13,7 +13,8 @@ export function applyRepositoryFilters(filters) {
       return false;
     }
 
-    if(filters.get(withIssues) === true && repository.get('open_issues') === 0) {
+    // With issues only filter
+    if (filters.get(withIssues) === true && repository.get('open_issues') === 0) {
       return false;
     }
 
@@ -24,7 +25,16 @@ export function applyRepositoryFilters(filters) {
 export function applyIssueFilters(filters) {
   return issue => {
 
+    // No assignees filter
     if (filters.get(withoutAssignee) === true && issue.get('assignees').size > 0) {
+      return false;
+    }
+
+    // Labels filter
+    if (
+      filters.get(labels).size > 0 &&
+      !issue.get('labelsIds').reduce((acc, next) => acc ? acc : filters.get(labels).includes(next), false)
+    ) {
       return false;
     }
 

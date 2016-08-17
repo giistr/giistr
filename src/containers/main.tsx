@@ -32,7 +32,7 @@ interface MainProps {
   getRepos: any;
   getUser: any;
   totalRepositories: number;
-  repositories: OrderedMap<number, Repository>;
+  repositories: OrderedMap<number, any>;
   user: User;
   params: any;
   filters: Map<string, any>
@@ -70,8 +70,12 @@ class Main extends React.Component<MainProps, any> {
   };
 
   public render() {
-    const { repositories, user, filters, totalRepositories } = this.props;
+    const { user, filters, totalRepositories } = this.props;
+    let { repositories } = this.props;
     const { page } = this.state;
+
+    // Hack because moving the filter repository in connect behave weird
+    repositories = repositories.filter(repo => repo.get('issues').size > 0).toOrderedMap();
 
     const middle = Math.floor(repositories.size / 2);
     const firstColumn = repositories.take(middle).toOrderedMap();

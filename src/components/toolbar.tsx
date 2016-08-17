@@ -27,7 +27,8 @@ const styles = {
   container: {
     backgroundColor: 'white',
     flex: 3,
-    borderLeft: `1px solid ${Colors.borderGrey}`
+    borderLeft: `1px solid ${Colors.borderGrey}`,
+    transform: 'translateY(-110px)'
   },
   languageFilter: {},
   filterTitle: {
@@ -69,7 +70,7 @@ class Toolbar extends React.Component<MainProps, any> {
   };
 
   public render() {
-    const { languages, user, labels } = this.props;
+    const { languages, user, filters } = this.props;
 
     return (
       <div style={styles.container}>
@@ -87,7 +88,8 @@ class Toolbar extends React.Component<MainProps, any> {
         <div style={styles.section}>
           <h3>Labels</h3>
           <LabelsFilter
-            labels={labels}
+            selected={filters.get(labels)}
+            labels={this.props.labels}
             onToggleTag={this.onToggleTag}/>
         </div>
         <div style={styles.section}>

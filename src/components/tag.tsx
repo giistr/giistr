@@ -13,7 +13,17 @@ const base = {
   cursor: 'pointer'
 };
 
-export function Tag({ label, onSelect, inactive, style }: { label: any, onSelect?: Function, inactive?: Boolean, style?: Object }) {
+export function Tag({
+  label,
+  onSelect,
+  inactive,
+  style
+}: {
+  label: any,
+  onSelect?: Function,
+  inactive?: Boolean,
+  style?: Object
+}) {
 
   const final = Object.assign({}, base, {
     color: inactive ? Colors.lightGrey : `#${label.get('color')}`,
