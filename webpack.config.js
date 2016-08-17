@@ -2,13 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var env = process.env.NODE_ENV;
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var html = {
-  template: 'index.ejs',
-  style: '/css/style.css',
-  script: '/bundle.js'
-};
 
 module.exports = {
   entry: [
@@ -55,7 +49,6 @@ module.exports = {
         'NODE_ENV': "'" + env + "'"
       }
     }),
-    new HtmlWebpackPlugin(html),
     new webpack.HotModuleReplacementPlugin()
   ]
 };

@@ -25,12 +25,13 @@ class LabelsFilters extends React.Component<MainProps, any> {
     return (
       <div style={styles.container}>
       {
-        labels.map(label =>
+        labels.map((label, key) =>
           <Tag
+            key={key}
             onSelect={this.onSelectTag.bind(this, label.get('id'))}
             inactive={true}
             label={label}/>
-        )
+        ).toArray()
       }
       </div>
     );

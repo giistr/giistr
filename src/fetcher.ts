@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
 
@@ -22,9 +22,14 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     url += qs.stringify(args);
   }
 
-  const headers = new Headers({
-    'Authorization': `token ${getFromStorage('user').access_token}`
-  });
+  let headers;
+  if (getFromStorage('user')) {
+    headers = new Headers({
+      'Authorization': `token ${getFromStorage('user').access_token}`
+    });
+  } else {
+    headers = new Headers();
+  }
 
   const req = new Request(url, {
     method,
