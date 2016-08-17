@@ -73,7 +73,14 @@ h1 {
 
 h2 {
   color: #4f7cf7;
-  font-size: 13px;
+  font-size: 14px;
+}
+
+h3 {
+  color: rgba(27, 31, 48, 0.4);
+  line-height: 24px;
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
 html, body, div, span, applet, object, iframe, p, blockquote, pre,

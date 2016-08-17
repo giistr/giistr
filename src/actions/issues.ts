@@ -1,5 +1,5 @@
 import { get } from '../fetcher';
-import { List, Map } from 'immutable';
+import { List, Map, Set } from 'immutable';
 import { ADD_ISSUE } from '../constants/issues';
 import { ADD_LABEL } from '../constants/labels';
 import * as hash from 'object-hash';
@@ -26,15 +26,18 @@ export const serializeIssues = (issues: List<any>) => {
   return dispatch => {
     let formattedIssues = issues.map(issue => {
       const issueBis = issue.update('labels', labels =>
-        labels.map(label => label.set('id', hash(label.toObject())))
+        labels.map(label => label.set('id', hash(label.get("name").toLowerCase())))
       );
 
       return issueBis.set('labelsIds', issueBis.get('labels').map(label => label.get('id')));
     });
 
-    const labels = formattedIssues.map(issue =>
+    const labels = formattedIssues
+    .map(issue =>
       issue.get('labels')
-    ).flatten(1);
+    )
+    .flatten(1)
+    .toList();
 
     formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 

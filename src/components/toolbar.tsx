@@ -8,6 +8,7 @@ import LabelsFilter from './labels-filter';
 
 interface MainProps {
   onSelectLanguage: Function;
+  onSelectPeriod: Function;
   languages: Set<string>;
   user: User;
 };
@@ -26,12 +27,15 @@ const styles = {
     paddingLeft: 20,
     fontSize: 14,
     borderTop: `1px solid ${Colors.borderGrey}`
+  },
+  section: {
+    padding: 20
   }
 };
 
 class Toolbar extends React.Component<MainProps, any> {
   public render() {
-    const { languages, onSelectLanguage, user } = this.props;
+    const { languages, onSelectLanguage, onSelectPeriod, user } = this.props;
 
     return (
       <div style={styles.container}>
@@ -39,13 +43,23 @@ class Toolbar extends React.Component<MainProps, any> {
         <div style={styles.filterTitle}>
           Filters
         </div>
-        <Input
-          onSelect={onSelectLanguage}
-          style={styles.languageFilter}
-          list={languages}/>
-        <div>
+        <div style={styles.section}>
+          <h3>Languages</h3>
+          <Input
+            onSelect={onSelectLanguage}
+            style={styles.languageFilter}
+            list={languages}/>
+         </div>
+        <div style={styles.section}>
           <h3>Labels</h3>
           <LabelsFilter/>
+        </div>
+        <div style={styles.section}>
+          <h3>Period</h3>
+          <Input
+            onSelect={onSelectPeriod}
+            style={styles.languageFilter}
+            list={Set<string>()}/>
         </div>
       </div>
     );

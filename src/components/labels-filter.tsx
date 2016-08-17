@@ -28,6 +28,9 @@ class LabelsFilters extends React.Component<MainProps, any> {
         labels.map((label, key) =>
           <Tag
             key={key}
+            style={{
+              margin: 6
+            }}
             onSelect={this.onSelectTag.bind(this, label.get('id'))}
             inactive={true}
             label={label}/>

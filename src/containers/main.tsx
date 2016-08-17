@@ -69,6 +69,10 @@ class Main extends React.Component<MainProps, any> {
     this.setState({ languageFilter });
   };
 
+  private onSelectPeriod = startDate => {
+    this.setState({ startDate });
+  };
+
   public render() {
     const { repositories, languages, user } = this.props;
     const { page, languageFilter } = this.state;
@@ -92,6 +96,7 @@ class Main extends React.Component<MainProps, any> {
           <RepoColumn
             repositories={secondColumn}/>
           <ToolBar
+            onSelectPeriod={this.onSelectPeriod}
             onSelectLanguage={this.selectLanguage}
             user={user}
             languages={languages}/>
