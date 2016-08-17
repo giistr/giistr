@@ -1,5 +1,5 @@
 export function save(key: string, obj: any) {
-  localStorage.setItem(key, JSON.stringify(typeof obj.toJS === "function" ? obj.toJS() : obj));
+  localStorage.setItem(key, JSON.stringify(typeof obj.toJS === 'function' ? obj.toJS() : obj));
 }
 
 export function get(key: string): any {
@@ -11,7 +11,7 @@ export function get(key: string): any {
 
   try {
     return JSON.parse(str);
-  } catch(err) {
+  } catch (err) {
     return undefined;
   }
 }

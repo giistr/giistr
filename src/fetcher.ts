@@ -1,4 +1,4 @@
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
 
