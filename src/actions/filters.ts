@@ -34,7 +34,7 @@ export const reset = (key: string) => {
   };
 };
 
-export const replace = (key: string, payload: string) => {
+export const replace = (key: string, payload: string | boolean) => {
   return dispatch => {
     return dispatch({
       key,

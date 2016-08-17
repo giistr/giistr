@@ -8,7 +8,7 @@ import { User } from '../reducers/user';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';
-
+import { Check } from './check';
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 interface MainProps {
@@ -41,6 +41,10 @@ const styles = {
   },
   section: {
     padding: 20
+  },
+  checkSection: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 };
 
@@ -69,6 +73,18 @@ class Toolbar extends React.Component<MainProps, any> {
 
   };
 
+  private onToggleAssignee = val => {
+    const { replace, dispatch } = this.props;
+
+    replace(withoutAssignee, !val)(dispatch);
+  };
+
+  private onToggleIssues = val => {
+    const { replace, dispatch } = this.props;
+
+    replace(withIssues, !val)(dispatch);
+  };
+
   public render() {
     const { languages, user, filters } = this.props;
 
@@ -79,25 +95,39 @@ class Toolbar extends React.Component<MainProps, any> {
           Filters
         </div>
         <div style={styles.section}>
+          <h3>Period</h3>
+          <Input
+            onSelect={this.onSelectPeriod}
+            style={styles.languageFilter}
+            list={Set<string>()}/>
+        </div>
+        <div style={styles.section}>
           <h3>Languages</h3>
           <Input
             onSelect={this.onSelectLanguage}
             style={styles.languageFilter}
             list={languages}/>
-         </div>
+        </div>
+        <div style={Object.assign({}, styles.section, styles.checkSection)}>
+          <div>
+            <h3>Without assignees</h3>
+            <Check
+              onSelect={this.onToggleAssignee.bind(this, filters.get(withoutAssignee))}
+              inactive={!filters.get(withoutAssignee)}/>
+          </div>
+          <div>
+            <h3>With issues</h3>
+            <Check
+              onSelect={this.onToggleIssues.bind(this, filters.get(withIssues))}
+              inactive={!filters.get(withIssues)}/>
+          </div>
+        </div>
         <div style={styles.section}>
           <h3>Labels</h3>
           <LabelsFilter
             selected={filters.get(labels)}
             labels={this.props.labels}
             onToggleTag={this.onToggleTag}/>
-        </div>
-        <div style={styles.section}>
-          <h3>Period</h3>
-          <Input
-            onSelect={this.onSelectPeriod}
-            style={styles.languageFilter}
-            list={Set<string>()}/>
         </div>
       </div>
     );

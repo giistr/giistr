@@ -28,7 +28,9 @@ const styles = {
     right: 0,
     backgroundColor: 'white',
     marginTop: 5,
-    color: Colors.grey
+    color: Colors.grey,
+    zIndex: 1,
+    borderRadius: 5
   },
   cross: {
     position: 'absolute',

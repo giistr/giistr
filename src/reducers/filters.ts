@@ -35,9 +35,13 @@ export default (state = initialState, action: IssueAction) => {
       );
 
     case REPLACE_FILTER:
-      return state.update(key, filter =>
-        initialState.get(key).add(payload)
-      );
+      return state.update(key, filter => {
+        if(typeof filter === 'boolean') {
+          return payload;
+        }
+
+        return initialState.get(key).add(payload)
+      });
 
     default:
       return state;

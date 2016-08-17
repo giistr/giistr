@@ -75,11 +75,12 @@ class Main extends React.Component<MainProps, any> {
     const { page } = this.state;
 
     // Hack because moving the filter repository in connect behave weird
-    repositories = repositories.filter(repo => repo.get('issues').size > 0).toOrderedMap();
+    if (filters.get('withIssues')) {
+      repositories = repositories.filter(repo => repo.get('issues').size > 0).toOrderedMap();
+    }
 
-    const middle = Math.floor(repositories.size / 2);
-    const firstColumn = repositories.take(middle).toOrderedMap();
-    const secondColumn = repositories.takeLast(middle).toOrderedMap();
+    const firstColumn = repositories.take(Math.ceil(repositories.size / 2)).toOrderedMap();
+    const secondColumn = repositories.takeLast(repositories.size / 2).toOrderedMap();
 
     return (
       <div>
