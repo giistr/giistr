@@ -2,7 +2,7 @@ import { get } from '../fetcher';
 import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 import { List } from 'immutable';
 import { Repository } from '../reducers/repository';
-import { getIssues } from './issues';
+import { getIssuesReq, serializeIssues } from './issues';
 
 export function clear() {
   return dispatch => {
@@ -30,10 +30,14 @@ export const getRepos = (username, page) => {
       })
       .then((repos: List<any>) => {
         const proms: Array<Promise<any>> = repos.map(repo =>
-          dispatch(getIssues(repo.get('full_name'), repo.get('id')))
+          getIssuesReq(repo.get('full_name'), repo.get('id'))
         ).toArray();
 
-        return Promise.all(proms)
+        return Promise.all(proms);
+      })
+      .then((pArr: Array<any>) => {
+        const issues: List<any> = List(pArr).flatten(1).toList();
+        return serializeIssues(issues)(dispatch);
       });
   };
 };

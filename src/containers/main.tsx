@@ -3,7 +3,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
-import { getIssues } from '../actions/issues';
 import { getUser } from '../actions/user';
 
 import { Repository } from '../reducers/repository';
@@ -30,7 +29,6 @@ interface MainProps {
   getRepos: any;
   getUser: any;
   getAllRepos: any;
-  getIssues: any;
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
   user: User;
@@ -133,11 +131,10 @@ connect((state, props) => ({
   repositories: state
     .get('repository')
     .map(repo =>
-      repo.set('issues', state.get('issues').filter(issue => issue.get('repoId') === repo.get('id')))
+      repo.set('issues', state.get('issues').filter(issue => issue.get('repositoryId') === repo.get('id')))
     ),
   user: state.get('user')
 }), dispatch => ({
-  getIssues,
   getRepos,
   getUser,
   getAllRepos,

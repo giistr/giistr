@@ -8,17 +8,16 @@ export type Issue = Map<string, any>;
 export interface IssueAction {
   type: string;
   payload?: List<Issue>;
-  repoId: string;
 }
 
 export default (state = initialState, action: IssueAction) => {
-  const { type, payload, repoId } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case ADD_ISSUE:
       if (List.isList(payload)) {
         const payloadBis = payload.reduce((acc, next) => {
-          return acc.set(next.get('id'), next.set('repoId', repoId));
+          return acc.set(next.get('id'), next);
         }, OrderedMap<any, any>());
 
         return state.merge(payloadBis);
