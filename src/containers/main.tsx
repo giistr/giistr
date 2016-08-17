@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
 import { getUser } from '../actions/user';
+import {
+  applyRepositoryFilters,
+  applyIssueFilters
+} from '../filters';
 
 import { Repository } from '../reducers/repository';
 import { User } from '../reducers/user';
@@ -27,15 +31,15 @@ interface MainProps {
   dispatch: any;
   getRepos: any;
   getUser: any;
+  totalRepositories: number;
   repositories: OrderedMap<number, Repository>;
-  languages: Set<string>;
   user: User;
   params: any;
+  filters: Map<string, any>
 };
 
 const initialState = {
-  languageFilter: undefined,
-  page: 1,
+  page: 1
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -65,41 +69,27 @@ class Main extends React.Component<MainProps, any> {
     this.onGetRepository(page);
   };
 
-  private selectLanguage = languageFilter => {
-    this.setState({ languageFilter });
-  };
-
-  private onSelectPeriod = startDate => {
-    this.setState({ startDate });
-  };
-
   public render() {
-    const { repositories, languages, user } = this.props;
-    const { page, languageFilter } = this.state;
-    let filteredRepos = repositories;
+    const { repositories, user, filters, totalRepositories } = this.props;
+    const { page } = this.state;
 
-    if (languageFilter) {
-      filteredRepos = repositories.filter(repo => repo.get('language') === languageFilter).toOrderedMap();
-    }
-    const middle = Math.floor(filteredRepos.size / 2);
-    const firstColumn = filteredRepos.take(middle).toOrderedMap();
-    const secondColumn = filteredRepos.takeLast(middle).toOrderedMap();
+    const middle = Math.floor(repositories.size / 2);
+    const firstColumn = repositories.take(middle).toOrderedMap();
+    const secondColumn = repositories.takeLast(middle).toOrderedMap();
 
     return (
       <div>
         <NavigationBar
-          total={repositories.size}
-          after={filteredRepos.size}/>
+          total={totalRepositories}
+          after={repositories.size}/>
         <div style={styles.mainList}>
           <RepoColumn
             repositories={firstColumn}/>
           <RepoColumn
             repositories={secondColumn}/>
           <ToolBar
-            onSelectPeriod={this.onSelectPeriod}
-            onSelectLanguage={this.selectLanguage}
             user={user}
-            languages={languages}/>
+            filters={filters}/>
         </div>
         <button onClick={this.onNext.bind(this, page + 1)}>More</button>
       </div>
@@ -109,19 +99,20 @@ class Main extends React.Component<MainProps, any> {
 
 export default
 connect((state, props) => ({
-  languages: Set<string>(
-    state
-      .get('repository')
-      .map(repo => repo.get('language'))
-      .toList()
-      .filter(Boolean)
-  ),
+  totalRepositories: state.get('repository').size,
   repositories: state
     .get('repository')
+    .filter(applyRepositoryFilters(state.get('filters')))
     .map(repo =>
-      repo.set('issues', state.get('issues').filter(issue => issue.get('repositoryId') === repo.get('id')))
+      repo.set('issues',
+        state
+          .get('issues')
+          .filter(applyIssueFilters(state.get('filters')))
+          .filter(issue => issue.get('repositoryId') === repo.get('id'))
+      )
     ),
-  user: state.get('user')
+  user: state.get('user'),
+  filters: state.get('filters')
 }), dispatch => ({
   getRepos,
   getUser,

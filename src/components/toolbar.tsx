@@ -1,16 +1,26 @@
 import * as React from 'react';
-import { Set, List } from 'immutable';
+import { connect } from 'react-redux';
+import { Set, List, Map } from 'immutable';
 import Input from './input-autocomplete';
 import { Colors } from '../style';
 import UserCard from './user-card';
 import { User } from '../reducers/user';
 import LabelsFilter from './labels-filter';
+import { FILTER_KEYS } from '../constants/filters';
+import { remove, add, replace, reset } from '../actions/filters';
+
+const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 interface MainProps {
-  onSelectLanguage: Function;
-  onSelectPeriod: Function;
   languages: Set<string>;
   user: User;
+  labels: any;
+  filters: Map<string, any>;
+  dispatch: any;
+  remove: any;
+  add: any;
+  replace: any;
+  reset: any;
 };
 
 const styles = {
@@ -34,8 +44,32 @@ const styles = {
 };
 
 class Toolbar extends React.Component<MainProps, any> {
+  private onToggleTag = id => {
+    const { filters, remove, add, dispatch } = this.props;
+
+    if (filters.get(labels).includes(id)) {
+      remove(labels, id)(dispatch);
+    } else {
+      add(labels, id)(dispatch);
+    }
+  };
+
+  private onSelectLanguage = language => {
+    const { filters, reset, replace, dispatch } = this.props;
+
+    if (filters.get(languages).includes(language) || !language) {
+      reset(languages)(dispatch);
+    } else {
+      replace(languages, language)(dispatch);
+    }
+  };
+
+  private onSelectPeriod = time => {
+
+  };
+
   public render() {
-    const { languages, onSelectLanguage, onSelectPeriod, user } = this.props;
+    const { languages, user, labels } = this.props;
 
     return (
       <div style={styles.container}>
@@ -46,18 +80,20 @@ class Toolbar extends React.Component<MainProps, any> {
         <div style={styles.section}>
           <h3>Languages</h3>
           <Input
-            onSelect={onSelectLanguage}
+            onSelect={this.onSelectLanguage}
             style={styles.languageFilter}
             list={languages}/>
          </div>
         <div style={styles.section}>
           <h3>Labels</h3>
-          <LabelsFilter/>
+          <LabelsFilter
+            labels={labels}
+            onToggleTag={this.onToggleTag}/>
         </div>
         <div style={styles.section}>
           <h3>Period</h3>
           <Input
-            onSelect={onSelectPeriod}
+            onSelect={this.onSelectPeriod}
             style={styles.languageFilter}
             list={Set<string>()}/>
         </div>
@@ -66,4 +102,20 @@ class Toolbar extends React.Component<MainProps, any> {
   }
 }
 
-export default Toolbar;
+export default
+connect((state, props) => ({
+  labels: state.get('label'),
+  languages: Set<string>(
+    state
+      .get('repository')
+      .map(repo => repo.get('language'))
+      .toList()
+      .filter(Boolean)
+  )
+}), dispatch => ({
+  dispatch,
+  remove,
+  add,
+  replace,
+  reset
+}))(Toolbar);

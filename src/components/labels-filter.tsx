@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Tag } from './tag';
 
 interface MainProps {
   labels: any;
+  onToggleTag: Function;
 };
 
 const styles = {
@@ -15,12 +15,8 @@ const styles = {
 
 class LabelsFilters extends React.Component<MainProps, any> {
 
-  private onSelectTag(id) {
-
-  }
-
   public render() {
-    const { labels } = this.props;
+    const { labels, onToggleTag } = this.props;
 
     return (
       <div style={styles.container}>
@@ -31,7 +27,7 @@ class LabelsFilters extends React.Component<MainProps, any> {
             style={{
               margin: 6
             }}
-            onSelect={this.onSelectTag.bind(this, label.get('id'))}
+            onSelect={onToggleTag.bind(this, label.get('id'))}
             inactive={true}
             label={label}/>
         ).toArray()
@@ -41,7 +37,4 @@ class LabelsFilters extends React.Component<MainProps, any> {
   }
 }
 
-export default
-connect((state, props) => ({
-  labels: state.get('label')
-}), null)(LabelsFilters);
+export default LabelsFilters
