@@ -24,11 +24,9 @@ const styles = {
 export type Label = Map<string, string>;
 
 interface MainProps {
-  clear: any;
   dispatch: any;
   getRepos: any;
   getUser: any;
-  getAllRepos: any;
   repositories: OrderedMap<number, Repository>;
   languages: Set<string>;
   user: User;
@@ -67,21 +65,8 @@ class Main extends React.Component<MainProps, any> {
     this.onGetRepository(page);
   };
 
-  private onGetAll = () => {
-    const { getAllRepos, dispatch, user } = this.props;
-    const { page } = this.state;
-
-    dispatch(getAllRepos(user.get('login'), page));
-  };
-
   private selectLanguage = languageFilter => {
     this.setState({ languageFilter });
-  };
-
-  private clearList = () => {
-    const { dispatch, clear } = this.props;
-    dispatch(clear());
-    this.setState(initialState);
   };
 
   public render() {
@@ -108,12 +93,10 @@ class Main extends React.Component<MainProps, any> {
             repositories={secondColumn}/>
           <ToolBar
             onSelectLanguage={this.selectLanguage}
-            onClear={this.clearList}
             user={user}
-            onNext={this.onNext.bind(this, page + 1)}
-            onGetAll={this.onGetAll}
             languages={languages}/>
         </div>
+        <button onClick={this.onNext.bind(this, page + 1)}>More</button>
       </div>
     );
   }
@@ -137,7 +120,5 @@ connect((state, props) => ({
 }), dispatch => ({
   getRepos,
   getUser,
-  getAllRepos,
-  clear,
   dispatch
 }))(Main);

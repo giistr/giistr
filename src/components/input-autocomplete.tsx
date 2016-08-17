@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Set } from 'immutable';
+import { Colors } from '../style';
 
 const styles = {
   container: {
-    position: 'relative'
+    position: 'relative',
+    display: 'inline-block'
   },
   input: {
     lineHeight: '40px',
@@ -11,17 +13,22 @@ const styles = {
     boxSizing: 'border-box',
     fontSize: 14,
     outline: 'none',
-    width: '100%'
+    width: '100%',
+    border: 'none',
+    borderBottom: `1px solid ${Colors.borderGrey}`,
+    color: Colors.grey
   },
   listContainer: {
     padding: '0px 10px',
-    border: '1px solid grey',
+    border: `1px solid ${Colors.borderGrey}`,
     maxHeight: 200,
     overflow: 'auto',
     position: 'absolute',
     left: 0,
     right: 0,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginTop: 5,
+    color: Colors.grey
   },
   cross: {
     position: 'absolute',

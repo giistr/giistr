@@ -7,9 +7,6 @@ import { User } from '../reducers/user';
 import LabelsFilter from './labels-filter';
 
 interface MainProps {
-  onClear: Function;
-  onNext: Function;
-  onGetAll: Function;
   onSelectLanguage: Function;
   languages: Set<string>;
   user: User;
@@ -34,7 +31,7 @@ const styles = {
 
 class Toolbar extends React.Component<MainProps, any> {
   public render() {
-    const { onClear, onNext, languages, onSelectLanguage, onGetAll, user } = this.props;
+    const { languages, onSelectLanguage, user } = this.props;
 
     return (
       <div style={styles.container}>
@@ -42,9 +39,6 @@ class Toolbar extends React.Component<MainProps, any> {
         <div style={styles.filterTitle}>
           Filters
         </div>
-        <button onClick={onClear}>clear</button>
-        <button onClick={onNext}>More</button>
-        <button onClick={onGetAll}>All</button>
         <Input
           onSelect={onSelectLanguage}
           style={styles.languageFilter}
