@@ -1,4 +1,4 @@
-import { Map, Iterable, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { ADD_USER, CLEAR_USER } from '../constants/user';
 import { get, save } from '../localStorage';
 

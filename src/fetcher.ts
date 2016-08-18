@@ -8,13 +8,18 @@ function makeUrl(endpoint: string): string {
 
 const shallowRequest = (method: string) => (
   method === 'GET' ||
+  method === 'HEAD' ||
   method === 'REMOVE' ||
   method === 'DELETE'
 );
 
 export function request(method: string, endpoint: string, args: any, fullEndpoint?: string) {
   const shallow = shallowRequest(method);
-  const body = !shallow && JSON.stringify(args);
+  let body;
+
+  if (!shallow) {
+    body = JSON.stringify(args);
+  }
 
   let url = fullEndpoint || makeUrl(endpoint);
 

@@ -64,7 +64,7 @@ class Input extends React.Component<MainProps, any> {
   };
 
   public refs: {
-    [string: string]: any;
+    [T: string]: any;
     container: any;
   };
 

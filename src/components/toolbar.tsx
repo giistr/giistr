@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Set, List, Map } from 'immutable';
+import { Set, Map } from 'immutable';
 import Input from './input-autocomplete';
 import { Colors } from '../style';
 import UserCard from './user-card';
@@ -70,7 +70,7 @@ class Toolbar extends React.Component<MainProps, any> {
   };
 
   private onSelectPeriod = time => {
-
+    console.log('Select a period');
   };
 
   private onToggleAssignee = val => {
@@ -86,7 +86,7 @@ class Toolbar extends React.Component<MainProps, any> {
   };
 
   public render() {
-    const { languages, user, filters } = this.props;
+    const { user, filters } = this.props;
 
     return (
       <div style={styles.container}>
@@ -106,7 +106,7 @@ class Toolbar extends React.Component<MainProps, any> {
           <Input
             onSelect={this.onSelectLanguage}
             style={styles.languageFilter}
-            list={languages}/>
+            list={this.props.languages}/>
         </div>
         <div style={Object.assign({}, styles.section, styles.checkSection)}>
           <div>

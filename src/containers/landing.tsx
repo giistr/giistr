@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { getUser, githubOauthAction, oauthFromToken } from '../actions/user';
+import { githubOauthAction, oauthFromToken } from '../actions/user';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
 import { browserHistory } from 'react-router';
@@ -16,7 +16,7 @@ interface MainProps {
 
 const styles = {
   container: {
-    margin: "100px auto",
+    margin: '100px auto',
     maxWidth: 1000
   },
   mainTitle: {
@@ -62,7 +62,7 @@ const styles = {
 };
 
 /// <reference path="require.d.ts" />
-const config = fromJS(require('!json!../config.json'));
+const config = fromJS(require('!json!../config.json')); // tslint:disable-line
 const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config.get('clientId')}`;
 
 class Landing extends React.Component<MainProps, any> {
@@ -80,11 +80,11 @@ class Landing extends React.Component<MainProps, any> {
 
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
-      dispatch(githubOauthAction(params.code, config.get('clientId'), config.get('clientSecret')))
+      dispatch(githubOauthAction(params.code, config.get('clientId'), config.get('clientSecret')));
     }
   }
 
-  private componentWillReceiveProps({ user }) {
+  public componentWillReceiveProps({ user }) {
     if (user.size > 0) {
       this.redirectToApp(user);
     }
@@ -115,7 +115,9 @@ class Landing extends React.Component<MainProps, any> {
         <div>
           <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
           <div>
-            <h1 style={styles.subTitle}>Search, filter and help easily on the issues of the repositories you starred</h1>
+            <h1 style={styles.subTitle}>
+              Search, filter and help easily on the issues of the repositories you starred
+            </h1>
             <div style={styles.square}></div>
           </div>
 

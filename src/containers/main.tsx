@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { connect } from 'react-redux';
-import { OrderedMap, Set, List } from 'immutable';
-import { getRepos, clear, getAllRepos } from '../actions/repositories';
+import { OrderedMap } from 'immutable';
+import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 
 import {
@@ -10,7 +10,6 @@ import {
   applyIssueFilters
 } from '../filters';
 
-import { Repository } from '../reducers/repository';
 import { User } from '../reducers/user';
 
 import ToolBar from '../components/toolbar';
@@ -34,8 +33,7 @@ interface MainProps {
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
-  params: any;
-  filters: Map<string, any>
+  filters: Map<string, any>;
 };
 
 const initialState = {
@@ -46,8 +44,8 @@ class Main extends React.Component<MainProps, any> {
 
   public state = initialState;
 
-  private componentWillMount() {
-    const { params, user, dispatch } = this.props;
+  public componentWillMount() {
+    const { user } = this.props;
 
     if (user.size === 0) {
       browserHistory.push('/');

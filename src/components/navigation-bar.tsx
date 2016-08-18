@@ -34,10 +34,10 @@ const styles = {
 
 class NavigationBar extends React.Component<MainProps, any> {
 
-  static defaultProps = {
+  public static defaultProps = {
     total: 0,
     after: 0
-  }
+  };
 
   public render() {
     const { after, total } = this.props;
@@ -45,7 +45,13 @@ class NavigationBar extends React.Component<MainProps, any> {
     return (
       <div style={styles.container}>
         <Logo/>
-        <div style={styles.description}>Viewing about <span style={styles.marked}>{after}</span> of a total of <span style={styles.marked}>{total}</span> repositories</div>
+        <div style={styles.description}>
+          <span>Viewing about </span>
+          <span style={styles.marked}>{after}</span>
+          <span> of a total of </span>
+          <span style={styles.marked}>{total}</span>
+          <span> repositories</span>
+        </div>
       </div>
     );
   }

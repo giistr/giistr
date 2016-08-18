@@ -1,4 +1,4 @@
-import { Map, List, Set } from 'immutable';
+import { Map } from 'immutable';
 import {
   ADD_FILTER,
   REMOVE_FILTER,
@@ -36,11 +36,11 @@ export default (state = initialState, action: IssueAction) => {
 
     case REPLACE_FILTER:
       return state.update(key, filter => {
-        if(typeof filter === 'boolean') {
+        if (typeof filter === 'boolean') {
           return payload;
         }
 
-        return initialState.get(key).add(payload)
+        return initialState.get(key).add(payload);
       });
 
     default:

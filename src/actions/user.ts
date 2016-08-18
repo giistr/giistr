@@ -36,22 +36,22 @@ export const getUser = (username) => {
   };
 };
 
-export const oauthFromToken = access_token => {
+export const oauthFromToken = accessToken => {
   return dispatch => {
-    return get('user', { access_token })
+    return get('user', { access_token: accessToken })
       .then((user: User) => {
-        const userBis = user.set('access_token', access_token);
+        const userBis = user.set('access_token', accessToken);
         add(userBis)(dispatch);
         return userBis;
       });
   };
 };
 
-export const githubOauthAction = (code, client_id, client_secret) => {
+export const githubOauthAction = (code, clientId, clientSecret) => {
   const params = {
     code,
-    client_id,
-    client_secret
+    client_id: clientId,
+    client_secret: clientSecret
   };
 
   return dispatch => {

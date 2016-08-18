@@ -8,7 +8,7 @@ export function applyRepositoryFilters(filters) {
     // Language filter
     if (
       filters.get(languages).size > 0 &&
-      repository.get("language") !== filters.get(languages).first()
+      repository.get('language') !== filters.get(languages).first()
     ) {
       return false;
     }

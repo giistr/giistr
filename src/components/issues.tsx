@@ -3,7 +3,6 @@ import { Colors } from '../style';
 import * as moment from 'moment';
 import { Tag } from './tag';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 
 interface MainProps {
   issues: any;
@@ -88,7 +87,11 @@ class Issues extends React.Component<MainProps, any> {
         <ul style={styles.container}>
           {
             issues.toList().map((issue, index) => {
-              const style = index === issues.size - 1 ? Object.assign({}, styles.issueItem, { borderBottom: 'none' }) : styles.issueItem;
+              const updated = moment(issue.get('updated_at')).format('MMMM Do YYYY');
+              let style = styles.issueItem;
+              if (index === issues.size - 1) {
+                style = Object.assign({}, styles.issueItem, { borderBottom: 'none' });
+              }
 
               return (
                 <li
@@ -98,7 +101,7 @@ class Issues extends React.Component<MainProps, any> {
                   <h2 style={styles.title2}>{ issue.get('title') }</h2>
                   <div style={styles.line}>
                     <div><div style={styles.light}></div>Open</div>
-                    <div style={styles.updated}>Updated: { moment(issue.get('updated_at')).format('MMMM Do YYYY') }</div>
+                    <div style={styles.updated}>Updated: { updated }</div>
                     <div style={styles.tagContainer}>
                       {
                         issue.get('labelsIds').map((label, key) =>
@@ -119,7 +122,7 @@ class Issues extends React.Component<MainProps, any> {
                     <div style={styles.milestone}>No Milestone</div>
                   </div>
                 </li>
-              )
+              );
             })
           }
         </ul>
@@ -132,10 +135,10 @@ export default
 connect((state, props) => ({
   issues: props.issues
     .map(issue =>
-      issue.update('labelsIds', labelsIds => {
-        return labelsIds.map(labelId =>
+      issue.update('labelsIds', labelsIds =>
+        labelsIds.map(labelId =>
           state.getIn([ 'label', labelId ])
         )
-      })
+      )
     )
 }), null)(Issues);

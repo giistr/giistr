@@ -40,8 +40,10 @@ export function Check({
   style?: Object
 }) {
 
+  const final = Object.assign({}, container, style);
+
   return (
-    <div style={container}>
+    <div style={final}>
       <div style={base} onClick={onSelect}>
         {
           !inactive && (

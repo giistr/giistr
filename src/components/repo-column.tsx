@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { OrderedMap, Set, Map } from 'immutable';
-import { Repository } from '../reducers/repository';
+import { OrderedMap } from 'immutable';
 import Issues from '../components/issues';
 import { Colors } from '../style';
 import * as moment from 'moment';
@@ -84,9 +83,14 @@ class RepoColumn extends React.Component<MainProps, any> {
                       color: Colors.grey
                     }}>
                       <h1>{repo.getIn([ 'owner', 'login' ])}</h1>
-                      <h1 style={styles.name}>/{ repo.get('name') }</h1>
+                      <a href={repo.get('html_url')} target="_blank">
+                        <h1 style={styles.name}>/{ repo.get('name') }</h1>
+                      </a>
                     </div>
-                    <div style={styles.starContainer}>Star <span style={styles.counter}>{ repo.get('stargazers_count') }</span></div>
+                    <div style={styles.starContainer}>
+                      <span>Star</span>
+                      <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
+                    </div>
                   </div>
                   <div style={Object.assign({}, styles.line, styles.second)}>
                     <div style={styles.language}>{ repo.get('language') }</div>

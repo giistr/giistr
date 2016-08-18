@@ -24,9 +24,9 @@ const shift = 10;
 
 class LabelsFilters extends React.Component<MainProps, any> {
 
-  state = {
+  public state = {
     display: shift
-  }
+  };
 
   private onShowMore = () => {
     this.setState({
@@ -64,4 +64,4 @@ class LabelsFilters extends React.Component<MainProps, any> {
   }
 }
 
-export default LabelsFilters
+export default LabelsFilters;
