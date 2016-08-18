@@ -6,6 +6,8 @@ import { browserHistory } from 'react-router';
 import { parse } from 'qs';
 import { Logo } from '../components/logo';
 import { Colors } from '../style';
+import { GithubButton } from '../components/github-button';
+import TokenLogin from '../components/token-login';
 
 interface MainProps {
   dispatch: any;
@@ -17,7 +19,7 @@ interface MainProps {
 const styles = {
   container: {
     margin: '100px auto',
-    maxWidth: 1000
+    maxWidth: 1200
   },
   mainTitle: {
     fontSize: 30,
@@ -25,7 +27,8 @@ const styles = {
   },
   subTitle: {
     display: 'inline-block',
-    color: Colors.grey
+    color: Colors.grey,
+    marginTop: 30
   },
   square: {
     height: 24,
@@ -40,24 +43,9 @@ const styles = {
     fontSize: 12,
     color: Colors.lightGrey
   },
-  signup: {
-    display: 'inline-block',
-    color: Colors.blue,
-    backgroundColor: Colors.blueBackground,
-    border: `1px solid ${Colors.blueBorder}`,
-    boxShadow: '0 1px 2px 0 rgba(20, 22, 36, 0.08)',
-    borderRadius: 5,
-    padding: '10px 60px',
-    margin: '16px auto'
-  },
-  githubIcon: {
-    display: 'inline-block',
-    marginRight: 10,
-    verticalAlign: 'middle',
-    marginBottom: 4
-  },
-  oauthLabel: {
-    verticalAlign: 'middle'
+  titles: {
+    marginTop: 100,
+    marginBottom: 40
   }
 };
 
@@ -68,7 +56,8 @@ const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config
 class Landing extends React.Component<MainProps, any> {
 
   public state = {
-    token: ''
+    token: '',
+    isTokenAccess: true
   };
 
   public componentWillMount() {
@@ -90,6 +79,16 @@ class Landing extends React.Component<MainProps, any> {
     }
   }
 
+  private onToggleAccess = () => {
+    this.setState({
+      isTokenAccess: !this.state.isTokenAccess
+    });
+  };
+
+  private onTokenLogin = () => {
+
+  };
+
   private redirectToApp(user) {
     browserHistory.push(`/app/${user.get('login')}`);
   }
@@ -108,11 +107,12 @@ class Landing extends React.Component<MainProps, any> {
   };
 
   public render() {
+    const { isTokenAccess } = this.state;
 
     return (
       <div style={styles.container}>
         <Logo/>
-        <div>
+        <div style={styles.titles}>
           <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
           <div>
             <h1 style={styles.subTitle}>
@@ -120,17 +120,22 @@ class Landing extends React.Component<MainProps, any> {
             </h1>
             <div style={styles.square}></div>
           </div>
-
         </div>
-        <a href={githubOauth} style={styles.signup}>
-          <img src="assets/github.svg" style={styles.githubIcon}/>
-          <span style={styles.oauthLabel}>Sign Up with Github</span>
-        </a>
-        <div style={styles.rateLimit}>Limited access, approximately 5,000 requests per hour</div>
-
-        <input onChange={this.onChangeToken} type="text" placeholder="Enter token"/>
-        <button onClick={this.onStart}>Start</button>
-
+        {
+          isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
+        }
+        <div style={styles.rateLimit}>
+          <span>
+            {
+              isTokenAccess ? 'Unlimited access using a dev token' : 'Limited access, 5,000 requests per hour'
+            }
+          </span>
+          <span onClick={this.onToggleAccess}>
+            {
+              isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
+            }
+          </span>
+        </div>
         <footer>
         </footer>
       </div>
