@@ -10,7 +10,7 @@ import { GithubButton } from '../components/github-button';
 import TokenLogin from '../components/token-login';
 import { BackgroundCover } from '../components/background-cover';
 import { TagCloud } from '../components/tag-cloud';
-
+import { LanguageCloud } from '../components/language-cloud';
 
 interface MainProps {
   dispatch: any;
@@ -113,6 +113,7 @@ class Landing extends React.Component<MainProps, any> {
       <div style={styles.container}>
         <BackgroundCover/>
         <TagCloud/>
+        <LanguageCloud/>
         <Logo/>
         <div style={styles.titles}>
           <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
