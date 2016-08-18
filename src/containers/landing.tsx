@@ -8,6 +8,7 @@ import { Logo } from '../components/logo';
 import { Colors } from '../style';
 import { GithubButton } from '../components/github-button';
 import TokenLogin from '../components/token-login';
+import { BackgroundCover } from '../components/background-cover';
 
 interface MainProps {
   dispatch: any;
@@ -18,11 +19,15 @@ interface MainProps {
 
 const styles = {
   container: {
-    margin: '100px auto',
-    maxWidth: 1200
+    margin: '0px auto',
+    maxWidth: 1200,
+    display: 'flex',
+    height: '100vh',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   mainTitle: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 100
   },
   subTitle: {
@@ -46,6 +51,11 @@ const styles = {
   titles: {
     marginTop: 100,
     marginBottom: 40
+  },
+  switchButton: {
+    marginLeft: 14,
+    color: Colors.blue,
+    cursor: 'pointer'
   }
 };
 
@@ -111,6 +121,7 @@ class Landing extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
+        <BackgroundCover/>
         <Logo/>
         <div style={styles.titles}>
           <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
@@ -127,10 +138,10 @@ class Landing extends React.Component<MainProps, any> {
         <div style={styles.rateLimit}>
           <span>
             {
-              isTokenAccess ? 'Unlimited access using a dev token' : 'Limited access, 5,000 requests per hour'
+              isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
             }
           </span>
-          <span onClick={this.onToggleAccess}>
+          <span style={styles.switchButton}onClick={this.onToggleAccess}>
             {
               isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
             }

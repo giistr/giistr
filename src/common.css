@@ -97,3 +97,5 @@ menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
   font-family: 'Roboto', sans-serif;
 }
+
+textarea, input { outline: none; }

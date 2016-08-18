@@ -3,14 +3,16 @@ import { convertHex } from '../helpers/color';
 import { Colors } from '../style';
 
 const signup = {
-  display: 'inline-block',
   color: Colors.blue,
   backgroundColor: Colors.blueBackground,
   border: `1px solid ${Colors.blueBorder}`,
   boxShadow: '0 1px 2px 0 rgba(20, 22, 36, 0.08)',
   borderRadius: 5,
-  padding: '10px 60px',
-  margin: '16px auto'
+  padding: '14px 60px',
+  margin: '16px auto',
+  marginLeft: 0,
+  fontWeight: 300,
+  fontSize: 15
 };
 
 const githubIcon = {
