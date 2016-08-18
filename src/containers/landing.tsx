@@ -95,26 +95,14 @@ class Landing extends React.Component<MainProps, any> {
     });
   };
 
-  private onTokenLogin = () => {
-
+  private onTokenLogin = token => {
+    const { oauthFromToken, dispatch } = this.props;
+    dispatch(oauthFromToken(token));
   };
 
   private redirectToApp(user) {
     browserHistory.push(`/app/${user.get('login')}`);
   }
-
-  private onChangeToken = (evt) => {
-    const text = evt.target.value;
-
-    this.setState({ token: text });
-  };
-
-  private onStart = () => {
-    const { token } = this.state;
-    const { oauthFromToken, dispatch } = this.props;
-
-    dispatch(oauthFromToken(token));
-  };
 
   public render() {
     const { isTokenAccess } = this.state;
