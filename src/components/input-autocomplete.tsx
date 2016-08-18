@@ -115,8 +115,6 @@ class Input extends React.Component<MainProps, any> {
     const { placeholder, style, list } = this.props;
     const { focus, selectedIndex } = this.state;
 
-    const arrowFunction = !selectedIndex ? this.onFocus : this.onChangeSelect.bind(this);
-
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">
         <input
@@ -126,13 +124,9 @@ class Input extends React.Component<MainProps, any> {
           onFocus={this.onFocus}
           onChange={this.onChange}
           placeholder={placeholder}/>
+        <img style={styles.cross} src="/assets/arrow.svg" onClick={this.onFocus}/>
         {
-          !selectedIndex && (
-            <img style={styles.cross} src="/assets/arrow.svg" onClick={arrowFunction}/>
-          )
-        }
-        {
-          list && focus && selectedIndex === undefined && (
+          list && focus && (
             <ul style={styles.listContainer}>
             {
               list.map((el, index) => (

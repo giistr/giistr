@@ -21,7 +21,7 @@ const styles = {
     display: 'flex',
     margin: '0px auto',
     alignItems: 'stretch',
-    maxWidth: 1700
+    maxWidth: 1800
   }
 };
 
