@@ -6,7 +6,7 @@ import { Colors } from '../style';
 import UserCard from './user-card';
 import { User } from '../reducers/user';
 import LabelsFilter from './labels-filter';
-import { FILTER_KEYS } from '../constants/filters';
+import { FILTER_KEYS, pOptions } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';
 import { Check } from './check';
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
@@ -48,6 +48,8 @@ const styles = {
   }
 };
 
+const periodOptions = Set<string>(pOptions);
+
 class Toolbar extends React.Component<MainProps, any> {
   private onToggleTag = id => {
     const { filters, remove, add, dispatch } = this.props;
@@ -60,9 +62,9 @@ class Toolbar extends React.Component<MainProps, any> {
   };
 
   private onSelectLanguage = language => {
-    const { filters, reset, replace, dispatch } = this.props;
+    const { reset, replace, dispatch } = this.props;
 
-    if (filters.get(languages).includes(language) || !language) {
+    if (!language) {
       reset(languages)(dispatch);
     } else {
       replace(languages, language)(dispatch);
@@ -70,7 +72,13 @@ class Toolbar extends React.Component<MainProps, any> {
   };
 
   private onSelectPeriod = time => {
-    console.log('Select a period');
+    const { reset, replace, dispatch } = this.props;
+
+    if (!time) {
+      reset(period)(dispatch);
+    } else {
+      replace(period, time)(dispatch);
+    }
   };
 
   private onToggleAssignee = val => {
@@ -95,11 +103,11 @@ class Toolbar extends React.Component<MainProps, any> {
           Filters
         </div>
         <div style={styles.section}>
-          <h3>Period</h3>
+          <h3>Updated before</h3>
           <Input
             onSelect={this.onSelectPeriod}
             style={styles.languageFilter}
-            list={Set<string>()}/>
+            list={periodOptions}/>
         </div>
         <div style={styles.section}>
           <h3>Languages</h3>

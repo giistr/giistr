@@ -59,7 +59,8 @@ const styles = {
     color: Colors.grey
   },
   counter: {
-    color: Colors.lightGrey
+    color: Colors.lightGrey,
+    marginLeft: 8
   }
 };
 

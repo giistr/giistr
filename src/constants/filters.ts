@@ -14,3 +14,10 @@ export const FILTER_DEFAULT = {
 };
 
 export const FILTER_KEYS = Object.keys(FILTER_DEFAULT);
+
+export const pOptions = [
+  'Last 5 days',
+  'Last 30 days',
+  'Last 2 months',
+  'Last year'
+];

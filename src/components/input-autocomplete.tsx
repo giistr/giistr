@@ -34,12 +34,11 @@ const styles = {
   },
   cross: {
     position: 'absolute',
-    backgroundColor: 'black',
     cursor: 'pointer',
     right: 10,
-    top: 10,
-    width: 20,
-    height: 20
+    top: 14,
+    width: 14,
+    height: 14
   },
   listItem: {
     padding: 10,
@@ -116,6 +115,8 @@ class Input extends React.Component<MainProps, any> {
     const { placeholder, style, list } = this.props;
     const { focus, selectedIndex } = this.state;
 
+    const arrowFunction = !selectedIndex ? this.onFocus : this.onChangeSelect.bind(this);
+
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">
         <input
@@ -126,8 +127,8 @@ class Input extends React.Component<MainProps, any> {
           onChange={this.onChange}
           placeholder={placeholder}/>
         {
-          selectedIndex !== undefined && (
-            <div style={styles.cross} onClick={this.onChangeSelect.bind(this, undefined)}></div>
+          !selectedIndex && (
+            <img style={styles.cross} src="/assets/arrow.svg" onClick={arrowFunction}/>
           )
         }
         {
