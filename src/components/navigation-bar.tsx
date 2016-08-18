@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Colors } from '../style';
+import { Logo } from './logo';
 
 interface MainProps {
   total?: number;
@@ -43,7 +44,7 @@ class NavigationBar extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
-        <h1 style={styles.title}>/Giistr</h1>
+        <Logo/>
         <div style={styles.description}>Viewing about <span style={styles.marked}>{after}</span> of a total of <span style={styles.marked}>{total}</span> repositories</div>
       </div>
     );

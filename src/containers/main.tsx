@@ -3,7 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { OrderedMap, Set, List } from 'immutable';
 import { getRepos, clear, getAllRepos } from '../actions/repositories';
-import { getUser } from '../actions/user';
+import { browserHistory } from 'react-router';
+
 import {
   applyRepositoryFilters,
   applyIssueFilters
@@ -30,7 +31,6 @@ export type Label = Map<string, string>;
 interface MainProps {
   dispatch: any;
   getRepos: any;
-  getUser: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
@@ -47,12 +47,10 @@ class Main extends React.Component<MainProps, any> {
   public state = initialState;
 
   private componentWillMount() {
-    const { params, user, getUser, dispatch } = this.props;
+    const { params, user, dispatch } = this.props;
 
     if (user.size === 0) {
-      dispatch(getUser(params.userId)).then(user => {
-        this.onGetRepository(this.state.page, user);
-      });
+      browserHistory.push('/');
     } else {
       this.onGetRepository(this.state.page);
     }
@@ -120,6 +118,5 @@ connect((state, props) => ({
   filters: state.get('filters')
 }), dispatch => ({
   getRepos,
-  getUser,
   dispatch
 }))(Main);
