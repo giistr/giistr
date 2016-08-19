@@ -5,10 +5,13 @@ import Input from './input-autocomplete';
 import { Colors } from '../style';
 import UserCard from './user-card';
 import { User } from '../reducers/user';
+import { clear as clearUser } from '../actions/user';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';
 import { Check } from './check';
+import { browserHistory } from 'react-router';
+
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 interface MainProps {
@@ -21,6 +24,7 @@ interface MainProps {
   add: any;
   replace: any;
   reset: any;
+  clearUser: any;
 };
 
 const styles = {
@@ -93,12 +97,20 @@ class Toolbar extends React.Component<MainProps, any> {
     replace(withIssues, !val)(dispatch);
   };
 
+  private onLogout = () => {
+    const { dispatch, clearUser } = this.props;
+    clearUser()(dispatch);
+    browserHistory.push('/');
+  };
+
   public render() {
     const { user, filters } = this.props;
 
     return (
       <div style={styles.container}>
-        <UserCard user={user}/>
+        <UserCard
+          onLogout={this.onLogout}
+          user={user}/>
         <div style={styles.filterTitle}>
           Filters
         </div>
@@ -160,5 +172,6 @@ connect((state, props) => ({
   remove,
   add,
   replace,
-  reset
+  reset,
+  clearUser
 }))(Toolbar);

@@ -2,10 +2,6 @@ import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
 
-interface MainProps {
-  user: User;
-};
-
 const styles = {
   container: {
     margin: 20
@@ -24,7 +20,8 @@ const styles = {
     marginLeft: 20
   },
   login: {
-    marginLeft: 10
+    marginLeft: 10,
+    cursor: 'pointer'
   },
   avatar: {
     borderRadius: '50%',
@@ -34,12 +31,24 @@ const styles = {
     color: Colors.lightGrey,
     fontSize: 13,
     lineHeight: '22px'
+  },
+  logout: {
+    fontSize: 12,
+    lineHeight: '18px',
+    color: Colors.blue,
+    textDecoration: 'underline',
+    cursor: 'pointer'
   }
 };
 
-class UserCard extends React.Component<MainProps, any> {
+class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, any> {
+
+  public shouldComponentUpdate(nextProps) {
+    return !nextProps.user.equals(this.props.user);
+  }
+
   public render() {
-    const { user } = this.props;
+    const { user, onLogout } = this.props;
 
     return (
       <div style={styles.container}>
@@ -47,12 +56,17 @@ class UserCard extends React.Component<MainProps, any> {
           <div style={styles.avatar}>
             <img width={60} src={user.get('avatar_url')}/>
           </div>
-          <div style={styles.login}>{ user.get('login') }</div>
+          <div style={styles.login}>
+            <a href={user.get('html_url')} target="_blank">{ user.get('login') }</a>
+          </div>
           <div style={styles.company}>{ user.get('company') }</div>
           <div style={styles.location}>{ user.get('location') }</div>
         </div>
         <div style={styles.bio}>
           { user.get('bio') }
+        </div>
+        <div>
+          <div style={styles.logout} onClick={onLogout}>Logout</div>
         </div>
       </div>
     );

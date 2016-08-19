@@ -8,6 +8,10 @@ interface MainProps {
   selected: any;
 };
 
+const buttonStyle = {
+
+}
+
 const styles = {
   container: {},
   more: {
@@ -17,6 +21,9 @@ const styles = {
     color: Colors.blue,
     textDecoration: 'underline',
     cursor: 'pointer'
+  },
+  moreContainer: {
+    display: 'flex'
   }
 };
 
@@ -28,11 +35,11 @@ class LabelsFilters extends React.Component<MainProps, any> {
     display: shift
   };
 
-  private onShowMore = () => {
+  private onShowMore(display) {
     this.setState({
-      display: this.state.display + shift
+      display
     });
-  };
+  }
 
   public render() {
     const { labels, onToggleTag, selected } = this.props;
@@ -54,8 +61,13 @@ class LabelsFilters extends React.Component<MainProps, any> {
       }
       {
         labels.size > display && (
-          <div style={styles.more} onClick={this.onShowMore}>
-            Show more
+          <div style={styles.moreContainer}>
+            <div style={styles.more} onClick={this.onShowMore.bind(this, this.state.display + shift)}>
+              Show more
+            </div>
+            <div style={styles.more} onClick={this.onShowMore.bind(this, labels.size)}>
+              Show all
+            </div>
           </div>
         )
       }

@@ -1,6 +1,6 @@
 import { Map, fromJS } from 'immutable';
 import { ADD_USER, CLEAR_USER } from '../constants/user';
-import { get, save } from '../localStorage';
+import { get, save, remove } from '../localStorage';
 
 export type User = Map<string, string|number>;
 
@@ -19,6 +19,7 @@ export default (state = initialState, action: UserAction) => {
       save('user', payload);
       return payload;
     case CLEAR_USER:
+      remove('user');
       return initialState;
     default:
       return state;
