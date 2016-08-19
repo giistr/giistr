@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { OrderedMap } from 'immutable';
 import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
+import Layout from '../components/layout';
 
 import {
   applyRepositoryFilters,
@@ -15,7 +16,6 @@ import { User } from '../reducers/user';
 import ToolBar from '../components/toolbar';
 import RepoColumn from '../components/repo-column';
 import NavigationBar from '../components/navigation-bar';
-import LoadMore from '../components/load-more';
 
 const styles = {
   mainList: {
@@ -38,7 +38,8 @@ interface MainProps {
 };
 
 const initialState = {
-  page: 1
+  page: 1,
+  column: window.innerWidth >= 1440 ? 2 : 1
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -69,15 +70,12 @@ class Main extends React.Component<MainProps, any> {
   public render() {
     const { user, filters, totalRepositories } = this.props;
     let { repositories } = this.props;
-    const { page } = this.state;
+    const { page, column } = this.state;
 
     // Hack because moving the filter repository in connect behave weird
     if (filters.get('withIssues')) {
       repositories = repositories.filter(repo => repo.get('issues').size > 0).toOrderedMap();
     }
-
-    const firstColumn = repositories.take(Math.ceil(repositories.size / 2)).toOrderedMap();
-    const secondColumn = repositories.takeLast(repositories.size / 2).toOrderedMap();
 
     return (
       <div>
@@ -85,16 +83,14 @@ class Main extends React.Component<MainProps, any> {
           total={totalRepositories}
           after={repositories.size}/>
         <div style={styles.mainList}>
-          <RepoColumn
-            repositories={firstColumn}/>
-          <RepoColumn
-            repositories={secondColumn}/>
+          <Layout
+            column={column}
+            onClickMore={this.onNext.bind(this, page + 1)}
+            repositories={repositories}/>
           <ToolBar
             user={user}
             filters={filters}/>
         </div>
-        <LoadMore
-          onClickMore={this.onNext.bind(this, page + 1)}/>
       </div>
     );
   }

@@ -30,6 +30,7 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
+    maxWidth: 360,
     flex: 3,
     borderLeft: `1px solid ${Colors.borderGrey}`,
     transform: 'translateY(-110px)'
