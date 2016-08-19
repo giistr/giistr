@@ -17,13 +17,41 @@ const styles = {
   },
   title: {
     margin: '16px 20px'
+  },
+  more: {
+    fontSize: 12,
+    lineHeight: '18px',
+    color: Colors.blue,
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    margin: '10px 20px',
+    textAlign: 'right'
   }
 };
 
-class Issues extends React.PureComponent<{ issues: any; }, any> {
+interface MainProps {
+  issues: any;
+  onLoadMore: Function;
+};
+
+class Issues extends React.PureComponent<MainProps, any> {
+
+  public state = {
+    page: 1
+  };
 
   public shouldComponentUpdate(nextProps) {
     return nextProps.issues.equals(this.props.issues);
+  }
+
+  private onSeeMore = () => {
+    const { onLoadMore } = this.props;
+
+    this.setState({
+      page: this.state.page + 1
+    });
+
+    onLoadMore(this.state.page + 1);
   }
 
   public render() {
@@ -44,6 +72,7 @@ class Issues extends React.PureComponent<{ issues: any; }, any> {
             })
           }
         </ul>
+        <div style={styles.more} onClick={this.onSeeMore}>See more issues</div>
       </div>
     );
   }

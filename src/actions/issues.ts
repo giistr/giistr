@@ -22,6 +22,12 @@ function addLabels(labels) {
   };
 }
 
+export const fetchIssues = (repository: string, repoId: string, page?: string) => {
+  return dispatch =>
+    getIssuesReq(repository, repoId, page)
+      .then((issues: List<any>) => serializeIssues(issues)(dispatch));
+};
+
 export const serializeIssues = (issues: List<any>) => {
   return dispatch => {
     let formattedIssues = issues.map(issue => {
@@ -48,7 +54,7 @@ export const serializeIssues = (issues: List<any>) => {
   };
 };
 
-export const getIssuesReq = (repository: string, repoId: string) => {
-  return get(`repos/${repository}/issues`, {})
-    .then((issues: List<any>) => issues.map(issue => issue.set('repositoryId', repoId)));
+export const getIssuesReq = (repository: string, repoId: string, page?: string) => {
+  return get(`repos/${repository}/issues`, { page })
+    .then((issues: List<any>) => issues.map(issue => issue.set('repositoryId', repoId)).toList());
 };

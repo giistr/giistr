@@ -8,10 +8,6 @@ interface MainProps {
   selected: any;
 };
 
-const buttonStyle = {
-
-}
-
 const styles = {
   container: {},
   more: {
