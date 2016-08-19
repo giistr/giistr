@@ -47,7 +47,7 @@ class TokenLogin extends React.Component<MainProps, any> {
           placeholder="Enter token"/>
         <Button
           title="Let's start"
-          onClick={onClickLogin.bind(this, this.state.query)}/>
+          onClick={onClickLogin.bind(this, this.state.query.trim())}/>
       </div>
     );
   }

@@ -97,7 +97,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
           <div style={Object.assign({}, styles.line, styles.second)}>
             <div>{ repo.get('language') }</div>
             <div style={styles.issues}>Issues: { repo.get('open_issues') }</div>
-            <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('MMMM Do YYYY') }</div>
+            <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
             <div style={styles.starContainer}>
               <span style={styles.starLabel}>Star</span>
               <span style={styles.counter}>{ repo.get('stargazers_count') }</span>

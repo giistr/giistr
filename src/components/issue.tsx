@@ -74,7 +74,7 @@ export class Issue extends React.PureComponent<MainProps, any> {
 
   public render() {
     const { issue, isLast } = this.props;
-    const updated = moment(issue.get('updated_at')).format('MMMM Do YYYY');
+    const updated = moment(issue.get('updated_at')).format('DD/MM/YYYY');
 
     let style = styles.issueItem;
     if (isLast) {
