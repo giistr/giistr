@@ -57,36 +57,44 @@ const styles = {
   }
 };
 
-export function Repository({ repo }: { repo: Map<string, any> }) {
+export class Repository extends React.PureComponent<{ repo: Map<string, any> }, any> {
 
-  return (
-    <div style={styles.mainRepo}>
-      <div
-        style={styles.repoContainer}>
-        <div style={styles.line}>
-          <div style={{
-            display: 'flex',
-            color: Colors.grey
-          }}>
-            <h1>{repo.getIn([ 'owner', 'login' ])}</h1>
-            <a href={repo.get('html_url')} target="_blank">
-              <h1 style={styles.name}>/{ repo.get('name') }</h1>
-            </a>
+  public shouldComponentUpdate(nextProps) {
+    return !nextProps.repo.equals(this.props.repo);
+  }
+
+  public render() {
+    const { repo } = this.props;
+
+    return (
+      <div style={styles.mainRepo}>
+        <div
+          style={styles.repoContainer}>
+          <div style={styles.line}>
+            <div style={{
+              display: 'flex',
+              color: Colors.grey
+            }}>
+              <h1>{repo.getIn([ 'owner', 'login' ])}</h1>
+              <a href={repo.get('html_url')} target="_blank">
+                <h1 style={styles.name}>/{ repo.get('name') }</h1>
+              </a>
+            </div>
           </div>
-        </div>
-        <div style={styles.description}>
-          { repo.get('description') }
-        </div>
-        <div style={Object.assign({}, styles.line, styles.second)}>
-          <div>{ repo.get('language') }</div>
-          <div style={styles.issues}>Issues: { repo.get('open_issues') }</div>
-          <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('MMMM Do YYYY') }</div>
-          <div style={styles.starContainer}>
-            <span style={styles.starLabel}>Star</span>
-            <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
+          <div style={styles.description}>
+            { repo.get('description') }
+          </div>
+          <div style={Object.assign({}, styles.line, styles.second)}>
+            <div>{ repo.get('language') }</div>
+            <div style={styles.issues}>Issues: { repo.get('open_issues') }</div>
+            <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('MMMM Do YYYY') }</div>
+            <div style={styles.starContainer}>
+              <span style={styles.starLabel}>Star</span>
+              <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

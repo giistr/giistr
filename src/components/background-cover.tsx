@@ -20,17 +20,17 @@ const circle = {
 const extendCircle = style => Object.assign({}, circle, style);
 
 const leftCircle = extendCircle({
-  left: -window.innerWidth/4,
-  top: -window.innerHeight/6,
-  bottom: -window.innerHeight/12,
-  right: window.innerWidth/2
+  left: -window.innerWidth / 4,
+  top: -window.innerHeight / 6,
+  bottom: -window.innerHeight / 12,
+  right: window.innerWidth / 2
 });
 
 const middleCircle = extendCircle({
   right: 0,
-  top: window.innerHeight/1.5,
-  bottom: -window.innerHeight/2,
-  left: window.innerWidth/2
+  top: window.innerHeight / 1.5,
+  bottom: -window.innerHeight / 2,
+  left: window.innerWidth / 2
 });
 
 export function BackgroundCover() {

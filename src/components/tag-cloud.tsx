@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Colors } from '../style';
 import { Tag } from './tag';
 import { fromJS } from 'immutable';
 

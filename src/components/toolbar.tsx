@@ -48,8 +48,6 @@ const styles = {
   }
 };
 
-
-
 const periodOptions = Set<string>(pOptions);
 
 class Toolbar extends React.Component<MainProps, any> {

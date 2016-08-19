@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { OrderedMap } from 'immutable';
 import Issues from '../components/issues';
-import { Colors } from '../style';
-import * as moment from 'moment';
 import { Repository } from '../components/repository';
 
 interface MainProps {
@@ -19,7 +17,8 @@ const styles = {
   }
 };
 
-class RepoColumn extends React.Component<MainProps, any> {
+class RepoColumn extends React.PureComponent<MainProps, any> {
+
   public render() {
     const { repositories } = this.props;
 

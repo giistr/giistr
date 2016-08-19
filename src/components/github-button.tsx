@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { convertHex } from '../helpers/color';
 import { Colors } from '../style';
 
 const signup = {
