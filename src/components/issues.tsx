@@ -37,7 +37,8 @@ interface MainProps {
 class Issues extends React.PureComponent<MainProps, any> {
 
   public state = {
-    page: 1
+    page: 1,
+    limit: this.props.issues.size < 30
   };
 
   public shouldComponentUpdate(nextProps) {
@@ -51,11 +52,18 @@ class Issues extends React.PureComponent<MainProps, any> {
       page: this.state.page + 1
     });
 
-    onLoadMore(this.state.page + 1);
+    onLoadMore(this.state.page + 1).then(issues => {
+      if(issues.size < 30) {
+        this.setState({
+          limit: true
+        });
+      }
+    });
   }
 
   public render() {
     const { issues } = this.props;
+    const { limit } = this.state;
 
     return (
       <div style={styles.main}>
@@ -72,7 +80,11 @@ class Issues extends React.PureComponent<MainProps, any> {
             })
           }
         </ul>
-        <div style={styles.more} onClick={this.onSeeMore}>See more issues</div>
+        {
+          !limit && (
+            <div style={styles.more} onClick={this.onSeeMore}>See more issues</div>
+          )
+        }
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
-import { OrderedMap } from 'immutable';
+import { OrderedMap, List } from 'immutable';
 import Issues from '../components/issues';
 import { Repository } from '../components/repository';
 import { fetchIssues } from '../actions/issues';
@@ -24,10 +23,10 @@ const styles = {
 
 class RepoColumn extends React.PureComponent<MainProps, any> {
 
-  private onLoadMoreIssues(repo, page) {
+  private onLoadMoreIssues(repo, page: number): Promise<List<any>> {
     const { fetchIssues, dispatch } = this.props;
 
-    dispatch(fetchIssues(repo.get('full_name'), repo.get('id'), page));
+    return dispatch(fetchIssues(repo.get('full_name'), repo.get('id'), page));
   };
 
   public render() {
