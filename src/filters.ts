@@ -1,20 +1,20 @@
-import { FILTER_KEYS, pOptions } from './constants/filters';
+import { FILTER_KEYS, pOptions, languageDefaultOption } from './constants/filters';
 import * as moment from 'moment';
 
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 function periodInterpretation(option) {
   switch (option) {
-    case pOptions[0]:
+    case pOptions[1]:
       return moment().subtract(5, 'days').unix();
 
-    case pOptions[1]:
+    case pOptions[2]:
       return moment().subtract(30, 'days').unix();
 
-    case pOptions[2]:
+    case pOptions[3]:
       return moment().subtract(2, 'months').unix();
 
-    case pOptions[3]:
+    case pOptions[4]:
       return moment().subtract(1, 'year').unix();
     default:
       return 0;
@@ -27,6 +27,7 @@ export function applyRepositoryFilters(filters) {
     // Language filter
     if (
       filters.get(languages).size > 0 &&
+      filters.get(languages).first() !== languageDefaultOption &&
       repository.get('language') !== filters.get(languages).first()
     ) {
       return false;
@@ -47,6 +48,7 @@ export function applyIssueFilters(filters) {
     // Apply period filter
     if (
       filters.get(period).size > 0 &&
+      filters.get(period).first() !== pOptions[0] &&
       moment(issue.get('updated_at')).unix() < periodInterpretation(filters.get(period).first())
     ) {
       return false;

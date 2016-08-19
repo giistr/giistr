@@ -52,6 +52,7 @@ interface MainProps {
   onFocus?: Function;
   style?: Object;
   placeholder?: string;
+  selectedIndex?: string;
   list: Set<string>;
 };
 
@@ -59,7 +60,7 @@ class Input extends React.Component<MainProps, any> {
 
   public state = {
     focus: false,
-    selectedIndex: undefined
+    selectedIndex: this.props.selectedIndex
   };
 
   public refs: {

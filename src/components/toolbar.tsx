@@ -6,7 +6,7 @@ import { Colors } from '../style';
 import UserCard from './user-card';
 import { User } from '../reducers/user';
 import LabelsFilter from './labels-filter';
-import { FILTER_KEYS, pOptions } from '../constants/filters';
+import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';
 import { Check } from './check';
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
@@ -47,6 +47,8 @@ const styles = {
     justifyContent: 'space-between'
   }
 };
+
+
 
 const periodOptions = Set<string>(pOptions);
 
@@ -106,6 +108,7 @@ class Toolbar extends React.Component<MainProps, any> {
           <h3>Updated before</h3>
           <Input
             onSelect={this.onSelectPeriod}
+            selectedIndex={pOptions[0]}
             style={styles.languageFilter}
             list={periodOptions}/>
         </div>
@@ -113,6 +116,7 @@ class Toolbar extends React.Component<MainProps, any> {
           <h3>Languages</h3>
           <Input
             onSelect={this.onSelectLanguage}
+            selectedIndex={languageDefaultOption}
             style={styles.languageFilter}
             list={this.props.languages}/>
         </div>
@@ -150,6 +154,7 @@ connect((state, props) => ({
       .get('repository')
       .map(repo => repo.get('language'))
       .toList()
+      .push(languageDefaultOption)
       .filter(Boolean)
   )
 }), dispatch => ({
