@@ -51,6 +51,9 @@ const styles = {
   counter: {
     color: Colors.lightGrey,
     marginLeft: 8
+  },
+  starLabel: {
+    fontWeight: 500
   }
 };
 
@@ -79,7 +82,7 @@ export function Repository({ repo }: { repo: Map<string, any> }) {
           <div style={styles.issues}>Issues: { repo.get('open_issues') }</div>
           <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('MMMM Do YYYY') }</div>
           <div style={styles.starContainer}>
-            <span>Star</span>
+            <span style={styles.starLabel}>Star</span>
             <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
           </div>
         </div>

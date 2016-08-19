@@ -15,6 +15,7 @@ import { User } from '../reducers/user';
 import ToolBar from '../components/toolbar';
 import RepoColumn from '../components/repo-column';
 import NavigationBar from '../components/navigation-bar';
+import LoadMore from '../components/load-more';
 
 const styles = {
   mainList: {
@@ -92,7 +93,8 @@ class Main extends React.Component<MainProps, any> {
             user={user}
             filters={filters}/>
         </div>
-        <button onClick={this.onNext.bind(this, page + 1)}>More</button>
+        <LoadMore
+          onClickMore={this.onNext.bind(this, page + 1)}/>
       </div>
     );
   }

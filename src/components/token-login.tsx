@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Colors } from '../style';
+import Button from './button';
 
 interface MainProps {
   onClickLogin: Function;
@@ -19,18 +20,6 @@ const styles = {
     paddingLeft: 14,
     color: Colors.lightGrey,
     fontWeight: 100
-  },
-  startButton: {
-    lineHeight: '40px',
-    margin: '14px 0px',
-    cursor: 'pointer',
-    fontSize: 15,
-    fontWeight: 300,
-    color: Colors.blue,
-    backgroundColor: Colors.blueBackground,
-    border: `1px solid ${Colors.blueBorder}`,
-    boxShadow: '0 1px 2px 0 rgba(20, 22, 36, 0.08)',
-    borderRadius: 5
   }
 };
 
@@ -56,7 +45,9 @@ class TokenLogin extends React.Component<MainProps, any> {
           onChange={this.onChangeToken}
           type="text"
           placeholder="Enter token"/>
-        <button style={styles.startButton} onClick={onClickLogin.bind(this, this.state.query)}>Let's start</button>
+        <Button
+          title="Let's start"
+          onClick={onClickLogin.bind(this, this.state.query)}/>
       </div>
     );
   }
