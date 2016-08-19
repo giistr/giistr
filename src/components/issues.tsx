@@ -53,7 +53,7 @@ class Issues extends React.PureComponent<MainProps, any> {
     });
 
     onLoadMore(this.state.page + 1).then(issues => {
-      if(issues.size < 30) {
+      if (issues.size < 30) {
         this.setState({
           limit: true
         });
