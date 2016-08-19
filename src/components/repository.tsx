@@ -18,17 +18,28 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between'
   },
+  fullName: {
+    display: 'flex',
+    color: Colors.grey,
+    letterSpacing: 1.5
+  },
+  slash: {
+    color: Colors.blue
+  },
   name: {
     backgroundColor: Colors.blueBackground,
     padding: '0px 6px',
-    borderRadius: 4
+    borderRadius: 2
+  },
+  font: {
+    fontWeight: 400
   },
   description: {
     marginBottom: 30,
     marginTop: 20,
-    fontSize: 16,
+    fontSize: 15,
     lineHeight: '22px',
-    color: Colors.grey
+    color: Colors.middleGrey
   },
   second: {
     fontSize: 14,
@@ -53,7 +64,7 @@ const styles = {
     marginLeft: 8
   },
   starLabel: {
-    fontWeight: 500
+    fontWeight: 400
   }
 };
 
@@ -71,13 +82,12 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
         <div
           style={styles.repoContainer}>
           <div style={styles.line}>
-            <div style={{
-              display: 'flex',
-              color: Colors.grey
-            }}>
-              <h1>{repo.getIn([ 'owner', 'login' ])}</h1>
+            <div style={styles.fullName}>
+              <h1 style={styles.font}>{repo.getIn([ 'owner', 'login' ])}</h1>
               <a href={repo.get('html_url')} target="_blank">
-                <h1 style={styles.name}>/{ repo.get('name') }</h1>
+                <h1 style={styles.name}>
+                  <span style={styles.slash}>/</span><span style={styles.font}>{ repo.get('name') }</span>
+                </h1>
               </a>
             </div>
           </div>

@@ -26,6 +26,9 @@ const styles = {
     cursor: 'pointer',
     margin: '10px 20px',
     textAlign: 'right'
+  },
+  space: {
+    height: 20
   }
 };
 
@@ -81,8 +84,10 @@ class Issues extends React.PureComponent<MainProps, any> {
           }
         </ul>
         {
-          !limit && (
+          !limit ? (
             <div style={styles.more} onClick={this.onSeeMore}>See more issues</div>
+          ) : (
+            <div style={styles.space}></div>
           )
         }
       </div>
