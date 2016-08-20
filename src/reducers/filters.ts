@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { Map, Set } from 'immutable';
 import {
   ADD_FILTER,
   REMOVE_FILTER,
@@ -40,7 +40,7 @@ export default (state = initialState, action: IssueAction) => {
           return payload;
         }
 
-        return initialState.get(key).add(payload);
+        return Set([ payload ]);
       });
 
     default:
