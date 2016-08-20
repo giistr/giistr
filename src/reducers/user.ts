@@ -20,7 +20,7 @@ export default (state = initialState, action: UserAction) => {
       return payload;
     case CLEAR_USER:
       remove('user');
-      return initialState;
+      return Map<string, string | number>();
     default:
       return state;
   }
