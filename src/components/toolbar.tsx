@@ -4,19 +4,15 @@ import { Set, Map } from 'immutable';
 import Input from './input-autocomplete';
 import { Colors } from '../style';
 import UserCard from './user-card';
-import { User } from '../reducers/user';
-import { clear as clearUser } from '../actions/user';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';
 import { Check } from './check';
-import { browserHistory } from 'react-router';
 
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
 interface MainProps {
   languages: Set<string>;
-  user: User;
   labels: any;
   filters: Map<string, any>;
   dispatch: any;
@@ -24,7 +20,6 @@ interface MainProps {
   add: any;
   replace: any;
   reset: any;
-  clearUser: any;
 };
 
 const styles = {
@@ -32,8 +27,7 @@ const styles = {
     backgroundColor: 'white',
     maxWidth: 360,
     flex: 3,
-    borderLeft: `1px solid ${Colors.borderGrey}`,
-    transform: 'translateY(-110px)'
+    borderLeft: `1px solid ${Colors.borderGrey}`
   },
   languageFilter: {},
   filterTitle: {
@@ -98,20 +92,11 @@ class Toolbar extends React.Component<MainProps, any> {
     replace(withIssues, !val)(dispatch);
   };
 
-  private onLogout = () => {
-    const { dispatch, clearUser } = this.props;
-    clearUser()(dispatch);
-    browserHistory.push('/');
-  };
-
   public render() {
-    const { user, filters } = this.props;
+    const { filters } = this.props;
 
     return (
       <div style={styles.container}>
-        <UserCard
-          onLogout={this.onLogout}
-          user={user}/>
         <div style={styles.filterTitle}>
           Filters
         </div>
@@ -173,6 +158,5 @@ connect((state, props) => ({
   remove,
   add,
   replace,
-  reset,
-  clearUser
+  reset
 }))(Toolbar);

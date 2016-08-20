@@ -1,60 +1,92 @@
 import * as React from 'react';
 import { Colors } from '../style';
 import { Logo } from './logo';
+import UserCard from './user-card';
+import { clear as clearUser } from '../actions/user';
+import { browserHistory } from 'react-router';
+import { User } from '../reducers/user';
+import { connect } from 'react-redux';
 
 interface MainProps {
   total?: number;
   after?: number;
+  clearUser: any;
+  dispatch: any;
+  user: User;
 };
 
 const styles = {
   container: {
     backgroundColor: 'white',
-    margin: '10px 20px',
-    padding: 10
+    fontSize: 13,
+    padding: '0px 30px',
+    borderBottom: `1px solid ${Colors.borderGrey}`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  title: {
-    lineHeight: '34px',
-    fontSize: 28,
-    padding: '0px 2px',
-    fontWeight: 100,
-    color: Colors.grey,
-    borderRadius: 4,
-    backgroundColor: Colors.blueBackground,
-    display: 'inline-block'
+  logo: {
+    marginRight: 40
   },
   description: {
-    marginTop: 20,
-    color: Colors.lightGrey
+    color: Colors.lightGrey,
+    display: 'flex',
+    alignItems: 'center'
   },
   marked: {
+    color: Colors.blue,
+    margin: '0px 6px'
+  },
+  title: {
+    padding: '0px 12px',
+    lineHeight: '24px',
+    borderRight: `1px solid ${Colors.borderGrey}`,
     color: Colors.grey
+  },
+  repoCounter: {
+    paddingLeft: 12
   }
 };
 
-class NavigationBar extends React.Component<MainProps, any> {
+class NavigationBar extends React.PureComponent<MainProps, any> {
 
   public static defaultProps = {
     total: 0,
     after: 0
   };
 
+  private onLogout = () => {
+    const { dispatch, clearUser } = this.props;
+    clearUser()(dispatch);
+    browserHistory.push('/');
+  };
+
   public render() {
-    const { after, total } = this.props;
+    const { after, total, user } = this.props;
 
     return (
       <div style={styles.container}>
-        <Logo/>
         <div style={styles.description}>
-          <span>Viewing about </span>
-          <span style={styles.marked}>{after}</span>
-          <span> of a total of </span>
-          <span style={styles.marked}>{total}</span>
-          <span> repositories</span>
+          <Logo style={styles.logo}/>
+          <div style={styles.title}>Starred repositories</div>
+          <div style={styles.repoCounter}>
+            <span>Viewing about </span>
+            <span style={styles.marked}>{after}</span>
+            <span> of a total of </span>
+            <span style={styles.marked}>{total}</span>
+            <span> repositories</span>
+          </div>
         </div>
+        <UserCard
+          onLogout={this.onLogout}
+          user={user}/>
       </div>
     );
   }
 }
 
-export default NavigationBar;
+export default
+connect((state, props) => props, dispatch => ({
+  dispatch,
+  clearUser
+}))(NavigationBar);

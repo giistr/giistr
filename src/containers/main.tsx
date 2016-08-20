@@ -80,6 +80,7 @@ class Main extends React.Component<MainProps, any> {
     return (
       <div>
         <NavigationBar
+          user={user}
           total={totalRepositories}
           after={repositories.size}/>
         <div style={styles.mainList}>
@@ -88,7 +89,6 @@ class Main extends React.Component<MainProps, any> {
             onClickMore={this.onNext.bind(this, page + 1)}
             repositories={repositories}/>
           <ToolBar
-            user={user}
             filters={filters}/>
         </div>
       </div>

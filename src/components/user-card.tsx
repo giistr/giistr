@@ -4,40 +4,62 @@ import { Colors } from '../style';
 
 const styles = {
   container: {
-    margin: 20
+    margin: 20,
+    display: 'flex'
   },
   first: {
     display: 'flex',
     alignItems: 'center',
-    margin: '12px 0px',
     color: Colors.grey,
-    fontSize: 14
+    fontSize: 14,
+    marginRight: 40
   },
-  company: {
-    marginLeft: 20
+  second: {
+    display: 'flex',
+    color: Colors.lightGrey,
+    fontSize: 12,
+    marginTop: 4
   },
   location: {
-    marginLeft: 20
+    marginLeft: 10
   },
   login: {
-    marginLeft: 10,
-    cursor: 'pointer'
+    marginLeft: 10
   },
   avatar: {
     borderRadius: '50%',
-    border: `1px solid ${Colors.borderGrey}`
+    position: 'relative',
+    border: `1px solid ${Colors.borderGrey}`,
+    width: 40,
+    height: 40
+  },
+  image: {
+    position: 'absolute',
+    margin: 'auto',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    maxWidth: 34,
+    maxHeight: 34
   },
   bio: {
     color: Colors.lightGrey,
     fontSize: 13,
     lineHeight: '22px'
   },
-  logout: {
+  item: {
     fontSize: 12,
     lineHeight: '18px',
-    color: Colors.blue,
-    textDecoration: 'underline',
-    cursor: 'pointer'
+    color: Colors.lightGrey,
+    cursor: 'pointer',
+    margin: '0px 10px'
+  },
+  menu: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 30,
+    borderLeft: `1px solid ${Colors.borderGrey}`
   }
 };
 
@@ -47,6 +69,10 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
     return !nextProps.user.equals(this.props.user);
   }
 
+  private onClickAbout() {
+
+  }
+
   public render() {
     const { user, onLogout } = this.props;
 
@@ -54,19 +80,21 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
       <div style={styles.container}>
         <div style={styles.first}>
           <div style={styles.avatar}>
-            <img width={60} src={user.get('avatar_url')}/>
+            <img style={styles.image} src={user.get('avatar_url')}/>
           </div>
+
           <div style={styles.login}>
             <a href={user.get('html_url')} target="_blank">{ user.get('login') }</a>
+            <div style={styles.second}>
+              <div>{ user.get('company') }</div>
+              <div style={styles.location}>{ user.get('location') }</div>
+            </div>
           </div>
-          <div style={styles.company}>{ user.get('company') }</div>
-          <div style={styles.location}>{ user.get('location') }</div>
         </div>
-        <div style={styles.bio}>
-          { user.get('bio') }
-        </div>
-        <div>
-          <div style={styles.logout} onClick={onLogout}>Logout</div>
+
+        <div style={styles.menu}>
+          <div style={styles.item} onClick={this.onClickAbout}>About giistr</div>
+          <div style={styles.item} onClick={onLogout}>Sign out</div>
         </div>
       </div>
     );

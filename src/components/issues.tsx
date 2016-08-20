@@ -44,10 +44,6 @@ class Issues extends React.PureComponent<MainProps, any> {
     limit: this.props.issues.size < 30
   };
 
-  public shouldComponentUpdate(nextProps) {
-    return nextProps.issues.equals(this.props.issues);
-  }
-
   private onSeeMore = () => {
     const { onLoadMore } = this.props;
 
