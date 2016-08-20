@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { Issue } from './issue';
 
 const styles = {
-  main: {
-    marginLeft: 10
-  },
   container: {
     margin: '10px 20px',
     border: `1px solid ${Colors.borderGrey}`,
@@ -14,9 +11,6 @@ const styles = {
     minHeight: 10,
     maxHeight: 420,
     borderRadius: 5
-  },
-  title: {
-    margin: '16px 20px'
   },
   more: {
     fontSize: 12,
@@ -65,8 +59,7 @@ class Issues extends React.PureComponent<MainProps, any> {
     const { limit } = this.state;
 
     return (
-      <div style={styles.main}>
-        <h2 style={styles.title}>Issues</h2>
+      <div>
         <ul style={styles.container}>
           {
             issues.toList().map((issue, index) => {

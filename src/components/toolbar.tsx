@@ -27,16 +27,15 @@ const styles = {
     backgroundColor: 'white',
     maxWidth: 360,
     flex: 3,
-    borderLeft: `1px solid ${Colors.borderGrey}`
+    marginTop: 30
   },
   languageFilter: {},
   filterTitle: {
-    backgroundColor: 'rgba(20, 22, 36, 0.02)',
     color: Colors.lightGrey,
     padding: '10px 0px',
-    paddingLeft: 20,
+    marginLeft: 20,
     fontSize: 14,
-    borderTop: `1px solid ${Colors.borderGrey}`
+    borderBottom: `1px solid ${Colors.borderGrey}`
   },
   section: {
     padding: 20
@@ -97,9 +96,9 @@ class Toolbar extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
-        <div style={styles.filterTitle}>
+        <h3 style={styles.filterTitle}>
           Filters
-        </div>
+        </h3>
         <div style={styles.section}>
           <h3>Updated before</h3>
           <Input

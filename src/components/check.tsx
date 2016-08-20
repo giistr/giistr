@@ -4,7 +4,8 @@ import { Colors } from '../style';
 const container = {
   display: 'flex',
   lineHeight: '20px',
-  color: Colors.grey
+  color: Colors.grey,
+  marginTop: 10
 };
 
 const base = {

@@ -14,15 +14,6 @@ const styles = {
     fontSize: 14,
     marginRight: 40
   },
-  second: {
-    display: 'flex',
-    color: Colors.lightGrey,
-    fontSize: 12,
-    marginTop: 4
-  },
-  location: {
-    marginLeft: 10
-  },
   login: {
     marginLeft: 10
   },
@@ -85,10 +76,6 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
 
           <div style={styles.login}>
             <a href={user.get('html_url')} target="_blank">{ user.get('login') }</a>
-            <div style={styles.second}>
-              <div>{ user.get('company') }</div>
-              <div style={styles.location}>{ user.get('location') }</div>
-            </div>
           </div>
         </div>
 

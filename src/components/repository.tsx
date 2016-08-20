@@ -11,7 +11,9 @@ const styles = {
     display: 'flex',
     padding: '20px 10px',
     minWidth: 400,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    border: `1px solid ${Colors.borderGrey}`,
+    borderRadius: 5
   },
   line: {
     flex: 1,
@@ -35,8 +37,7 @@ const styles = {
     fontWeight: 400
   },
   description: {
-    marginBottom: 30,
-    marginTop: 20,
+    margin: '20px 0px',
     fontSize: 15,
     lineHeight: '22px',
     color: Colors.middleGrey

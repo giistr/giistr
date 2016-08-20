@@ -37,12 +37,6 @@ const styles = {
     color: Colors.blue,
     margin: '0px 6px'
   },
-  title: {
-    padding: '0px 12px',
-    lineHeight: '24px',
-    borderRight: `1px solid ${Colors.borderGrey}`,
-    color: Colors.grey
-  },
   repoCounter: {
     paddingLeft: 12
   }
@@ -68,7 +62,6 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
       <div style={styles.container}>
         <div style={styles.description}>
           <Logo style={styles.logo}/>
-          <div style={styles.title}>Starred repositories</div>
           <div style={styles.repoCounter}>
             <span>Viewing about </span>
             <span style={styles.marked}>{after}</span>
