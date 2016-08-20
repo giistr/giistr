@@ -11,6 +11,8 @@ import thunk from 'redux-thunk';
 
 import Main from './containers/main';
 import Landing from './containers/landing';
+import About from './containers/about';
+
 import Logger from './common/Logger';
 import rootReducer from './reducers';
 import './common.css';
@@ -30,6 +32,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Landing}/>
       <Route path="/app/:userId" component={Main}/>
+      <Route path="/about" component={About}/>
     </Router>
   </Provider>,
   document.getElementById('content')

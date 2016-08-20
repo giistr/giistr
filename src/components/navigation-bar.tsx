@@ -55,6 +55,26 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
     browserHistory.push('/');
   };
 
+  private renderCounter = (after: number, total: number) => {
+    return (
+      <div style={styles.repoCounter}>
+        <span>Viewing about </span>
+        <span style={styles.marked}>{after}</span>
+        <span> of a total of </span>
+        <span style={styles.marked}>{total}</span>
+        <span> repositories</span>
+      </div>
+    );
+  };
+
+  private renderInfo() {
+    return (
+      <div>
+        Let's contribute to the open source world
+      </div>
+    )
+  }
+
   public render() {
     const { after, total, user } = this.props;
 
@@ -62,17 +82,32 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
       <div style={styles.container}>
         <div style={styles.description}>
           <Logo style={styles.logo}/>
-          <div style={styles.repoCounter}>
-            <span>Viewing about </span>
-            <span style={styles.marked}>{after}</span>
-            <span> of a total of </span>
-            <span style={styles.marked}>{total}</span>
-            <span> repositories</span>
-          </div>
+          {
+            total && after ? this.renderCounter(after, total) : this.renderInfo()
+          }
         </div>
-        <UserCard
-          onLogout={this.onLogout}
-          user={user}/>
+        {
+          user.size > 0 && (
+            <UserCard
+              onLogout={this.onLogout}
+              user={user}/>
+          )
+        }
+        {
+          !user && (
+            <div>
+              <div>
+                Signup with github
+              </div>
+              <span>
+                or
+              </span>
+              <div>
+                Get unlimited access with token
+              </div>
+            </div>
+          )
+        }
       </div>
     );
   }

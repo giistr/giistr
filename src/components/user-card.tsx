@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
+import { browserHistory } from 'react-router';
 
 const styles = {
   container: {
@@ -61,7 +62,7 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
   }
 
   private onClickAbout() {
-
+    browserHistory.push('/about');
   }
 
   public render() {
