@@ -36,8 +36,9 @@ class LoadMore extends React.Component<MainProps, any> {
           <div style={styles.sentence}>Psst! you can load more repositories</div>
         </div>
         <Button
-          onClick={onClickMore}
-          title="See more repositories"/>
+          onClick={onClickMore}>
+          See more repositories
+        </Button>
       </div>
     );
   }

@@ -2,31 +2,55 @@ import * as React from 'react';
 import { Colors } from '../style';
 
 interface MainProps {
-  onClick: Function;
-  title: string;
+  onClick?: Function;
+  style?: Object
 };
 
-const styles = {
-  container: {
-    lineHeight: '40px',
-    margin: '14px 0px',
-    cursor: 'pointer',
-    fontSize: 15,
-    fontWeight: 300,
-    color: Colors.blue,
-    backgroundColor: Colors.blueBackground,
-    border: `1px solid ${Colors.blueBorder}`,
-    boxShadow: '0 1px 2px 0 rgba(20, 22, 36, 0.08)',
-    borderRadius: 5
-  }
+const base = {
+  lineHeight: '40px',
+  margin: '14px 0px',
+  cursor: 'pointer',
+  fontSize: 15,
+  fontWeight: 300,
+  color: Colors.blue,
+  outline: 'none',
+  border: `1px solid ${Colors.blueBorder}`,
+  boxShadow: '0 1px 2px 0 rgba(20, 22, 36, 0.08)',
+  borderRadius: 5
 };
 
 class Button extends React.Component<MainProps, any> {
+
+  state = {
+    color: Colors.blueBackground
+  };
+
+  private onOver = () => {
+    this.setState({
+      color: Colors.blueBackgroundDark
+    });
+  };
+
+  private onMouseOut = () => {
+    this.setState({
+      color: Colors.blueBackground
+    });
+  };
+
   public render() {
-    const { onClick, title } = this.props;
+    const { onClick, children, style } = this.props;
+    const final = Object.assign({}, base, style, {
+      backgroundColor: this.state.color
+    });
 
     return (
-      <button style={styles.container} onClick={onClick}>{ title }</button>
+      <button
+        onMouseOver={this.onOver}
+        onMouseOut={this.onMouseOut}
+        style={final}
+        onClick={onClick}>
+        { children }
+      </button>
     );
   }
 }

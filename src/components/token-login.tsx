@@ -18,8 +18,8 @@ const styles = {
     border: `1px solid ${Colors.lightlightGrey}`,
     fontSize: 15,
     paddingLeft: 14,
-    color: Colors.lightGrey,
-    fontWeight: 100
+    color: Colors.grey,
+    fontWeight: 400
   }
 };
 
@@ -46,8 +46,9 @@ class TokenLogin extends React.Component<MainProps, any> {
           type="text"
           placeholder="Enter token"/>
         <Button
-          title="Let's start"
-          onClick={onClickLogin.bind(this, this.state.query.trim())}/>
+          onClick={onClickLogin.bind(this, this.state.query.trim())}>
+          Let's start
+        </Button>
       </div>
     );
   }

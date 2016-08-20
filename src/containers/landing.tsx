@@ -11,6 +11,7 @@ import TokenLogin from '../components/token-login';
 import { BackgroundCover } from '../components/background-cover';
 import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
+import { BlinkSquare } from '../components/blink-square';
 
 interface MainProps {
   dispatch: any;
@@ -36,15 +37,6 @@ const styles = {
     display: 'inline-block',
     color: Colors.grey,
     marginTop: 30
-  },
-  square: {
-    height: 24,
-    width: 16,
-    verticalAlign: 'middle',
-    marginLeft: 6,
-    marginBottom: 5,
-    backgroundColor: Colors.blue,
-    display: 'inline-block'
   },
   rateLimit: {
     fontSize: 12,
@@ -121,7 +113,7 @@ class Landing extends React.Component<MainProps, any> {
             <h1 style={styles.subTitle}>
               Search, filter and help easily on the issues of the repositories you starred
             </h1>
-            <div style={styles.square}></div>
+            <BlinkSquare/>
           </div>
         </div>
         {
