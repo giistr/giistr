@@ -65,6 +65,10 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
     browserHistory.push('/about');
   }
 
+  private onClickHome() {
+    browserHistory.push('/');
+  }
+
   public render() {
     const { user, onLogout } = this.props;
 
@@ -74,13 +78,10 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
           <div style={styles.avatar}>
             <img style={styles.image} src={user.get('avatar_url')}/>
           </div>
-
-          <div style={styles.login}>
-            <a href={user.get('html_url')} target="_blank">{ user.get('login') }</a>
-          </div>
         </div>
 
         <div style={styles.menu}>
+          <div style={styles.item} onClick={this.onClickHome}>Home</div>
           <div style={styles.item} onClick={this.onClickAbout}>About giistr</div>
           <div style={styles.item} onClick={onLogout}>Sign out</div>
         </div>
