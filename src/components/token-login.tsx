@@ -10,14 +10,13 @@ const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    width: 300,
-    zIndex: 2
+    width: 300
   },
   input: {
     lineHeight: '40px',
     borderRadius: 5,
     border: `1px solid ${Colors.lightlightGrey}`,
-    fontSize: 15,
+    fontSize: 13,
     paddingLeft: 14,
     color: Colors.grey,
     fontWeight: 400
@@ -45,7 +44,7 @@ class TokenLogin extends React.Component<MainProps, any> {
           style={styles.input}
           onChange={this.onChangeToken}
           type="text"
-          placeholder="Enter token"/>
+          placeholder="Enter your dev token"/>
         <Button
           onClick={onClickLogin.bind(this, this.state.query.trim())}>
           Let's start

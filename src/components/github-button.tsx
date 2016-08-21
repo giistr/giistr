@@ -9,10 +9,6 @@ const githubIcon = {
   marginBottom: 4
 };
 
-const container = {
-  zIndex: 2
-};
-
 const oauthLabel = {
   verticalAlign: 'middle'
 };
@@ -28,7 +24,7 @@ export function GithubButton({
 }) {
 
   return (
-    <a href={href} style={container}>
+    <a href={href}>
       <Button style={button}>
         <img src="assets/github.svg" style={githubIcon}/>
         <span style={oauthLabel}>Sign Up with Github</span>

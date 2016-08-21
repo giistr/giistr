@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Colors } from '../style';
 import { connect } from 'react-redux';
 import { Issue } from './issue';
+import { RawButton } from './raw-button';
 
 const styles = {
   container: {
@@ -13,11 +14,6 @@ const styles = {
     borderRadius: 5
   },
   more: {
-    fontSize: 12,
-    lineHeight: '18px',
-    color: Colors.blue,
-    textDecoration: 'underline',
-    cursor: 'pointer',
     margin: '10px 20px',
     textAlign: 'right'
   },
@@ -74,7 +70,11 @@ class Issues extends React.PureComponent<MainProps, any> {
         </ul>
         {
           !limit ? (
-            <div style={styles.more} onClick={this.onSeeMore}>See more issues</div>
+            <RawButton
+              style={styles.more}
+              onClick={this.onSeeMore}>
+              See more issues
+            </RawButton>
           ) : (
             <div style={styles.space}></div>
           )

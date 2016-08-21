@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { githubOauthAction, oauthFromToken } from '../actions/user';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
@@ -12,6 +13,7 @@ import { BackgroundCover } from '../components/background-cover';
 import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
+import { RawButton } from '../components/raw-button';
 
 interface MainProps {
   dispatch: any;
@@ -30,28 +32,48 @@ const styles = {
     flexDirection: 'column'
   },
   mainTitle: {
-    fontSize: 40,
-    fontWeight: 100
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: Colors.grey
   },
   subTitle: {
     display: 'inline-block',
-    color: Colors.grey,
-    marginTop: 30
+    color: Colors.middleGrey,
+    marginTop: 30,
+    fontSize: 16,
+    fontWeight: 200
+  },
+  interactive: {
+    height: 160,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    zIndex: 2,
+    maxWidth: 360
   },
   rateLimit: {
     fontSize: 12,
-    color: Colors.lightGrey
+    marginBottom: 10,
+    color: Colors.middleGrey
   },
   titles: {
     marginTop: 100,
     marginBottom: 40
-  },
-  switchButton: {
-    marginLeft: 14,
-    color: Colors.blue,
-    cursor: 'pointer'
   }
 };
+
+// const ImprovedStyle = StyleSheet.create({
+//   switchButton: {
+//     fontSize: 12,
+//     color: Colors.blue,
+//     textDecoration: 'underline',
+//     cursor: 'pointer',
+//     ':hover': {
+//       color: Colors.darkBlue,
+//       textDecoration: 'none'
+//     }
+//   }
+// });
 
 /// <reference path="require.d.ts" />
 const config = fromJS(require('!json!../config.json')); // tslint:disable-line
@@ -116,20 +138,21 @@ class Landing extends React.Component<MainProps, any> {
             <BlinkSquare/>
           </div>
         </div>
-        {
-          isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
-        }
-        <div style={styles.rateLimit}>
-          <span>
+        <div style={styles.interactive}>
+          <div style={styles.rateLimit}>
             {
               isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
             }
-          </span>
-          <span style={styles.switchButton}onClick={this.onToggleAccess}>
+          </div>
+          {
+            isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
+          }
+          <RawButton
+            onClick={this.onToggleAccess}>
             {
               isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
             }
-          </span>
+          </RawButton>
         </div>
         <footer>
         </footer>

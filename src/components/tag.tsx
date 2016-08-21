@@ -37,10 +37,13 @@ export function Tag({
       }
     }
   });
+
   const final = [
     styles.base,
     tmp.container
   ].join(' ');
+
+  document.getElementById('stylesheet').textContent = StyleSheet.render();
 
   return (
     <div

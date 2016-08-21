@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Tag } from './tag';
 import { Colors } from '../style';
+import { RawButton } from './raw-button';
 
 interface MainProps {
   labels: any;
@@ -11,12 +12,7 @@ interface MainProps {
 const styles = {
   container: {},
   more: {
-    marginLeft: 6,
-    fontSize: 12,
-    lineHeight: '18px',
-    color: Colors.blue,
-    textDecoration: 'underline',
-    cursor: 'pointer'
+    marginLeft: 8
   },
   moreContainer: {
     display: 'flex'
@@ -58,12 +54,16 @@ class LabelsFilters extends React.Component<MainProps, any> {
       {
         labels.size > display && (
           <div style={styles.moreContainer}>
-            <div style={styles.more} onClick={this.onShowMore.bind(this, this.state.display + shift)}>
+            <RawButton
+              style={styles.more}
+              onClick={this.onShowMore.bind(this, this.state.display + shift)}>
               Show more
-            </div>
-            <div style={styles.more} onClick={this.onShowMore.bind(this, labels.size)}>
+            </RawButton>
+            <RawButton
+              style={styles.more}
+              onClick={this.onShowMore.bind(this, labels.size)}>
               Show all
-            </div>
+            </RawButton>
           </div>
         )
       }
