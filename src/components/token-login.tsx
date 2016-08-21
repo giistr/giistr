@@ -10,7 +10,8 @@ const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    width: 300
+    width: 300,
+    zIndex: 2
   },
   input: {
     lineHeight: '40px',

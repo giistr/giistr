@@ -47,6 +47,7 @@
     "redux": "^3.5.2",
     "redux-immutable": "3.0.6",
     "redux-thunk": "^2.0.1",
+    "stilr": "^1.2.4",
     "url-join": "^1.1.0"
   }
 }
