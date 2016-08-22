@@ -60,7 +60,7 @@ class Issues extends React.PureComponent<MainProps, any> {
     this.refs.container.removeEventListener('mousewheel', this.onMousewheel);
   }
 
-  public componentWillUpdate(prevProps, prevState) {
+  public componentDidUpdate(prevProps, prevState) {
     if (prevState.rendered !== this.state.rendered) {
       this.contentHeight = this.getContentHeight(this.refs.container);
     }
