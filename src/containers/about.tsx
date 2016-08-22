@@ -16,10 +16,12 @@ const styles = {
     display: 'flex',
     margin: '0px auto',
     alignItems: 'stretch',
-    maxWidth: 1200
+    maxWidth: 1270,
+    marginTop: 60
   },
   column: {
-    flex: 8.5
+    flex: 8.5,
+    marginRight: 100
   },
   title: {
     fontSize: 22,
@@ -38,12 +40,23 @@ const styles = {
     margin: '20px 0px'
   },
   text: {
-    fontWeight: 300,
     fontSize: 14,
     lineHeight: "20px",
     color: Colors.middleGrey,
     paddingBottom: 50,
     borderBottom: `1px solid ${Colors.borderGrey}`
+  },
+  listContainer: {
+    lineHeight: "24px",
+    fontSize: 14,
+    color: Colors.middleGrey
+  },
+  bold: {
+    color: Colors.grey,
+    fontWeight: 500
+  },
+  thirdTitle: {
+    marginTop: 40
   }
 };
 
@@ -64,12 +77,12 @@ class About extends React.Component<MainProps, any> {
             </div>
             <div>
               <h1 style={styles.secondTitle}><span>/</span>The principle</h1>
-              <ul>
-                <li>Filter the issues easily per date, labels or language</li>
-                <li>Find an issue that fit your skills</li>
-                <li>Contribute to an issue you picked</li>
+              <ul style={styles.listContainer}>
+                <li><span style={styles.bold}>Filter</span> the issues easily per date, labels or language</li>
+                <li><span style={styles.bold}>Find</span> an issue that fit your skills</li>
+                <li><span style={styles.bold}>Contribute</span> to an issue you picked</li>
               </ul>
-              <div>
+              <div style={styles.thirdTitle}>
                 Built for the developer community with passion, our project is <a href="https://github.com/alex3165/github-issues">open-source itself.</a>
               </div>
               <div>

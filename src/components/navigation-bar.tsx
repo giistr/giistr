@@ -27,7 +27,7 @@ const styles = {
     justifyContent: 'space-between'
   },
   logo: {
-    marginRight: 40
+    margin: "0px 30px"
   },
   description: {
     color: Colors.lightGrey,
@@ -82,7 +82,9 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
     return (
       <div style={styles.container}>
         <div style={styles.description}>
-          <Logo style={styles.logo}/>
+          <a href="/">
+            <Logo style={styles.logo}/>
+          </a>
           {
             total && after ? this.renderCounter(after, total) : this.renderInfo()
           }

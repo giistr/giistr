@@ -2,7 +2,9 @@ import * as React from 'react';
 
 const base = {};
 
-const logo = {};
+const logo = {
+  width: 60
+};
 
 export function Logo({
   style
