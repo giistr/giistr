@@ -72,6 +72,7 @@ class Main extends React.Component<MainProps, any> {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
     const { page, column } = this.state;
+    console.log('render main');
 
     return (
       <div>
@@ -94,22 +95,25 @@ class Main extends React.Component<MainProps, any> {
 }
 
 export default
-connect((state, props) => ({
-  totalRepositories: state.get('repository').size,
-  repositories: state
-    .get('repository')
-    .map(repo =>
-      repo.set('issues',
-        state
-          .get('issues')
-          .filter(applyIssueFilters(state.get('filters')))
-          .filter(issue => issue.get('repositoryId') === repo.get('id'))
+connect((state, props) => {
+  const groupedIssues = state.get('issues').groupBy(issue => issue.get('repositoryId'));
+
+  return {
+    totalRepositories: state.get('repository').size,
+    repositories: state
+      .get('repository')
+      .map(repo =>
+        repo.set('issues',
+          groupedIssues
+            .get(repo.get('id'), OrderedMap())
+            .filter(applyIssueFilters(state.get('filters')))
+        )
       )
-    )
-    .filter(applyRepositoryFilters(state.get('filters'))),
-  user: state.get('user'),
-  filters: state.get('filters')
-}), dispatch => ({
+      .filter(applyRepositoryFilters(state.get('filters'))),
+    user: state.get('user'),
+    filters: state.get('filters')
+  };
+}, dispatch => ({
   getRepos,
   dispatch
 }))(Main);

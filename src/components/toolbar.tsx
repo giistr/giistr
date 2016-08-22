@@ -92,6 +92,7 @@ class Toolbar extends React.Component<MainProps, any> {
 
   public render() {
     const { filters } = this.props;
+    console.log('render toolbar');
 
     return (
       <div style={styles.container}>
