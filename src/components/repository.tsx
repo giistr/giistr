@@ -5,7 +5,8 @@ import * as moment from 'moment';
 
 const styles = {
   mainRepo: {
-    margin: '0px 20px'
+    margin: '0px 20px',
+    backgroundColor: 'white'
   },
   repoContainer: {
     display: 'flex',
