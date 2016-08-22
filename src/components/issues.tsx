@@ -103,7 +103,7 @@ class Issues extends React.PureComponent<MainProps, any> {
         });
       }
     });
-  }
+  };
 
   public render() {
     const { issues } = this.props;

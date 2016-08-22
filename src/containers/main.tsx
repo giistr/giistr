@@ -72,7 +72,6 @@ class Main extends React.Component<MainProps, any> {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
     const { page, column } = this.state;
-    console.log('render main');
 
     return (
       <div>
