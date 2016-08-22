@@ -11,22 +11,30 @@ const base = {
 };
 
 export class BlinkSquare extends React.PureComponent<{}, any> {
-  state = {
+  public state = {
     color: Colors.blue
   };
 
+  private interval = undefined;
+  private timeout = undefined;
+
   public componentWillMount() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         color: 'transparent'
       });
 
-      setTimeout(() => {
+      this.timeout = setTimeout(() => {
         this.setState({
           color: Colors.blue
         });
       }, 500)
     }, 1000);
+  }
+
+  public componentWillUnmount() {
+    clearInterval(this.interval);
+    clearTimeout(this.timeout);
   }
 
   public render() {

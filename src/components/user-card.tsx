@@ -2,6 +2,7 @@ import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
 import { browserHistory } from 'react-router';
+import * as StyleSheet from 'stilr';
 
 const styles = {
   container: {
@@ -40,13 +41,6 @@ const styles = {
     fontSize: 13,
     lineHeight: '22px'
   },
-  item: {
-    fontSize: 12,
-    lineHeight: '18px',
-    color: Colors.lightGrey,
-    cursor: 'pointer',
-    margin: '0px 10px'
-  },
   menu: {
     display: 'flex',
     alignItems: 'center',
@@ -54,6 +48,19 @@ const styles = {
     borderLeft: `1px solid ${Colors.borderGrey}`
   }
 };
+
+const improvedStyle = StyleSheet.create({
+  item: {
+    fontSize: 12,
+    lineHeight: '18px',
+    color: Colors.lightGrey,
+    cursor: 'pointer',
+    margin: '0px 10px',
+    ':hover': {
+      color: Colors.middleGrey
+    }
+  }
+});
 
 class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, any> {
 
@@ -81,9 +88,9 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
         </div>
 
         <div style={styles.menu}>
-          <div style={styles.item} onClick={this.onClickHome}>Home</div>
-          <div style={styles.item} onClick={this.onClickAbout}>About giistr</div>
-          <div style={styles.item} onClick={onLogout}>Sign out</div>
+          <div className={improvedStyle.item} onClick={this.onClickHome}>Home</div>
+          <div className={improvedStyle.item} onClick={this.onClickAbout}>About giistr</div>
+          <div className={improvedStyle.item} onClick={onLogout}>Sign out</div>
         </div>
       </div>
     );
