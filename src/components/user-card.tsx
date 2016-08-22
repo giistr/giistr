@@ -50,7 +50,7 @@ const styles = {
   },
   active: {
     fontWeight: 'bold',
-    color: Colors.grey
+    color: Colors.blue
   }
 };
 
