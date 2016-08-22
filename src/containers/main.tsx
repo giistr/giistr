@@ -70,11 +70,6 @@ class Main extends React.Component<MainProps, any> {
     let { repositories } = this.props;
     const { page, column } = this.state;
 
-    // Hack because moving the filter repository in connect behave weird
-    if (filters.get('withIssues')) {
-      repositories = repositories.filter(repo => repo.get('issues').size > 0).toOrderedMap();
-    }
-
     return (
       <div>
         <NavigationBar
@@ -99,7 +94,6 @@ connect((state, props) => ({
   totalRepositories: state.get('repository').size,
   repositories: state
     .get('repository')
-    .filter(applyRepositoryFilters(state.get('filters')))
     .map(repo =>
       repo.set('issues',
         state
@@ -107,7 +101,8 @@ connect((state, props) => ({
           .filter(applyIssueFilters(state.get('filters')))
           .filter(issue => issue.get('repositoryId') === repo.get('id'))
       )
-    ),
+    )
+    .filter(applyRepositoryFilters(state.get('filters'))),
   user: state.get('user'),
   filters: state.get('filters')
 }), dispatch => ({

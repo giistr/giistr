@@ -34,7 +34,11 @@ export function applyRepositoryFilters(filters) {
     }
 
     // With issues only filter
-    if (filters.get(withIssues) === true && repository.get('open_issues') === 0) {
+    if (
+      filters.get(withIssues) === true &&
+      (repository.get('open_issues') === 0 ||
+      repository.get('issues').size === 0)
+    ) {
       return false;
     }
 
