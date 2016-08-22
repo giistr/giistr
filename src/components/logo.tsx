@@ -1,17 +1,8 @@
 import * as React from 'react';
-import { Colors } from '../style';
 
-const base = {
-};
+const base = {};
 
-const logo = {
-
-};
-
-const slash = {
-  color: Colors.blue,
-  fontWeight: 400
-};
+const logo = {};
 
 export function Logo({
   style

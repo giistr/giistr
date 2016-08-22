@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Set, Map } from 'immutable';
 import Input from './input-autocomplete';
 import { Colors } from '../style';
-import UserCard from './user-card';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
 import { remove, add, replace, reset } from '../actions/filters';

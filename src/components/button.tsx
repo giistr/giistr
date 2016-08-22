@@ -3,7 +3,7 @@ import { Colors } from '../style';
 
 interface MainProps {
   onClick?: Function;
-  style?: Object
+  style?: Object;
 };
 
 const base = {
@@ -21,7 +21,7 @@ const base = {
 
 class Button extends React.Component<MainProps, any> {
 
-  state = {
+  public state = {
     color: Colors.blueBackground
   };
 

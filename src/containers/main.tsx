@@ -13,7 +13,6 @@ import {
 import { User } from '../reducers/user';
 
 import ToolBar from '../components/toolbar';
-import RepoColumn from '../components/repo-column';
 import NavigationBar from '../components/navigation-bar';
 
 const styles = {

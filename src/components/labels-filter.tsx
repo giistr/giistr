@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Tag } from './tag';
-import { Colors } from '../style';
 import { RawButton } from './raw-button';
 
 interface MainProps {

@@ -28,7 +28,7 @@ export class BlinkSquare extends React.PureComponent<{}, any> {
         this.setState({
           color: Colors.blue
         });
-      }, 500)
+      }, 500);
     }, 1000);
   }
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Colors } from '../style';
 
 const styles = {
   container: {

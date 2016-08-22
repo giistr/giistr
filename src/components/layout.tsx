@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Colors } from '../style';
-import { OrderedMap, Range } from 'immutable';
+import { OrderedMap } from 'immutable';
 
 import RepoColumn from '../components/repo-column';
 import LoadMore from '../components/load-more';

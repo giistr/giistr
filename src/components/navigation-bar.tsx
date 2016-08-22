@@ -72,7 +72,7 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
       <div>
         Let's contribute to the open source world
       </div>
-    )
+    );
   }
 
   public render() {
