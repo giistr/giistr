@@ -3,6 +3,7 @@ import { User } from '../reducers/user';
 import { Colors } from '../style';
 import { browserHistory } from 'react-router';
 import * as StyleSheet from 'stilr';
+import { fromJS } from 'immutable';
 
 const styles = {
   container: {
@@ -46,6 +47,10 @@ const styles = {
     alignItems: 'center',
     paddingLeft: 30,
     borderLeft: `1px solid ${Colors.borderGrey}`
+  },
+  active: {
+    fontWeight: 'bold',
+    color: Colors.grey
   }
 };
 
@@ -62,7 +67,42 @@ const improvedStyle = StyleSheet.create({
   }
 });
 
-class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, any> {
+interface MainProps {
+  user: User;
+  onLogout: Function;
+  location: any;
+};
+
+class UserCard extends React.PureComponent<MainProps, any> {
+
+  public state = {
+    active: this.getActiveRoute(this.props.location)
+  };
+
+  private menu = fromJS([
+    {
+      title: 'Home',
+      action: this.onClickHome
+    },
+    {
+      title: 'About',
+      action: this.onClickAbout
+    },
+    {
+      title: 'Sign out',
+      action: this.props.onLogout
+    }
+  ]);
+
+  private getActiveRoute(location) {
+    if (location.pathname.includes('app')) {
+      return 0;
+    }
+
+    if (location.pathname.includes('about')) {
+      return 1;
+    }
+  }
 
   public shouldComponentUpdate(nextProps) {
     return !nextProps.user.equals(this.props.user);
@@ -88,9 +128,17 @@ class UserCard extends React.PureComponent<{ user: User; onLogout: Function; }, 
         </div>
 
         <div style={styles.menu}>
-          <div className={improvedStyle.item} onClick={this.onClickHome}>Home</div>
-          <div className={improvedStyle.item} onClick={this.onClickAbout}>About giistr</div>
-          <div className={improvedStyle.item} onClick={onLogout}>Sign out</div>
+          {
+            this.menu.map((el, index) =>
+              <div
+                key={index}
+                style={index === this.state.active ? styles.active : {}}
+                className={improvedStyle.item}
+                onClick={el.get('action')}>
+                { el.get('title') }
+              </div>
+            )
+          }
         </div>
       </div>
     );

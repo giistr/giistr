@@ -33,6 +33,7 @@ interface MainProps {
   repositories: OrderedMap<number, any>;
   user: User;
   filters: Map<string, any>;
+  location?: any;
 };
 
 const initialState = {
@@ -45,11 +46,13 @@ class Main extends React.Component<MainProps, any> {
   public state = initialState;
 
   public componentWillMount() {
-    const { user } = this.props;
+    const { user, repositories } = this.props;
 
-    if (user.size === 0) {
+    if (!user.size) {
       browserHistory.push('/');
-    } else {
+    }
+
+    if (user.size && !repositories.size) {
       this.onGetRepository(this.state.page);
     }
   }
@@ -66,7 +69,7 @@ class Main extends React.Component<MainProps, any> {
   };
 
   public render() {
-    const { user, filters, totalRepositories } = this.props;
+    const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
     const { page, column } = this.state;
 
@@ -74,6 +77,7 @@ class Main extends React.Component<MainProps, any> {
       <div>
         <NavigationBar
           user={user}
+          location={location}
           total={totalRepositories}
           after={repositories.size}/>
         <div style={styles.mainList}>

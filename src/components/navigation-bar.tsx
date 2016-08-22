@@ -13,6 +13,7 @@ interface MainProps {
   clearUser: any;
   dispatch: any;
   user: User;
+  location: any;
 };
 
 const styles = {
@@ -76,7 +77,7 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
   }
 
   public render() {
-    const { after, total, user } = this.props;
+    const { after, total, user, location } = this.props;
 
     return (
       <div style={styles.container}>
@@ -89,6 +90,7 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
         {
           user.size > 0 && (
             <UserCard
+              location={location}
               onLogout={this.onLogout}
               user={user}/>
           )

@@ -8,6 +8,7 @@ import NavigationBar from '../components/navigation-bar';
 
 interface MainProps {
   user: User;
+  location: any;
 };
 
 const styles = {
@@ -24,11 +25,11 @@ const styles = {
 
 class About extends React.Component<MainProps, any> {
   public render() {
-    const { user } = this.props;
+    const { user, location } = this.props;
 
     return (
       <div>
-        <NavigationBar user={user}/>
+        <NavigationBar location={location} user={user}/>
         <div style={styles.main}>
           <div style={styles.column}>
             <h1><span>/</span>About</h1>
