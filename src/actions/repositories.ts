@@ -12,7 +12,7 @@ export function clear() {
   };
 }
 
-function add(repos) {
+export function add(repos) {
   return dispatch => {
     return dispatch({
       payload: repos,

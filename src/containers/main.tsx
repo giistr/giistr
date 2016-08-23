@@ -5,6 +5,7 @@ import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
+import { devDispatcher } from '../dev-dispatcher';
 
 import {
   applyRepositoryFilters,
@@ -64,8 +65,8 @@ class Main extends React.Component<MainProps, any> {
 
   private onGetRepository(page, user: User = this.props.user) {
     const { dispatch, getRepos } = this.props;
-
-    dispatch(getRepos(user.get('login'), page));
+    devDispatcher(dispatch, user);
+    // dispatch(getRepos(user.get('login'), page));
   };
 
   private onNext(page) {
