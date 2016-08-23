@@ -67,7 +67,9 @@ class Main extends React.Component<MainProps, any> {
   private onGetRepository(page, user: User = this.props.user) {
     const { dispatch, getRepos } = this.props;
 
-    this.setState({ loaded: false });
+    if (this.state.loaded) {
+      this.setState({ loaded: false });
+    }
 
     dispatch(getRepos(user.get('login'), page)).then(() => {
       this.setState({ loaded: true });
