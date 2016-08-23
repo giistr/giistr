@@ -4,6 +4,8 @@ import { OrderedMap } from 'immutable';
 import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
+import { LoaderLayout } from '../components/loader-layout';
+import { List } from 'immutable';
 import { Colors } from '../style';
 import { devDispatcher } from '../dev-dispatcher';
 
@@ -42,14 +44,13 @@ interface MainProps {
   location?: any;
 };
 
-const initialState = {
-  page: 1,
-  column: window.innerWidth >= 1440 ? 2 : 1
-};
-
 class Main extends React.Component<MainProps, any> {
 
-  public state = initialState;
+  public state = {
+    page: 1,
+    column: window.innerWidth >= 1440 ? 2 : 1,
+    loaded: this.props.repositories.size > 0
+  };
 
   public componentWillMount() {
     const { user, repositories } = this.props;
@@ -65,8 +66,12 @@ class Main extends React.Component<MainProps, any> {
 
   private onGetRepository(page, user: User = this.props.user) {
     const { dispatch, getRepos } = this.props;
-    devDispatcher(dispatch, user);
-    // dispatch(getRepos(user.get('login'), page));
+
+    this.setState({ loaded: false });
+
+    dispatch(getRepos(user.get('login'), page)).then(() => {
+      this.setState({ loaded: true });
+    });
   };
 
   private onNext(page) {
@@ -77,7 +82,7 @@ class Main extends React.Component<MainProps, any> {
   public render() {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
-    const { page, column } = this.state;
+    const { page, column, loaded } = this.state;
 
     return (
       <div style={styles.container}>
@@ -89,6 +94,7 @@ class Main extends React.Component<MainProps, any> {
         <div style={styles.mainList}>
           <Layout
             column={column}
+            loaded={loaded}
             onClickMore={this.onNext.bind(this, page + 1)}
             repositories={repositories}/>
           <ToolBar

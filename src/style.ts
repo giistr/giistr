@@ -10,7 +10,7 @@ export const Colors = {
   middleGrey: 'rgba(21, 23, 36, 0.7)',
   lightGrey: 'rgba(21, 23, 36, 0.4)',
   lightlightGrey: 'rgba(20, 22, 36, 0.2)',
-  greyish: '#FAFAFA',
+  greyish: 'rgb(253, 253, 253)',
   red: '#ff5252',
   borderGrey: '#f1f1f2'
 };

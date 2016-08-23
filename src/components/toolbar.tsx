@@ -23,8 +23,6 @@ interface MainProps {
 
 const styles = {
   container: {
-    backgroundColor: 'white',
-    border: `1px solid ${Colors.borderGrey}`,
     borderRadius: '5px 5px 0px 0px',
     maxWidth: 360,
     flex: 3,
@@ -95,7 +93,6 @@ class Toolbar extends React.Component<MainProps, any> {
 
   public render() {
     const { filters } = this.props;
-    console.log('render toolbar');
 
     return (
       <div style={styles.container}>

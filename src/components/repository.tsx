@@ -81,26 +81,36 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
           <div style={styles.line}>
             <div style={styles.fullName}>
               <h1 style={styles.font}>{repo.getIn([ 'owner', 'login' ])}</h1>
-              <a href={repo.get('html_url')} target="_blank">
-                <h1 style={styles.name}>
-                  <span style={styles.slash}>/</span><span style={styles.font}>{ repo.get('name') }</span>
-                </h1>
-              </a>
+              {
+                repo.size > 0 && (
+                  <a href={repo.get('html_url')} target="_blank">
+                    <h1 style={styles.name}>
+                      <span style={styles.slash}>/</span><span style={styles.font}>{ repo.get('name') }</span>
+                    </h1>
+                  </a>
+                )
+              }
             </div>
           </div>
           <div style={styles.description}>
             { repo.get('description') }
           </div>
           <div style={Object.assign({}, styles.line, styles.second)}>
-            <div style={styles.first}>
-              <div>{ repo.get('language') }</div>
-              <div style={styles.item}>Issues: { repo.get('open_issues') }</div>
-              <div style={styles.item}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
-            </div>
-            <div>
-              <span>Star</span>
-              <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
-            </div>
+            {
+              repo.size > 0 && (
+                <div>
+                  <div style={styles.first}>
+                    <div>{ repo.get('language') }</div>
+                    <div style={styles.item}>Issues: { repo.get('open_issues') }</div>
+                    <div style={styles.item}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
+                  </div>
+                  <div>
+                    <span>Star</span>
+                    <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
+                  </div>
+                </div>
+              )
+            }
           </div>
         </div>
       </div>

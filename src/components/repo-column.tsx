@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { OrderedMap, List } from 'immutable';
+import { OrderedMap, List, Map } from 'immutable';
 import Issues from '../components/issues';
 import { Repository } from '../components/repository';
 import { fetchIssues } from '../actions/issues';
@@ -32,6 +32,8 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
   public render() {
     const { repositories } = this.props;
 
+    console.log(styles, repositories);
+
     return (
       <div style={styles.container}>
         {
@@ -41,7 +43,7 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
               key={key}>
               <Repository repo={repo}/>
               {
-                repo.get('issues').size > 0 && (
+                repo.get('issues', Map<string, any>()).size > 0 && (
                   <Issues
                     onLoadMore={this.onLoadMoreIssues.bind(this, repo)}
                     issues={repo.get('issues')}/>
