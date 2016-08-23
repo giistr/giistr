@@ -22,7 +22,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     body = JSON.stringify(args);
   }
 
-  if(shallow || preventBody) {
+  if (shallow || preventBody) {
     url += qs.stringify(args);
   }
 

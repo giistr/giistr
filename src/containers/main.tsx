@@ -4,10 +4,7 @@ import { OrderedMap } from 'immutable';
 import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
-import { LoaderLayout } from '../components/loader-layout';
-import { List } from 'immutable';
 import { Colors } from '../style';
-import { devDispatcher } from '../dev-dispatcher';
 
 import {
   applyRepositoryFilters,

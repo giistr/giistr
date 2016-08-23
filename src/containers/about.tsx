@@ -26,7 +26,7 @@ const styles = {
   title: {
     fontSize: 22,
     fontWeight: 100,
-    letterSpacing: "0.3px",
+    letterSpacing: '0.3px',
     color: Colors.grey
   },
   secondTitle: {
@@ -41,13 +41,13 @@ const styles = {
   },
   text: {
     fontSize: 14,
-    lineHeight: "20px",
+    lineHeight: '20px',
     color: Colors.middleGrey,
     paddingBottom: 50,
     borderBottom: `1px solid ${Colors.borderGrey}`
   },
   listContainer: {
-    lineHeight: "24px",
+    lineHeight: '24px',
     fontSize: 14,
     color: Colors.middleGrey
   },
@@ -81,8 +81,10 @@ class About extends React.Component<MainProps, any> {
             <h1 style={styles.title}><span>/</span>About</h1>
             <h1 style={styles.subtitle}>An easy way to pick a task from a repository you like and contribute to it</h1>
             <div style={styles.text}>
-              Giistr is a tool to help the open-source community to grow faster because today open-source libraries are a very important part of every project.
-              Our tool make any contribution easier, every developer can just pick a task he think he have the profile appropriated for.
+              Giistr is a tool to help the open-source community to grow faster because
+              today open-source libraries are a very important part of every project.
+              Our tool make any contribution easier, every developer can
+              just pick a task he think he have the profile appropriated for.
             </div>
             <div>
               <h1 style={styles.secondTitle}><span>/</span>The principle</h1>

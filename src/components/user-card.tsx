@@ -118,7 +118,7 @@ class UserCard extends React.PureComponent<MainProps, any> {
   }
 
   public render() {
-    const { user, onLogout } = this.props;
+    const { user } = this.props;
 
     return (
       <div style={styles.container}>
