@@ -12,7 +12,7 @@ interface MainProps {
 const styles = {
   issueItem: {
     borderBottom: `1px solid ${Colors.borderGrey}`,
-    padding: '20px 10px',
+    padding: 20,
     display: 'flex',
     flexDirection: 'column',
     lineHeight: '30px',

@@ -4,6 +4,7 @@ import { OrderedMap } from 'immutable';
 import { getRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
+import { Colors } from '../style';
 
 import {
   applyRepositoryFilters,
@@ -16,6 +17,10 @@ import ToolBar from '../components/toolbar';
 import NavigationBar from '../components/navigation-bar';
 
 const styles = {
+  container: {
+    backgroundColor: Colors.greyish,
+    minHeight: '100vh'
+  },
   mainList: {
     display: 'flex',
     margin: '0px auto',
@@ -74,7 +79,7 @@ class Main extends React.Component<MainProps, any> {
     const { page, column } = this.state;
 
     return (
-      <div>
+      <div style={styles.container}>
         <NavigationBar
           user={user}
           location={location}

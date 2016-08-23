@@ -24,9 +24,12 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
+    border: `1px solid ${Colors.borderGrey}`,
+    borderRadius: '5px 5px 0px 0px',
     maxWidth: 360,
     flex: 3,
-    marginTop: 30
+    marginTop: 40,
+    minHeight: '100vh'
   },
   languageFilter: {},
   filterTitle: {

@@ -22,6 +22,7 @@ const styles = {
   },
   avatar: {
     borderRadius: '50%',
+    overflow: 'hidden',
     position: 'relative',
     border: `1px solid ${Colors.borderGrey}`,
     width: 40,
@@ -60,7 +61,7 @@ const improvedStyle = StyleSheet.create({
     lineHeight: '18px',
     color: Colors.lightGrey,
     cursor: 'pointer',
-    margin: '0px 10px',
+    margin: '0px 20px',
     ':hover': {
       color: Colors.middleGrey
     }
@@ -122,9 +123,12 @@ class UserCard extends React.PureComponent<MainProps, any> {
     return (
       <div style={styles.container}>
         <div style={styles.first}>
-          <div style={styles.avatar}>
+          <a
+            href={user.get('html_url')}
+            target="_blank"
+            style={styles.avatar}>
             <img style={styles.image} src={user.get('avatar_url')}/>
-          </div>
+          </a>
         </div>
 
         <div style={styles.menu}>

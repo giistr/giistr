@@ -10,11 +10,11 @@ const styles = {
   },
   repoContainer: {
     display: 'flex',
-    padding: '20px 10px',
+    padding: '24px 20px',
     minWidth: 400,
     flexDirection: 'column',
     border: `1px solid ${Colors.borderGrey}`,
-    borderRadius: 5
+    borderRadius: '5px 5px 0px 0px'
   },
   line: {
     flex: 1,
@@ -44,29 +44,24 @@ const styles = {
     color: Colors.middleGrey
   },
   second: {
-    fontSize: 14,
-    justifyContent: 'flex-start',
+    fontSize: 13,
+    justifyContent: 'space-between',
+    color: Colors.middleGrey,
     fontWeight: 300,
     paddingTop: 16,
     borderTop: `1px solid ${Colors.borderGrey}`
   },
-  issues: {
-    marginLeft: 20
-  },
-  updated: {
-    marginLeft: 20
-  },
-  starContainer: {
-    fontSize: 14,
-    color: Colors.grey,
-    marginLeft: 20
+  item: {
+    marginLeft: 24
   },
   counter: {
-    color: Colors.lightGrey,
     marginLeft: 8
   },
   starLabel: {
     fontWeight: 400
+  },
+  first: {
+    display: 'flex'
   }
 };
 
@@ -97,11 +92,13 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
             { repo.get('description') }
           </div>
           <div style={Object.assign({}, styles.line, styles.second)}>
-            <div>{ repo.get('language') }</div>
-            <div style={styles.issues}>Issues: { repo.get('open_issues') }</div>
-            <div style={styles.updated}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
-            <div style={styles.starContainer}>
-              <span style={styles.starLabel}>Star</span>
+            <div style={styles.first}>
+              <div>{ repo.get('language') }</div>
+              <div style={styles.item}>Issues: { repo.get('open_issues') }</div>
+              <div style={styles.item}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
+            </div>
+            <div>
+              <span>Star</span>
               <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
             </div>
           </div>

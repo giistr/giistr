@@ -13,7 +13,7 @@ const styles = {
     overflow: 'auto',
     minHeight: 10,
     maxHeight: containerMaxHeight,
-    borderRadius: 5,
+    borderRadius: '0px 0px 5px 5px',
     backgroundColor: 'white'
   },
   more: {

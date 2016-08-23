@@ -32,7 +32,8 @@ const styles = {
     flexDirection: 'column'
   },
   mainTitle: {
-    fontSize: 32,
+    fontSize: 38,
+    lineHeight: '44px',
     fontWeight: 'bold',
     color: Colors.grey
   },
@@ -41,7 +42,7 @@ const styles = {
     color: Colors.middleGrey,
     marginTop: 30,
     fontSize: 16,
-    fontWeight: 200
+    fontWeight: 400
   },
   interactive: {
     height: 160,
@@ -57,23 +58,10 @@ const styles = {
     color: Colors.middleGrey
   },
   titles: {
-    marginTop: 100,
+    marginTop: 80,
     marginBottom: 40
   }
 };
-
-// const ImprovedStyle = StyleSheet.create({
-//   switchButton: {
-//     fontSize: 12,
-//     color: Colors.blue,
-//     textDecoration: 'underline',
-//     cursor: 'pointer',
-//     ':hover': {
-//       color: Colors.darkBlue,
-//       textDecoration: 'none'
-//     }
-//   }
-// });
 
 /// <reference path="require.d.ts" />
 const config = fromJS(require('!json!../config.json')); // tslint:disable-line

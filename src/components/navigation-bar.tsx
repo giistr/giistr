@@ -27,7 +27,8 @@ const styles = {
     justifyContent: 'space-between'
   },
   logo: {
-    margin: "0px 30px"
+    marginLeft: 30,
+    marginRight: 20
   },
   description: {
     color: Colors.lightGrey,

@@ -3,7 +3,7 @@ import * as React from 'react';
 const base = {};
 
 const logo = {
-  width: 60
+  width: 80
 };
 
 export function Logo({
