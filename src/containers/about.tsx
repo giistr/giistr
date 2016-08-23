@@ -56,7 +56,16 @@ const styles = {
     fontWeight: 500
   },
   thirdTitle: {
-    marginTop: 40
+    marginTop: 40,
+    lineHeight: '50px'
+  },
+  link: {
+    display: 'inline-block',
+    marginLeft: 5
+  },
+  strap: {
+    fontSize: 13,
+    color: Colors.middleGrey
   }
 };
 
@@ -83,9 +92,10 @@ class About extends React.Component<MainProps, any> {
                 <li><span style={styles.bold}>Contribute</span> to an issue you picked</li>
               </ul>
               <div style={styles.thirdTitle}>
-                Built for the developer community with passion, our project is <a href="https://github.com/alex3165/github-issues">open-source itself.</a>
+                Built for the developer community with passion, our project is
+                <a href="https://github.com/alex3165/github-issues" style={styles.link}>open-source itself.</a>
               </div>
-              <div>
+              <div style={styles.strap}>
                 Feel free to reach and follow us, we will keep you up to date about Giistr.
               </div>
             </div>
