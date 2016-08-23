@@ -21,7 +21,7 @@ const styles = {
   title2: {
     flex: 1,
     opacity: 0.9,
-    fontWeight: 100,
+    fontWeight: 400,
     fontSize: 14
   },
   line: {
@@ -51,7 +51,8 @@ const styles = {
     marginLeft: 20
   },
   milestone: {
-    marginLeft: 20
+    marginLeft: 20,
+    fontSize: 13
   },
   icon: {
     display: 'inline-block',

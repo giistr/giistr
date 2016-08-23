@@ -32,8 +32,6 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
   public render() {
     const { repositories } = this.props;
 
-    console.log(styles, repositories);
-
     return (
       <div style={styles.container}>
         {

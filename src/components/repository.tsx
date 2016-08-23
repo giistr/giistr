@@ -46,10 +46,15 @@ const styles = {
   second: {
     fontSize: 13,
     justifyContent: 'space-between',
-    color: Colors.middleGrey,
-    fontWeight: 300,
+    color: Colors.lightGrey,
+    fontWeight: 400,
     paddingTop: 16,
     borderTop: `1px solid ${Colors.borderGrey}`
+  },
+  subline: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   item: {
     marginLeft: 24
@@ -98,7 +103,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
           <div style={Object.assign({}, styles.line, styles.second)}>
             {
               repo.size > 0 && (
-                <div>
+                <div style={styles.subline}>
                   <div style={styles.first}>
                     <div>{ repo.get('language') }</div>
                     <div style={styles.item}>Issues: { repo.get('open_issues') }</div>

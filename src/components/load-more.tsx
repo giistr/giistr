@@ -10,7 +10,8 @@ const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 30
   },
   notice: {
     display: 'flex',
@@ -22,6 +23,10 @@ const styles = {
   },
   sentence: {
     marginLeft: 20
+  },
+  more: {
+    paddingLeft: 24,
+    paddingRight: 24
   }
 };
 
@@ -36,6 +41,7 @@ class LoadMore extends React.Component<MainProps, any> {
           <div style={styles.sentence}>Psst! you can load more repositories</div>
         </div>
         <Button
+          style={styles.more}
           onClick={onClickMore}>
           See more repositories
         </Button>

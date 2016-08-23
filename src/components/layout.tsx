@@ -65,8 +65,6 @@ class Layout extends React.Component<MainProps, any> {
   public render() {
     const { column, repositories, onClickMore, loaded } = this.props;
 
-    console.log(loaded);
-
     return (
       <div style={styles.container}>
         {
