@@ -65,7 +65,7 @@ const styles = {
 
 /// <reference path="require.d.ts" />
 const config = fromJS(require('!json!../config.json')); // tslint:disable-line
-const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config.get('clientId')}&redirect_uri=http://localhost:3001/`;
+const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config.get('clientId')}`;
 
 class Landing extends React.Component<MainProps, any> {
 
