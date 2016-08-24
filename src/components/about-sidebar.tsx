@@ -19,6 +19,12 @@ const styles = {
     color: Colors.grey,
     fontSize: 16
   },
+  second: {
+    color: Colors.blue,
+    backgroundColor: Colors.blueBackground,
+    padding: '2px 4px',
+    borderRadius: 4
+  },
   slash: {
     color: Colors.blue
   },
@@ -34,6 +40,9 @@ const styles = {
   },
   link: {
     padding: '0px 5px'
+  },
+  firstLink: {
+    paddingRight: 5
   }
 };
 
@@ -49,13 +58,13 @@ export function AboutSidebar() {
       <div>
 
         <div style={styles.user}>
-          <h1 style={styles.userTitle}>alexandre_rieux<span style={styles.slash}>/</span>developer</h1>
+          <h1 style={styles.userTitle}>alexandre_rieux<span style={styles.second}>/developer</span></h1>
           <div style={styles.description}>
             Front-end developer, FRP, Immutability, also iOS developer during my free time.
           </div>
           <div style={styles.links}>
             <RawButton
-              style={styles.link}
+              style={styles.firstLink}
               onClick={redirectTo.bind(null, 'https://github.com/alex3165')}>
               Github
             </RawButton>
@@ -73,13 +82,13 @@ export function AboutSidebar() {
         </div>
 
         <div style={styles.user}>
-          <h1 style={styles.userTitle}>jason_boyer<span style={styles.slash}>/</span>designer</h1>
+          <h1 style={styles.userTitle}>jason_boyer<span style={styles.second}>/designer</span></h1>
           <div style={styles.description}>
             blabla
           </div>
           <div style={styles.links}>
             <RawButton
-              style={styles.link}
+              style={styles.firstLink}
               onClick={redirectTo.bind(null, 'https://dribbble.com/jason_boyer')}>
               Dribbble
             </RawButton>

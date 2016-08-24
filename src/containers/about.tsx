@@ -69,6 +69,9 @@ const styles = {
     fontSize: 13,
     lineHeight: '20px',
     color: Colors.middleGrey
+  },
+  slash: {
+    color: Colors.blue
   }
 };
 
@@ -86,7 +89,7 @@ class About extends React.Component<MainProps, any> {
         <NavigationBar location={location} user={user}/>
         <div style={styles.main}>
           <div style={styles.column}>
-            <h1 style={styles.title}><span>/</span>About</h1>
+            <h1 style={styles.title}><span style={styles.slash}>/</span>About</h1>
             <h1 style={styles.subtitle}>An easy way to pick a task from a repository you like and contribute to it</h1>
             <div style={styles.text}>
               Giistr is a tool that help developers to quickly find a task which fit with their profile.
@@ -96,7 +99,7 @@ class About extends React.Component<MainProps, any> {
               Open-source libraries are a big part of our every day life as a developer, let's make it better.
             </div>
             <div>
-              <h1 style={styles.secondTitle}><span>/</span>How it works</h1>
+              <h1 style={styles.secondTitle}><span style={styles.slash}>/</span>How it works</h1>
               <ul style={styles.listContainer}>
                 <li><span style={styles.bold}>Filter</span> the issues easily per date, labels or language</li>
                 <li><span style={styles.bold}>Find</span> an issue that fit your skills</li>

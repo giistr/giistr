@@ -12,5 +12,5 @@ export const Colors = {
   lightlightGrey: 'rgba(20, 22, 36, 0.2)',
   greyish: 'rgb(253, 253, 253)',
   red: '#ff5252',
-  borderGrey: '#f1f1f2'
+  borderGrey: '#EBEBEB'
 };
