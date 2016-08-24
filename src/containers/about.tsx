@@ -5,6 +5,7 @@ import { User } from '../reducers/user';
 
 import { AboutSidebar } from '../components/about-sidebar';
 import NavigationBar from '../components/navigation-bar';
+import { RawButton } from '../components/raw-button';
 
 interface MainProps {
   user: User;
@@ -25,23 +26,23 @@ const styles = {
   },
   title: {
     fontSize: 22,
-    fontWeight: 100,
+    fontWeight: 400,
     letterSpacing: '0.3px',
     color: Colors.grey
   },
   secondTitle: {
     color: Colors.grey,
-    fontWeight: 100,
+    fontWeight: 400,
     margin: '20px 0px'
   },
   subtitle: {
     color: Colors.grey,
-    fontWeight: 100,
+    fontWeight: 400,
     margin: '20px 0px'
   },
   text: {
     fontSize: 14,
-    lineHeight: '20px',
+    lineHeight: '22px',
     color: Colors.middleGrey,
     paddingBottom: 50,
     borderBottom: `1px solid ${Colors.borderGrey}`
@@ -53,7 +54,7 @@ const styles = {
   },
   bold: {
     color: Colors.grey,
-    fontWeight: 500
+    fontWeight: 'bold'
   },
   thirdTitle: {
     marginTop: 40,
@@ -61,15 +62,22 @@ const styles = {
   },
   link: {
     display: 'inline-block',
-    marginLeft: 5
+    marginLeft: 5,
+    fontSize: 16
   },
   strap: {
     fontSize: 13,
+    lineHeight: '20px',
     color: Colors.middleGrey
   }
 };
 
 class About extends React.Component<MainProps, any> {
+
+  private onClickProjectLink() {
+    window.open('https://github.com/alex3165/github-issues', '_blank').focus();
+  }
+
   public render() {
     const { user, location } = this.props;
 
@@ -81,24 +89,26 @@ class About extends React.Component<MainProps, any> {
             <h1 style={styles.title}><span>/</span>About</h1>
             <h1 style={styles.subtitle}>An easy way to pick a task from a repository you like and contribute to it</h1>
             <div style={styles.text}>
-              Giistr is a tool to help the open-source community to grow faster because
-              today open-source libraries are a very important part of every project.
-              Our tool make any contribution easier, every developer can
-              just pick a task he think he have the profile appropriated for.
+              Giistr is a tool that help developers to quickly find a task which fit with their profile.
+              The app display all the repositories you starred on github and their issues in one view so you can apply filters
+              and find an issue you are happy with.
+              Our purpose is to help open-source projects growth faster and get more stability.
+              Open-source libraries are a big part of our every day life as a developer, let's make it better.
             </div>
             <div>
-              <h1 style={styles.secondTitle}><span>/</span>The principle</h1>
+              <h1 style={styles.secondTitle}><span>/</span>How it works</h1>
               <ul style={styles.listContainer}>
                 <li><span style={styles.bold}>Filter</span> the issues easily per date, labels or language</li>
                 <li><span style={styles.bold}>Find</span> an issue that fit your skills</li>
-                <li><span style={styles.bold}>Contribute</span> to an issue you picked</li>
+                <li><span style={styles.bold}>Contribute</span> to the issue you picked</li>
               </ul>
               <div style={styles.thirdTitle}>
-                Built for the developer community with passion, our project is
-                <a href="https://github.com/alex3165/github-issues" style={styles.link}>open-source itself.</a>
+                Built for the developer community with passion, this app is open-source on
+                <RawButton onClick={this.onClickProjectLink} style={styles.link}>Github</RawButton>
               </div>
               <div style={styles.strap}>
-                Feel free to reach and follow us, we will keep you up to date about Giistr.
+                Feel free to reach and follow us, we will keep you updated about the project.<br/>
+                If you find any issue or have any suggestion to do, you can open an issue on our github
               </div>
             </div>
           </div>
