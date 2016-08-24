@@ -49,7 +49,7 @@ app.post('/api/github-login', function handler(req, res) {
       if (!error && response.statusCode === 200) {
         var parsedRes = JSON.parse(body);
         res.send(200, {
-          token: parsedRes.access_token
+          access_token: parsedRes.access_token
         });
       } else {
         res.send(500, { error: err });

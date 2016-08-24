@@ -83,7 +83,7 @@ class Landing extends React.Component<MainProps, any> {
 
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
-      dispatch(githubOauthAction(params.code, config.get('clientId'), config.get('clientSecret')));
+      dispatch(githubOauthAction(params.code));
     }
   }
 

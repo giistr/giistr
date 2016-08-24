@@ -47,15 +47,11 @@ export const oauthFromToken = accessToken => {
   };
 };
 
-export const githubOauthAction = (code, clientId, clientSecret) => {
-  const params = {
-    code,
-    client_id: clientId,
-    client_secret: clientSecret
-  };
+export const githubOauthAction = code => {
+  const params = { code };
 
   return dispatch => {
-    return post(null, params, 'https://github.com/login/oauth/access_token?', true)
+    return post(null, params, '/api/github-login')
       .then(res => {
         const ac = res.get('access_token');
         return oauthFromToken(ac)(dispatch);
