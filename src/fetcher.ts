@@ -29,14 +29,19 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     url += qs.stringify(args);
   }
 
-  let headers;
+  let rawHeader: { [index: string]: string; } = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Accept-Charset' : 'utf-8'
+  };
+
   if (getFromStorage('user')) {
-    headers = new Headers({
+    rawHeader = Object.assign({}, rawHeader, {
       'Authorization': `token ${getFromStorage('user').access_token}`
     });
-  } else {
-    headers = new Headers();
   }
+
+  const headers = new Headers(rawHeader);
 
   const req = new Request(url, {
     method,
