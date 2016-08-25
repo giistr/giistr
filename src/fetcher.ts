@@ -45,7 +45,6 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
 
   const req = new Request(url, {
     method,
-    mode: fullEndpoint ? 'cors' : 'no-cors',
     headers,
     body
   });

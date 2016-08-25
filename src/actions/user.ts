@@ -57,7 +57,7 @@ export const githubOauthAction = code => {
         return oauthFromToken(ac)(dispatch);
       })
       .catch(err => {
-        console.error(err);
+        throw err;
       });
   };
 };
