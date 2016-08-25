@@ -10,6 +10,9 @@ ADD package.json /app
 RUN npm install
 
 ADD . /app
+RUN npm install -g typescript
+RUN npm install -g typings
+RUN typings install
 RUN npm run build
 
 EXPOSE 3001

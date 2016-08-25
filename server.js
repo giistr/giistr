@@ -1,7 +1,8 @@
 var fallback = require('express-history-api-fallback');
 var express = require('express');
-var config = require('./config.json');
+var config = require('./server-config.json');
 var bodyParser = require('body-parser');
+var request = require('request');
 
 // Express setup
 var app = express();
