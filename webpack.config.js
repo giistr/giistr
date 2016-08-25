@@ -4,16 +4,19 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var env = process.env.NODE_ENV;
 
 const entries = [ 'whatwg-fetch', path.join(__dirname, 'src/App') ];
+const output = {
+  filename: 'bundle.js',
+  path: path.join(__dirname, 'dist')
+};
+
 if (env === 'dev') {
   entries.concat([ 'webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001' ]);
+  output.path = __dirname;
 }
 
 module.exports = {
   entry: entries,
-  output: {
-    path: __dirname,
-    filename: 'bundle.js'
-  },
+  output: output,
   devtool: 'eval',
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.css', '.html', 'png', 'jpg']
