@@ -51,7 +51,7 @@ export const githubOauthAction = code => {
   const params = { code };
 
   return dispatch => {
-    return post(null, params, '/api/github-login', true)
+    return post(null, params, '/api/github-login?', true)
       .then(res => {
         const ac = res.get('access_token');
         return oauthFromToken(ac)(dispatch);
