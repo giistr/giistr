@@ -100,3 +100,12 @@ time, mark, audio, video {
 }
 
 textarea, input { outline: none; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  left: 0;
+  right: 0;
+  background-color: #fafafc;
+}

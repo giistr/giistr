@@ -6,6 +6,7 @@ import { clear as clearUser } from '../actions/user';
 import { browserHistory } from 'react-router';
 import { User } from '../reducers/user';
 import { connect } from 'react-redux';
+import { RawButton } from '../components/raw-button';
 
 interface MainProps {
   total?: number;
@@ -19,6 +20,7 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
+    minHeight: 64,
     fontSize: 13,
     padding: '0px 30px',
     borderBottom: `1px solid ${Colors.borderGrey}`,
@@ -41,6 +43,14 @@ const styles = {
   },
   repoCounter: {
     paddingLeft: 12
+  },
+  landingLinks: {
+    display: 'flex'
+  },
+  or: {
+    padding: '0px 10px',
+    lineHeight: '14px',
+    color: Colors.lightGrey
   }
 };
 
@@ -71,10 +81,14 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
 
   private renderInfo() {
     return (
-      <div>
+      <div style={styles.repoCounter}>
         Let's contribute to the open source world
       </div>
     );
+  }
+
+  private onClickLanding() {
+    browserHistory.push('/');
   }
 
   public render() {
@@ -99,17 +113,17 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
           )
         }
         {
-          !user && (
-            <div>
-              <div>
+          !user.size && (
+            <div style={styles.landingLinks}>
+              <RawButton onClick={this.onClickLanding}>
                 Signup with github
-              </div>
-              <span>
+              </RawButton>
+              <div style={styles.or}>
                 or
-              </span>
-              <div>
-                Get unlimited access with token
               </div>
+              <RawButton onClick={this.onClickLanding}>
+                Get unlimited access with token
+              </RawButton>
             </div>
           )
         }

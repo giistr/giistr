@@ -27,28 +27,20 @@ const styles = {
   line: {
     flex: 1,
     display: 'flex',
+    justifyContent: 'space-between',
     color: Colors.grey,
     fontSize: 14
   },
-  secondLine: {
-    flex: 1,
-    display: 'flex',
+  updatedValue: {
     color: Colors.lightGrey
   },
-  updated: {
-    marginLeft: 20
-  },
-  light: {
-    width: 12,
-    height: 12,
-    borderRadius: '50%',
-    display: 'inline-block',
-    backgroundColor: Colors.green,
-    marginRight: 10
+  secondLine: {
+    flex: 1,
+    display: 'flex'
   },
   tagContainer: {
     display: 'flex',
-    marginLeft: 20
+    marginTop: 14
   },
   milestone: {
     marginLeft: 20,
@@ -60,6 +52,13 @@ const styles = {
   },
   convers: {
     marginLeft: 10
+  },
+  secondColumn: {
+    color: Colors.lightGrey,
+    display: 'flex'
+  },
+  column: {
+    display: 'flex'
   }
 };
 
@@ -88,8 +87,22 @@ export class Issue extends React.PureComponent<MainProps, any> {
         style={style}>
         <h2 style={styles.title2}>{ issue.get('title') }</h2>
         <div style={styles.line}>
-          <div><div style={styles.light}></div>Open</div>
-          <div style={styles.updated}>Updated: { updated }</div>
+          <div style={styles.column}>
+            <div>Updated: <span style={styles.updatedValue}>{ updated }</span></div>
+          </div>
+          <div style={styles.secondColumn}>
+            <div>
+              <img style={styles.icon} src="../assets/user.svg"/>
+              { issue.get('assignees').size }
+            </div>
+            <div style={styles.convers}>
+              <img style={styles.icon} src="../assets/convers.svg"/>
+              { issue.get('comments') }
+            </div>
+            <div style={styles.milestone}>No Milestone</div>
+          </div>
+        </div>
+        <div style={styles.secondLine}>
           <div style={styles.tagContainer}>
             {
               issue.get('labelsIds').map((label, key) =>
@@ -97,17 +110,6 @@ export class Issue extends React.PureComponent<MainProps, any> {
               )
             }
           </div>
-        </div>
-        <div style={styles.secondLine}>
-          <div>
-            <img style={styles.icon} src="../assets/user.svg"/>
-            { issue.get('assignees').size }
-          </div>
-          <div style={styles.convers}>
-            <img style={styles.icon} src="../assets/convers.svg"/>
-            { issue.get('comments') }
-          </div>
-          <div style={styles.milestone}>No Milestone</div>
         </div>
       </li>
     );

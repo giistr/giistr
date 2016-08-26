@@ -14,6 +14,9 @@ const styles = {
   user: {
     marginTop: 30
   },
+  userNext: {
+    marginTop: 60
+  },
   userTitle: {
     fontWeight: 400,
     color: Colors.grey,
@@ -54,7 +57,7 @@ export function AboutSidebar() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.mainTitle}><span style={styles.slash}>/</span>About us</h1>
+      <h1 style={styles.mainTitle}><span style={styles.slash}>/</span>We built the platform</h1>
       <div>
 
         <div style={styles.user}>
@@ -81,7 +84,7 @@ export function AboutSidebar() {
           </div>
         </div>
 
-        <div style={styles.user}>
+        <div style={styles.userNext}>
           <h1 style={styles.userTitle}>jason_boyer<span style={styles.second}>/designer</span></h1>
           <div style={styles.description}>
             blabla
@@ -101,6 +104,20 @@ export function AboutSidebar() {
               style={styles.link}
               onClick={redirectTo.bind(null, 'http://jasonboyer.fr')}>
               Website
+            </RawButton>
+          </div>
+        </div>
+
+        <div style={styles.userNext}>
+          <h1 style={styles.userTitle}>guillaume_dejabrun<span style={styles.second}>/developer</span></h1>
+          <div style={styles.description}>
+            blabla
+          </div>
+          <div style={styles.links}>
+            <RawButton
+              style={styles.firstLink}
+              onClick={redirectTo.bind(null, 'https://github.com/Wykks')}>
+              Github
             </RawButton>
           </div>
         </div>

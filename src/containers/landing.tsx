@@ -60,6 +60,28 @@ const styles = {
   titles: {
     marginTop: 80,
     marginBottom: 40
+  },
+  bottom: {
+    display: 'flex'
+  },
+  howToToken: {
+    marginLeft: 8
+  },
+  footerContainer: {
+    maxWidth: 1200,
+    margin: '0px auto',
+    display: 'flex',
+    justifyContent:'flex-end',
+    alignItems: 'center',
+    height: '100%'
+  },
+  footerItem: {
+    padding: '0px 10px',
+    fontSize: 12,
+    color: Colors.middleGrey
+  },
+  about: {
+    cursor: 'pointer'
   }
 };
 
@@ -108,6 +130,14 @@ class Landing extends React.Component<MainProps, any> {
     browserHistory.push(`/app/${user.get('login')}`);
   }
 
+  private onGetToken() {
+    window.open('https://github.com/settings/tokens', '_blank');
+  }
+
+  private onClickAbout() {
+    browserHistory.push('/about');
+  }
+
   public render() {
     const { isTokenAccess } = this.state;
 
@@ -135,14 +165,35 @@ class Landing extends React.Component<MainProps, any> {
           {
             isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
           }
-          <RawButton
-            onClick={this.onToggleAccess}>
+          <div style={styles.bottom}>
+            <RawButton
+              onClick={this.onToggleAccess}>
+              {
+                isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
+              }
+            </RawButton>
             {
-              isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
+              isTokenAccess && (
+                <RawButton
+                  style={styles.howToToken}
+                  onClick={this.onGetToken}>
+                  How to get a token
+                </RawButton>
+              )
             }
-          </RawButton>
+          </div>
         </div>
         <footer>
+          <div style={styles.footerContainer}>
+            <div style={styles.footerItem}>
+              Giistr © 2016
+            </div>
+            <div
+              style={Object.assign({}, styles.footerItem, styles.about)}
+              onClick={this.onClickAbout}>
+              About
+            </div>
+          </div>
         </footer>
       </div>
     );
