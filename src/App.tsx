@@ -9,6 +9,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
 import thunk from 'redux-thunk';
+import * as ReactGA from 'react-ga';
 
 import Main from './containers/main';
 import Landing from './containers/landing';
@@ -28,9 +29,16 @@ if (env === 'dev') {
 
 const store = createStore(rootReducer, Map(), applyMiddleware(...middlewares));
 
+ReactGA.initialize('');
+
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={browserHistory} onUpdate={logPageView}>
       <Route path="/" component={Landing}/>
       <Route path="/app/:userId" component={Main}/>
       <Route path="/about" component={About}/>

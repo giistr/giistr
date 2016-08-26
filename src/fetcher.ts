@@ -30,14 +30,14 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
   }
 
   let rawHeader: { [index: string]: string; } = {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
     'Accept-Charset' : 'utf-8'
   };
 
   if (getFromStorage('user')) {
     rawHeader = Object.assign({}, rawHeader, {
-      'Authorization': `token ${getFromStorage('user').access_token}`
+      Authorization: `token ${getFromStorage('user').access_token}`
     });
   }
 
