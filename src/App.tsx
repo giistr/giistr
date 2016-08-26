@@ -29,7 +29,7 @@ if (env === 'dev') {
 
 const store = createStore(rootReducer, Map(), applyMiddleware(...middlewares));
 
-ReactGA.initialize('');
+ReactGA.initialize('UA-42294228-2');
 
 function logPageView() {
   ReactGA.set({ page: window.location.pathname });
