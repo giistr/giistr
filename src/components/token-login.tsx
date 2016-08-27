@@ -47,7 +47,7 @@ class TokenLogin extends React.Component<MainProps, any> {
           placeholder="Enter your dev token"/>
         <Button
           onClick={onClickLogin.bind(this, this.state.query.trim())}>
-          Let's start
+          Let's Start
         </Button>
       </div>
     );

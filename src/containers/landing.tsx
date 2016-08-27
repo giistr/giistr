@@ -32,22 +32,23 @@ const styles = {
     flexDirection: 'column'
   },
   mainTitle: {
-    fontSize: 38,
-    lineHeight: '44px',
+    fontSize: 40,
+    lineHeight: '46px',
     fontWeight: 'bold',
     color: Colors.grey
   },
   subTitle: {
     display: 'inline-block',
     color: Colors.middleGrey,
-    marginTop: 30,
-    fontSize: 16,
+    marginTop: 14,
+    fontSize: 18,
+    lineHeight: '24px',
     fontWeight: 400
   },
   interactive: {
     height: 160,
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     flexDirection: 'column',
     zIndex: 2,
     maxWidth: 360
@@ -59,7 +60,7 @@ const styles = {
   },
   titles: {
     marginTop: 80,
-    marginBottom: 40
+    marginBottom: 60
   },
   bottom: {
     display: 'flex'
@@ -71,17 +72,24 @@ const styles = {
     maxWidth: 1200,
     margin: '0px auto',
     display: 'flex',
-    justifyContent:'flex-end',
+    justifyContent:'space-between',
     alignItems: 'center',
     height: '100%'
   },
   footerItem: {
     padding: '0px 10px',
-    fontSize: 12,
+    fontSize: 11,
     color: Colors.middleGrey
   },
   about: {
     cursor: 'pointer'
+  },
+  rightContainer: {
+    display: 'flex'
+  },
+  first: {
+    fontSize: 11,
+    color: Colors.grey
   }
 };
 
@@ -93,7 +101,7 @@ class Landing extends React.Component<MainProps, any> {
 
   public state = {
     token: '',
-    isTokenAccess: true
+    isTokenAccess: false
   };
 
   public componentWillMount() {
@@ -185,13 +193,18 @@ class Landing extends React.Component<MainProps, any> {
         </div>
         <footer>
           <div style={styles.footerContainer}>
-            <div style={styles.footerItem}>
-              Giistr © 2016
+            <div style={styles.first}>
+              Giistr works on your way to do a pull of issues you liked and register to your localstorage.
             </div>
-            <div
-              style={Object.assign({}, styles.footerItem, styles.about)}
-              onClick={this.onClickAbout}>
-              About
+            <div style={styles.rightContainer}>
+              <div style={styles.footerItem}>
+                Giistr © 2016
+              </div>
+              <div
+                style={Object.assign({}, styles.footerItem, styles.about)}
+                onClick={this.onClickAbout}>
+                About
+              </div>
             </div>
           </div>
         </footer>

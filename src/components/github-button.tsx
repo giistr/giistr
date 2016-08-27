@@ -4,8 +4,7 @@ import Button from './button';
 const githubIcon = {
   display: 'inline-block',
   marginRight: 10,
-  verticalAlign: 'middle',
-  marginBottom: 4
+  verticalAlign: 'middle'
 };
 
 const oauthLabel = {
@@ -13,7 +12,8 @@ const oauthLabel = {
 };
 
 const button = {
-  padding: '0px 60px'
+  marginTop: 0,
+  width: 300
 };
 
 export function GithubButton({
