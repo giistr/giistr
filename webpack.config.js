@@ -17,6 +17,7 @@ var toCopy = [
 ];
 
 var plugins = [
+  new webpack.PrefetchPlugin('react'),
   new ExtractTextPlugin('css/style.css'),
   new webpack.DefinePlugin({
     'process.env': {
@@ -26,15 +27,21 @@ var plugins = [
 ];
 
 var devtool = '';
+var loaders;
 
 if (env === 'dev') {
+  loaders = ['react-hot', 'ts-loader'];
   entries = entries.concat(['webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001']);
   output.path = __dirname;
   toCopy = [];
   devtool = 'eval';
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
-  plugins = plugins.concat([new CopyWebpackPlugin(toCopy)]);
+  loaders = ['ts-loader'];
+  plugins = plugins.concat([
+    new CopyWebpackPlugin(toCopy),
+    new webpack.optimize.DedupePlugin()
+  ]);
 }
 
 module.exports = {
@@ -49,7 +56,7 @@ module.exports = {
     loaders: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        loaders: loaders
       },
       {
         test: /\.css$/,
@@ -60,12 +67,12 @@ module.exports = {
         loader: 'json-loader'
       }
     ],
-    preLoaders: [
-      {
-        test: /\.tsx?$/,
-        loader: 'tslint'
-      }
-    ]
+    // preLoaders: [
+    //   {
+    //     test: /\.tsx?$/,
+    //     loader: 'tslint'
+    //   }
+    // ]
   },
   plugins: plugins
 };
