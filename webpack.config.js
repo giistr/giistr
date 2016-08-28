@@ -5,8 +5,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var env = process.env.NODE_ENV;
 
-const entries = [ 'whatwg-fetch', path.join(__dirname, 'src/App') ];
-const output = {
+var entries = ['whatwg-fetch', path.join(__dirname, 'src/App')];
+var output = {
   filename: 'bundle.js',
   path: path.join(__dirname, 'dist')
 };
@@ -16,16 +16,31 @@ var toCopy = [
   { from: 'nginx.conf' }
 ];
 
+var plugins = [
+  new ExtractTextPlugin('css/style.css'),
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: "'" + env + "'"
+    }
+  })
+];
+
+var devtool = '';
+
 if (env === 'dev') {
-  entries.concat([ 'webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001' ]);
+  entries = entries.concat(['webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001']);
   output.path = __dirname;
   toCopy = [];
+  devtool = 'eval';
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+} else {
+  plugins = plugins.concat([new CopyWebpackPlugin(toCopy)]);
 }
 
 module.exports = {
   entry: entries,
   output: output,
-  devtool: 'eval',
+  devtool: devtool,
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.css', '.html', 'png', 'jpg']
   },
@@ -52,14 +67,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new ExtractTextPlugin('css/style.css'),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': "'" + env + "'"
-      }
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new CopyWebpackPlugin(toCopy)
-  ]
+  plugins: plugins
 };
