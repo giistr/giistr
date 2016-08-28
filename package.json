@@ -55,6 +55,7 @@
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-immutable": "3.0.6",
+    "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
     "stilr": "^1.2.4",
     "url-join": "^1.1.0"

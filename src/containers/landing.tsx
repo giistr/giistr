@@ -72,7 +72,7 @@ const styles = {
     maxWidth: 1200,
     margin: '0px auto',
     display: 'flex',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     alignItems: 'center',
     height: '100%'
   },

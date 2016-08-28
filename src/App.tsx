@@ -9,13 +9,13 @@ import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
 import thunk from 'redux-thunk';
+import * as createLogger from 'redux-logger';
 import * as ReactGA from 'react-ga';
 
 import Main from './containers/main';
 import Landing from './containers/landing';
 import About from './containers/about';
 
-import Logger from './common/Logger';
 import rootReducer from './reducers';
 import './common.css';
 
@@ -24,7 +24,7 @@ const env = process.env.NODE_ENV;
 const middlewares: Array<any> = [ thunk ];
 
 if (env === 'dev') {
-  middlewares.push(Logger);
+  middlewares.push(createLogger());
 }
 
 const store = createStore(rootReducer, Map(), applyMiddleware(...middlewares));
