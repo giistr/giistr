@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 import * as StyleSheet from 'stilr';
 
 import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
@@ -28,6 +29,9 @@ if (env === 'dev') {
 }
 
 const store = createStore(rootReducer, Map(), applyMiddleware(...middlewares));
+const history = syncHistoryWithStore(browserHistory, store, {
+    selectLocationState: (state: Map<string, any>) => state.get('routing')
+  });
 
 ReactGA.initialize('UA-42294228-2');
 
@@ -38,7 +42,7 @@ function logPageView() {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} onUpdate={logPageView}>
+    <Router history={history} onUpdate={logPageView}>
       <Route path="/" component={Landing}/>
       <Route path="/app/:userId" component={Main}/>
       <Route path="/about" component={About}/>
