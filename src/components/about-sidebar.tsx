@@ -49,7 +49,7 @@ const styles = {
   }
 };
 
-function redirectTo(url) {
+function redirectTo(url: string) {
   window.open(url, '_blank').focus();
 }
 
@@ -61,7 +61,7 @@ export function AboutSidebar() {
       <div>
 
         <div style={styles.user}>
-          <h1 style={styles.userTitle}>alexandre_rieux<span style={styles.second}>/developer</span></h1>
+          <h1 style={styles.userTitle}>Alexandre_Rieux<span style={styles.second}>/developer</span></h1>
           <div style={styles.description}>
             Front-end developer, FRP, Immutability, also iOS developer during my free time.
           </div>
@@ -85,7 +85,7 @@ export function AboutSidebar() {
         </div>
 
         <div style={styles.userNext}>
-          <h1 style={styles.userTitle}>jason_boyer<span style={styles.second}>/designer</span></h1>
+          <h1 style={styles.userTitle}>Jason_Boyer<span style={styles.second}>/designer</span></h1>
           <div style={styles.description}>
             blabla
           </div>
@@ -109,9 +109,9 @@ export function AboutSidebar() {
         </div>
 
         <div style={styles.userNext}>
-          <h1 style={styles.userTitle}>guillaume_dejabrun<span style={styles.second}>/developer</span></h1>
+          <h1 style={styles.userTitle}>Guillaume_de_Jabrun<span style={styles.second}>/developer</span></h1>
           <div style={styles.description}>
-            blabla
+            Versatile developer (mainly front-end), and open source enthusiast.
           </div>
           <div style={styles.links}>
             <RawButton

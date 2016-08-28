@@ -93,8 +93,8 @@ class About extends React.Component<MainProps, any> {
             <h1 style={styles.subtitle}>An easy way to pick a task from a repository you like and contribute to it</h1>
             <div style={styles.text}>
               Giistr is a tool that help developers to quickly find a task which fit with their profile.
-              The app display all the repositories you starred on github and their issues in one view so you can apply filters
-              and find an issue you are happy with.
+              The app display all the repositories you starred on github and their issues in one view so you can
+              apply filters and find an issue you are happy with.
               Our purpose is to help open-source projects growth faster and get more stability.
               Open-source libraries are a big part of our every day life as a developer, let's make it better.
             </div>
