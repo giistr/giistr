@@ -67,12 +67,12 @@ module.exports = {
         loader: 'json-loader'
       }
     ],
-    // preLoaders: [
-    //   {
-    //     test: /\.tsx?$/,
-    //     loader: 'tslint'
-    //   }
-    // ]
+    preLoaders: [
+      {
+        test: /\.tsx?$/,
+        loader: 'tslint'
+      }
+    ]
   },
   plugins: plugins
 };
