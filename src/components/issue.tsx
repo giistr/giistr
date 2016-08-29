@@ -12,7 +12,8 @@ interface MainProps {
 const styles = {
   issueItem: {
     borderBottom: `1px solid ${Colors.borderGrey}`,
-    padding: 20,
+    margin: '0px 20px',
+    padding: '20px 0px',
     display: 'flex',
     flexDirection: 'column',
     lineHeight: '30px',
@@ -50,8 +51,9 @@ const styles = {
     display: 'inline-block',
     marginRight: 5
   },
-  convers: {
-    marginLeft: 10
+  item: {
+    marginLeft: 10,
+    display: 'flex'
   },
   secondColumn: {
     color: Colors.lightGrey,
@@ -65,7 +67,7 @@ const styles = {
 export class Issue extends React.PureComponent<MainProps, any> {
 
   public shouldComponentUpdate(nextProps) {
-    return !nextProps.issue.equals(this.props.issue);
+    return !nextProps.issue.equals(this.props.issue) || nextProps.isLast !== this.props.isLast;
   }
 
   private onClickIssue(url) {
@@ -91,15 +93,14 @@ export class Issue extends React.PureComponent<MainProps, any> {
             <div>Updated: <span style={styles.updatedValue}>{ updated }</span></div>
           </div>
           <div style={styles.secondColumn}>
-            <div>
+            <div style={styles.item}>
               <img style={styles.icon} src="../assets/user.svg"/>
               { issue.get('assignees').size }
             </div>
-            <div style={styles.convers}>
+            <div style={styles.item}>
               <img style={styles.icon} src="../assets/convers.svg"/>
               { issue.get('comments') }
             </div>
-            <div style={styles.milestone}>No Milestone</div>
           </div>
         </div>
         <div style={styles.secondLine}>

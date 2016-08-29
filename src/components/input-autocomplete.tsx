@@ -42,7 +42,8 @@ const styles = {
   },
   listItem: {
     padding: 10,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    fontSize: 14
   }
 };
 

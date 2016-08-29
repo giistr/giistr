@@ -46,7 +46,7 @@ const styles = {
   },
   repoCounter: {
     paddingLeft: 12,
-    marginTop: 10
+    marginTop: 6
   },
   landingLinks: {
     display: 'flex'

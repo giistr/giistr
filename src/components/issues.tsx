@@ -17,8 +17,13 @@ const styles = {
     backgroundColor: 'white'
   },
   more: {
-    margin: '10px 20px',
-    textAlign: 'right'
+    margin: '0px 20px',
+    padding: '20px 0px',
+    borderTop: `1px solid ${Colors.borderGrey}`,
+    textAlign: 'center'
+  },
+  moreBtn: {
+    color: Colors.lightGrey
   },
   space: {
     height: 20
@@ -122,17 +127,28 @@ class Issues extends React.PureComponent<MainProps, any> {
               );
             })
           }
+          {
+            !limit && (
+              <li style={styles.more}>
+                <RawButton
+                  style={styles.moreBtn}
+                  onClick={this.onSeeMore}>
+                  See more issues
+                </RawButton>
+              </li>
+            )
+          }
         </ul>
         {
-          !limit ? (
-            <RawButton
-              style={styles.more}
-              onClick={this.onSeeMore}>
-              See more issues
-            </RawButton>
-          ) : (
-            <div style={styles.space}></div>
-          )
+          // !limit ? (
+          //   <RawButton
+          //     style={styles.more}
+          //     onClick={this.onSeeMore}>
+          //     See more issues
+          //   </RawButton>
+          // ) : (
+          //   <div style={styles.space}></div>
+          // )
         }
       </div>
     );
