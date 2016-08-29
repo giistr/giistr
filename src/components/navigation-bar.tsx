@@ -20,13 +20,16 @@ interface MainProps {
 const styles = {
   container: {
     backgroundColor: 'white',
-    minHeight: 64,
     fontSize: 13,
-    padding: '0px 30px',
-    borderBottom: `1px solid ${Colors.borderGrey}`,
+    borderBottom: `1px solid ${Colors.borderGrey}`
+  },
+  wrapper: {
+    maxWidth: 1800,
+    minHeight: 100,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    margin: '0px auto'
   },
   logo: {
     marginLeft: 30,
@@ -39,10 +42,11 @@ const styles = {
   },
   marked: {
     color: Colors.blue,
-    margin: '0px 6px'
+    margin: '0px 2px'
   },
   repoCounter: {
-    paddingLeft: 12
+    paddingLeft: 12,
+    marginTop: 10
   },
   landingLinks: {
     display: 'flex'
@@ -70,11 +74,11 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
   private renderCounter = (after: number, total: number) => {
     return (
       <div style={styles.repoCounter}>
-        <span>Viewing about </span>
+        <span>Viewing </span>
         <span style={styles.marked}>{after}</span>
-        <span> of a total of </span>
+        <span> on </span>
         <span style={styles.marked}>{total}</span>
-        <span> repositories</span>
+        <span> starred repositories</span>
       </div>
     );
   };
@@ -96,37 +100,39 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
 
     return (
       <div style={styles.container}>
-        <div style={styles.description}>
-          <a href="/">
-            <Logo style={styles.logo}/>
-          </a>
+        <div style={styles.wrapper}>
+          <div style={styles.description}>
+            <a href="/">
+              <Logo style={styles.logo}/>
+            </a>
+            {
+              total && after ? this.renderCounter(after, total) : this.renderInfo()
+            }
+          </div>
           {
-            total && after ? this.renderCounter(after, total) : this.renderInfo()
+            user.size > 0 && (
+              <UserCard
+                location={location}
+                onLogout={this.onLogout}
+                user={user}/>
+            )
+          }
+          {
+            !user.size && (
+              <div style={styles.landingLinks}>
+                <RawButton onClick={this.onClickLanding}>
+                  Signup with github
+                </RawButton>
+                <div style={styles.or}>
+                  or
+                </div>
+                <RawButton onClick={this.onClickLanding}>
+                  Get unlimited access with token
+                </RawButton>
+              </div>
+            )
           }
         </div>
-        {
-          user.size > 0 && (
-            <UserCard
-              location={location}
-              onLogout={this.onLogout}
-              user={user}/>
-          )
-        }
-        {
-          !user.size && (
-            <div style={styles.landingLinks}>
-              <RawButton onClick={this.onClickLanding}>
-                Signup with github
-              </RawButton>
-              <div style={styles.or}>
-                or
-              </div>
-              <RawButton onClick={this.onClickLanding}>
-                Get unlimited access with token
-              </RawButton>
-            </div>
-          )
-        }
       </div>
     );
   }

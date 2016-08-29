@@ -8,14 +8,15 @@ import { fromJS } from 'immutable';
 const styles = {
   container: {
     margin: 20,
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   first: {
     display: 'flex',
     alignItems: 'center',
     color: Colors.grey,
     fontSize: 14,
-    marginRight: 40
+    marginRight: 30
   },
   login: {
     marginLeft: 10
@@ -46,7 +47,8 @@ const styles = {
   menu: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: 30,
+    paddingLeft: 24,
+    height: 20,
     borderLeft: `1px solid ${Colors.borderGrey}`
   },
   active: {
@@ -61,7 +63,7 @@ const improvedStyle = StyleSheet.create({
     lineHeight: '18px',
     color: Colors.lightGrey,
     cursor: 'pointer',
-    margin: '0px 20px',
+    margin: '0px 14px',
     ':hover': {
       color: Colors.middleGrey
     }
@@ -82,7 +84,7 @@ class UserCard extends React.PureComponent<MainProps, any> {
 
   private menu = fromJS([
     {
-      title: 'Home',
+      title: 'My home',
       action: this.onClickHome
     },
     {
