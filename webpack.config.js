@@ -33,7 +33,6 @@ if (env === 'dev') {
   loaders = ['react-hot', 'ts-loader'];
   entries = entries.concat(['webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001']);
   output.path = __dirname;
-  toCopy = [];
   devtool = 'eval';
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {

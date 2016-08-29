@@ -4,23 +4,27 @@ import { Colors } from '../style';
 
 const styles = {
   container: {
-    flex: 3.5
+    flex: 3.5,
+    maxWidth: 340,
+    marginTop: 40
   },
   mainTitle: {
     fontWeight: 400,
     color: Colors.grey,
-    fontSize: 17
+    fontSize: 14,
+    fontFamily: 'Droid Sans Mono'
   },
   user: {
     marginTop: 30
   },
   userNext: {
-    marginTop: 60
+    marginTop: 40
   },
   userTitle: {
     fontWeight: 400,
     color: Colors.grey,
-    fontSize: 16
+    fontSize: 14,
+    fontFamily: 'Droid Sans Mono'
   },
   second: {
     color: Colors.blue,

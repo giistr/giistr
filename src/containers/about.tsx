@@ -16,29 +16,33 @@ const styles = {
   main: {
     display: 'flex',
     margin: '0px auto',
-    alignItems: 'stretch',
     maxWidth: 1270,
-    marginTop: 60
+    marginTop: 60,
+    justifyContent: 'center'
   },
   column: {
     flex: 8.5,
-    marginRight: 100
+    marginRight: 100,
+    maxWidth: 640
   },
   title: {
     fontSize: 22,
     fontWeight: 400,
     letterSpacing: '0.3px',
-    color: Colors.grey
+    color: Colors.grey,
+    fontFamily: 'Droid Sans Mono'
   },
   secondTitle: {
     color: Colors.grey,
     fontWeight: 400,
-    margin: '20px 0px'
+    margin: '20px 0px',
+    fontFamily: 'Droid Sans Mono'
   },
   subtitle: {
     color: Colors.grey,
     fontWeight: 400,
-    margin: '20px 0px'
+    marginTop: 20,
+    marginBottom: 30
   },
   text: {
     fontSize: 14,
