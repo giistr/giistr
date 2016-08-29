@@ -27,16 +27,14 @@ var plugins = [
 ];
 
 var devtool = '';
-var loaders;
+var loaders = ['babel', 'ts-loader'];
 
 if (env === 'dev') {
-  loaders = ['babel', 'ts-loader'];
   entries = entries.concat(['webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001']);
   output.path = __dirname;
   devtool = 'eval';
   plugins.push(new webpack.HotModuleReplacementPlugin());
 } else {
-  loaders = ['ts-loader'];
   plugins = plugins.concat([
     new CopyWebpackPlugin(toCopy),
     new webpack.optimize.DedupePlugin()
