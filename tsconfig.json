@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "ES6",
     "module": "commonjs",
     "sourceMap": true,
     "removeComments": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "node_modules",

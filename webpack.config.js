@@ -30,7 +30,7 @@ var devtool = '';
 var loaders;
 
 if (env === 'dev') {
-  loaders = ['react-hot', 'ts-loader'];
+  loaders = ['babel', 'ts-loader'];
   entries = entries.concat(['webpack/hot/only-dev-server', 'webpack-dev-server/client?http://localhost:3001']);
   output.path = __dirname;
   devtool = 'eval';
