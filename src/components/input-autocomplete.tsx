@@ -60,8 +60,7 @@ interface MainProps {
 class Input extends React.Component<MainProps, any> {
 
   public state = {
-    focus: false,
-    selectedIndex: this.props.selectedIndex
+    focus: false
   };
 
   public refs: {
@@ -104,7 +103,6 @@ class Input extends React.Component<MainProps, any> {
     const { onSelect } = this.props;
 
     this.setState({
-      selectedIndex: index,
       focus: false
     });
 
@@ -114,8 +112,8 @@ class Input extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { placeholder, style, list } = this.props;
-    const { focus, selectedIndex } = this.state;
+    const { placeholder, style, list, selectedIndex } = this.props;
+    const { focus } = this.state;
 
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">

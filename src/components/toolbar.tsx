@@ -5,8 +5,9 @@ import Input from './input-autocomplete';
 import { Colors } from '../style';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
-import { remove, add, replace, reset } from '../actions/filters';
+import { remove, add, replace, reset, resetAll } from '../actions/filters';
 import { Check } from './check';
+import { RawButton } from './raw-button';
 
 const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
 
@@ -19,6 +20,7 @@ interface MainProps {
   add: any;
   replace: any;
   reset: any;
+  resetAll: any;
 };
 
 const styles = {
@@ -43,6 +45,16 @@ const styles = {
   checkSection: {
     display: 'flex',
     justifyContent: 'space-between'
+  },
+  defaultFilters: {
+    color: Colors.red
+  },
+  defaultSection: {
+    margin: '0px 20px',
+    marginTop: 20,
+    padding: '20px 0px',
+    borderTop: `1px solid ${Colors.borderGrey}`,
+    maxWidth: 100
   }
 };
 
@@ -91,6 +103,11 @@ class Toolbar extends React.Component<MainProps, any> {
     replace(withIssues, !val)(dispatch);
   };
 
+  private onResetFilters = () => {
+    const { resetAll, dispatch } = this.props;
+    resetAll()(dispatch);
+  };
+
   public render() {
     const { filters } = this.props;
 
@@ -103,7 +120,7 @@ class Toolbar extends React.Component<MainProps, any> {
           <h3>Updated before</h3>
           <Input
             onSelect={this.onSelectPeriod}
-            selectedIndex={pOptions[0]}
+            selectedIndex={filters.get('period').first() || pOptions[0]}
             style={styles.languageFilter}
             list={periodOptions}/>
         </div>
@@ -111,7 +128,7 @@ class Toolbar extends React.Component<MainProps, any> {
           <h3>Languages</h3>
           <Input
             onSelect={this.onSelectLanguage}
-            selectedIndex={languageDefaultOption}
+            selectedIndex={filters.get('languages').first() || languageDefaultOption}
             style={styles.languageFilter}
             list={this.props.languages}/>
         </div>
@@ -136,6 +153,14 @@ class Toolbar extends React.Component<MainProps, any> {
             labels={this.props.labels}
             onToggleTag={this.onToggleTag}/>
         </div>
+
+        <div style={styles.defaultSection}>
+          <RawButton
+            style={styles.defaultFilters}
+            onClick={this.onResetFilters}>
+            Default filters
+          </RawButton>
+        </div>
       </div>
     );
   }
@@ -157,5 +182,6 @@ connect((state, props) => ({
   remove,
   add,
   replace,
-  reset
+  reset,
+  resetAll
 }))(Toolbar);

@@ -30,9 +30,13 @@ export default (state = initialState, action: IssueAction) => {
       );
 
     case RESET_FILTER:
-      return state.update(key, filter =>
-        initialState.get(key)
-      );
+      if (key) {
+        return state.update(key, filter =>
+          initialState.get(key)
+        );
+      } else {
+        return initialState;
+      }
 
     case REPLACE_FILTER:
       return state.update(key, filter => {
