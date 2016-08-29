@@ -10,7 +10,9 @@ const styles = {
   },
   repoContainer: {
     display: 'flex',
-    padding: '24px 20px',
+    padding: '0px 20px',
+    paddingTop: 27,
+    paddingBottom: 16,
     minWidth: 400,
     flexDirection: 'column',
     border: `1px solid ${Colors.borderGrey}`,
@@ -38,15 +40,16 @@ const styles = {
     fontWeight: 400
   },
   description: {
-    margin: '20px 0px',
-    fontSize: 15,
+    marginTop: 13,
+    marginBottom: 15,
+    fontSize: 14,
     lineHeight: '22px',
     color: Colors.middleGrey
   },
   second: {
     fontSize: 13,
     justifyContent: 'space-between',
-    color: Colors.lightGrey,
+    color: Colors.middleLightGrey,
     fontWeight: 400,
     paddingTop: 16,
     borderTop: `1px solid ${Colors.borderGrey}`
@@ -60,7 +63,7 @@ const styles = {
     marginLeft: 24
   },
   counter: {
-    marginLeft: 8
+    marginLeft: 4
   },
   starLabel: {
     fontWeight: 400

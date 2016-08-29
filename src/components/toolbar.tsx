@@ -40,7 +40,7 @@ const styles = {
     borderBottom: `1px solid ${Colors.borderGrey}`
   },
   section: {
-    padding: 20
+    padding: '10px 20px'
   },
   checkSection: {
     display: 'flex',
@@ -140,7 +140,7 @@ class Toolbar extends React.Component<MainProps, any> {
               inactive={!filters.get(withoutAssignee)}/>
           </div>
           <div>
-            <h3>With issues</h3>
+            <h3>With open issues</h3>
             <Check
               onSelect={this.onToggleIssues.bind(this, filters.get(withIssues))}
               inactive={!filters.get(withIssues)}/>
