@@ -5,7 +5,8 @@ const container = {
   display: 'flex',
   lineHeight: '20px',
   color: Colors.grey,
-  marginTop: 10
+  marginTop: 10,
+  fontSize: 14
 };
 
 const base = {

@@ -43,7 +43,9 @@ class LabelsFilters extends React.Component<MainProps, any> {
           <Tag
             key={key}
             style={{
-              margin: 6
+              marginRight: 11,
+              marginLeft: 0,
+              marginBottom: 11
             }}
             onSelect={onToggleTag.bind(this, label.get('id'))}
             inactive={!selected.includes(label.get('id'))}
