@@ -139,17 +139,6 @@ class Issues extends React.PureComponent<MainProps, any> {
             )
           }
         </ul>
-        {
-          // !limit ? (
-          //   <RawButton
-          //     style={styles.more}
-          //     onClick={this.onSeeMore}>
-          //     See more issues
-          //   </RawButton>
-          // ) : (
-          //   <div style={styles.space}></div>
-          // )
-        }
       </div>
     );
   }
