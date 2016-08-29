@@ -56,9 +56,9 @@ class Main extends React.Component<MainProps, any> {
       browserHistory.push('/');
     }
 
-    // if (user.size && !repositories.size) {
-    //   this.onGetRepository(this.state.page);
-    // }
+    if (user.size && !repositories.size) {
+      this.onGetRepository(this.state.page);
+    }
   }
 
   private onGetRepository(page, user: User = this.props.user) {
