@@ -3,6 +3,11 @@ import { Colors } from '../style';
 import { Map } from 'immutable';
 import * as moment from 'moment';
 
+const borderSwitch = [
+  `1px solid ${Colors.borderGrey}`,
+  `1px solid ${Colors.blueDarkBorder}`
+];
+
 const styles = {
   mainRepo: {
     margin: '0px 20px',
@@ -48,11 +53,10 @@ const styles = {
   },
   second: {
     fontSize: 13,
-    justifyContent: 'space-between',
     color: Colors.middleLightGrey,
     fontWeight: 400,
     paddingTop: 16,
-    borderTop: `1px solid ${Colors.borderGrey}`
+    transition: 'border 1.5s ease'
   },
   subline: {
     flex: 1,
@@ -75,12 +79,41 @@ const styles = {
 
 export class Repository extends React.PureComponent<{ repo: Map<string, any> }, any> {
 
-  public shouldComponentUpdate(nextProps) {
-    return !nextProps.repo.equals(this.props.repo);
+  interval = undefined;
+
+  public state = {
+    borderIndex: 0
+  };
+
+  public componentWillMount() {
+    if (this.props.repo.size === 0) {
+      this.interval = setInterval(() => {
+        if (this.props.repo.size === 0) {
+          this.setState({
+            borderIndex: this.state.borderIndex === 0 ? 1 : 0
+          });
+        } else {
+          clearInterval(this.interval);
+        }
+      }, 2000);
+    }
+  }
+
+  public componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  public shouldComponentUpdate(nextProps, nextState) {
+    return !nextProps.repo.equals(this.props.repo) || nextState.borderIndex !== this.state.borderIndex;
   }
 
   public render() {
     const { repo } = this.props;
+    const { borderIndex } = this.state;
+
+    const border = {
+      borderTop: borderSwitch[borderIndex]
+    };
 
     return (
       <div style={styles.mainRepo}>
@@ -103,7 +136,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
           <div style={styles.description}>
             { repo.get('description') }
           </div>
-          <div style={Object.assign({}, styles.line, styles.second)}>
+          <div style={Object.assign({}, styles.line, styles.second, border)}>
             {
               repo.size > 0 && (
                 <div style={styles.subline}>
