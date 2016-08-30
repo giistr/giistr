@@ -94,11 +94,11 @@ export class Issue extends React.PureComponent<MainProps, any> {
           </div>
           <div style={styles.secondColumn}>
             <div style={styles.item}>
-              <img style={styles.icon} src="../assets/user.svg"/>
+              <img style={styles.icon} src="/assets/user.svg"/>
               { issue.get('assignees').size }
             </div>
             <div style={styles.item}>
-              <img style={styles.icon} src="../assets/convers.svg"/>
+              <img style={styles.icon} src="/assets/convers.svg"/>
               { issue.get('comments') }
             </div>
           </div>
