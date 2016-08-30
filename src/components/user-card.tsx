@@ -52,7 +52,7 @@ const styles = {
     borderLeft: `1px solid ${Colors.borderGrey}`
   },
   active: {
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: Colors.blue
   }
 };
