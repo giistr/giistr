@@ -32,7 +32,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
   let rawHeader: { [index: string]: string; } = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    'Accept-Charset' : 'utf-8'
+    'Accept-Charset': 'utf-8'
   };
 
   if (getFromStorage('user')) {
