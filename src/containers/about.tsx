@@ -58,7 +58,7 @@ const styles = {
   },
   bold: {
     color: Colors.grey,
-    fontWeight: 'bold'
+    fontWeight: 500
   },
   thirdTitle: {
     marginTop: 40,

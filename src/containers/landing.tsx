@@ -34,7 +34,7 @@ const styles = {
   mainTitle: {
     fontSize: 40,
     lineHeight: '46px',
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: Colors.grey
   },
   subTitle: {

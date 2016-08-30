@@ -27,17 +27,10 @@ const styles = {
     position: 'relative',
     border: `1px solid ${Colors.borderGrey}`,
     width: 40,
-    height: 40
-  },
-  image: {
-    position: 'absolute',
-    margin: 'auto',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    maxWidth: 34,
-    maxHeight: 34
+    height: 40,
+    backgroundColor: '#ffffff',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
   },
   bio: {
     color: Colors.lightGrey,
@@ -52,7 +45,7 @@ const styles = {
     borderLeft: `1px solid ${Colors.borderGrey}`
   },
   active: {
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: Colors.blue
   }
 };
@@ -128,9 +121,9 @@ class UserCard extends React.PureComponent<MainProps, any> {
           <a
             href={user.get('html_url')}
             target="_blank"
-            style={styles.avatar}>
-            <img style={styles.image} src={user.get('avatar_url')}/>
-          </a>
+            style={Object.assign({}, styles.avatar, {
+              backgroundImage: `url('${user.get('avatar_url')}')`
+            })}/>
         </div>
 
         <div style={styles.menu}>
