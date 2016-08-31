@@ -6,7 +6,7 @@ const labels = fromJS([
   {
     url: 'https://api.github.com/repos/ptmt/react-native-macos/labels/bug',
     name: 'bug',
-    color: 'fc2929',
+    color: 'ff5252',
     id: 'f1762f35158225d09b6116287397b3ec98947a35',
     style: {
       position: 'absolute',
@@ -17,7 +17,7 @@ const labels = fromJS([
   {
     url: 'https://api.github.com/repos/andrewdavey/immutable-devtools/labels/enhancement',
     name: 'enhancement',
-    color: '84b6eb',
+    color: '4fbaf7',
     id: '1ea222e004a6e222f8606ab0f1a97eda0ac8ed24',
     style: {
       position: 'absolute',
@@ -28,7 +28,7 @@ const labels = fromJS([
   {
     url: 'https://api.github.com/repos/rg3/youtube-dl/labels/request',
     name: 'request',
-    color: '165725',
+    color: '49e673',
     id: '89af4c13c8331c358befa9686d79e55216bb1ebe',
     style: {
       position: 'absolute',
