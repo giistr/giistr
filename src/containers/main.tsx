@@ -45,7 +45,6 @@ class Main extends React.Component<MainProps, any> {
 
   public state = {
     page: 1,
-    column: window.innerWidth >= 1440 ? 2 : 1,
     loaded: this.props.repositories.size > 0
   };
 
@@ -81,7 +80,7 @@ class Main extends React.Component<MainProps, any> {
   public render() {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
-    const { page, column, loaded } = this.state;
+    const { page, loaded } = this.state;
 
     return (
       <div style={styles.container}>
@@ -92,7 +91,6 @@ class Main extends React.Component<MainProps, any> {
           after={repositories.size}/>
         <div style={styles.mainList}>
           <Layout
-            column={column}
             loaded={loaded}
             onClickMore={this.onNext.bind(this, page + 1)}
             repositories={repositories}/>

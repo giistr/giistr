@@ -33,7 +33,7 @@ const styles = {
     fontSize: 14
   },
   updatedValue: {
-    color: Colors.lightGrey
+    color: Colors.middleGrey
   },
   secondLine: {
     flex: 1,
@@ -60,7 +60,15 @@ const styles = {
     display: 'flex'
   },
   column: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
+  },
+  light: {
+    width: 10,
+    height: 10,
+    borderRadius: '50%',
+    backgroundColor: Colors.green,
+    marginRight: 10
   }
 };
 
@@ -90,7 +98,12 @@ export class Issue extends React.PureComponent<MainProps, any> {
         <h2 style={styles.title2}>{ issue.get('title') }</h2>
         <div style={styles.line}>
           <div style={styles.column}>
-            <div>Updated: <span style={styles.updatedValue}>{ updated }</span></div>
+            {
+              issue.get('state') === 'open' && (
+                <div style={styles.light}></div>
+              )
+            }
+            <div style={styles.updatedValue}>Updated: <span>{ updated }</span></div>
           </div>
           <div style={styles.secondColumn}>
             <div style={styles.item}>

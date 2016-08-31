@@ -5,7 +5,6 @@ import RepoColumn from '../components/repo-column';
 import LoadMore from '../components/load-more';
 
 interface MainProps {
-  column: number;
   repositories: OrderedMap<number, any>;
   onClickMore: Function;
   loaded: boolean;
@@ -32,6 +31,28 @@ const fakeRepos = OrderedMap<number, any>({
 });
 
 class Layout extends React.Component<MainProps, any> {
+
+  state = {
+    column: window.innerWidth >= 1440 ? 2 : 1
+  };
+
+  public componentWillMount() {
+    window.addEventListener('resize', this.onWindowResize, true);
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  onWindowResize = () => {
+    if (window.innerWidth >= 1440 && this.state.column === 1) {
+      this.setState({ column: 2 });
+    }
+
+    if (window.innerWidth < 1440 && this.state.column === 2) {
+      this.setState({ column: 1 });
+    }
+  };
 
   private renderSingleColumn(repositories, loaded) {
     if (!loaded) {
@@ -63,7 +84,8 @@ class Layout extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { column, repositories, onClickMore, loaded } = this.props;
+    const { repositories, onClickMore, loaded } = this.props;
+    const { column } = this.state;
 
     return (
       <div style={styles.container}>
