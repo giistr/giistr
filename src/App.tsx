@@ -44,7 +44,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history} onUpdate={logPageView}>
       <Route path="/" component={Landing}/>
-      <Route path="/app/:userId" component={Main}/>
+      <Route path="/home/:userId" component={Main}/>
       <Route path="/about" component={About}/>
     </Router>
   </Provider>,

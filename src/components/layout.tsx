@@ -8,6 +8,7 @@ interface MainProps {
   repositories: OrderedMap<number, any>;
   onClickMore: Function;
   loaded: boolean;
+  hasNext: boolean;
 };
 
 const styles = {
@@ -84,7 +85,7 @@ class Layout extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { repositories, onClickMore, loaded } = this.props;
+    const { repositories, onClickMore, loaded, hasNext } = this.props;
     const { column } = this.state;
 
     return (
@@ -96,7 +97,7 @@ class Layout extends React.Component<MainProps, any> {
           column === 2 && this.renderDoubleColumn(repositories, loaded)
         }
         {
-          loaded && (
+          loaded && hasNext && (
             <LoadMore
               onClickMore={onClickMore}/>
           )

@@ -92,6 +92,7 @@ class Main extends React.Component<MainProps, any> {
         <div style={styles.mainList}>
           <Layout
             loaded={loaded}
+            hasNext={30 * page === totalRepositories}
             onClickMore={this.onNext.bind(this, page + 1)}
             repositories={repositories}/>
           <ToolBar
