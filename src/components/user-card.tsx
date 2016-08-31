@@ -91,7 +91,7 @@ class UserCard extends React.PureComponent<MainProps, any> {
   ]);
 
   private getActiveRoute(location) {
-    if (location.pathname.includes('app')) {
+    if (location.pathname.includes('home')) {
       return 0;
     }
 
