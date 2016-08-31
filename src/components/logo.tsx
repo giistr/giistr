@@ -2,17 +2,23 @@ import * as React from 'react';
 
 const base = {};
 
-const logo = {
+let logo = {
   width: 80
 };
 
 export function Logo({
-  style
+  style,
+  width
 }: {
-  style?: Object
+  style?: Object,
+  width?: number
 }) {
 
   const final = Object.assign({}, base, style);
+
+  if (width) {
+    logo.width = width;
+  }
 
   return (
     <div style={final}>

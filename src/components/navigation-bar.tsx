@@ -104,7 +104,7 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
         <div style={styles.wrapper}>
           <div style={styles.description}>
             <a href="/">
-              <Logo style={styles.logo}/>
+              <Logo style={styles.logo} width={60}/>
             </a>
             {
               total && after ? this.renderCounter(after, total) : this.renderInfo()
