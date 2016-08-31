@@ -16,7 +16,8 @@ const styles = {
     width: '100%',
     border: 'none',
     borderBottom: `1px solid ${Colors.borderGrey}`,
-    color: Colors.grey
+    color: Colors.grey,
+    backgroundColor: 'transparent'
   },
   listContainer: {
     padding: '0px 10px',

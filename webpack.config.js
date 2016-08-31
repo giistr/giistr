@@ -12,6 +12,7 @@ var output = {
 };
 var toCopy = [
   { from: 'assets', to: 'assets' },
+  { from: 'icons', to: 'icons' },
   { from: 'index.html' },
   { from: 'nginx.conf' }
 ];

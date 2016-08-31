@@ -8,7 +8,8 @@ const styles = {
     left: 0,
     bottom: 0,
     right: 0,
-    zIndex: -1
+    zIndex: -1,
+    fontFamily: 'Droid Sans Mono'
   },
   javascript: {
     position: 'absolute',

@@ -67,7 +67,7 @@ export function AboutSidebar() {
         <div style={styles.user}>
           <h1 style={styles.userTitle}>Alexandre_Rieux<span style={styles.second}>/developer</span></h1>
           <div style={styles.description}>
-            Front-end developer, FRP, Immutability, also iOS developer during my free time.
+            Front-end developer, creativity and tech addict into Functional Reactive Programming.
           </div>
           <div style={styles.links}>
             <RawButton
@@ -91,7 +91,7 @@ export function AboutSidebar() {
         <div style={styles.userNext}>
           <h1 style={styles.userTitle}>Jason_Boyer<span style={styles.second}>/designer</span></h1>
           <div style={styles.description}>
-            blabla
+            Jason is interested in everything about creativity, design and learning. He also recently started to be addict at tea.
           </div>
           <div style={styles.links}>
             <RawButton
