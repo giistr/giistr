@@ -1,14 +1,18 @@
+/// <reference path="../typings/globals/react/index.d.ts" />
+
+declare interface LoadingProps {
+  color? : string;
+  height? : any;
+  width? : any;
+  type? : string;
+}
+
+declare interface LoadingState {
+  delayed : boolean;
+}
+
+declare class Loading extends React.Component<LoadingProps, LoadingState> {}
+
 declare module 'react-loading' {
-
-  interface LoadingProps {
-    color?: string;
-    delay?: number;
-    height?: string | number;
-    type?: string;
-    width?: string | number;
-  }
-
- export = class Loading extends React.Component<LoadingProps, any> {
-
- }
+  export = Loading;
 }

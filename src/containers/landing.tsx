@@ -14,7 +14,7 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import Loading from 'react-loading';
+import * as Loading from 'react-loading';
 
 interface MainProps {
   dispatch: any;
