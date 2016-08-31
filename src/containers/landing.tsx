@@ -14,6 +14,7 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
+import Loading from 'react-loading';
 
 interface MainProps {
   dispatch: any;
@@ -102,7 +103,7 @@ class Landing extends React.Component<MainProps, any> {
   public state = {
     token: '',
     isTokenAccess: false,
-    loading: false
+    loading: true
   };
 
   public componentWillMount() {
@@ -151,67 +152,78 @@ class Landing extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { isTokenAccess } = this.state;
+    const { isTokenAccess, loading } = this.state;
+    const load = ( <Loading type="cyclon" color="#4f7cf7"/> );
 
+    console.log(load);
     return (
-      <div style={styles.container}>
+      <div>
         <BackgroundCover/>
         <TagCloud/>
         <LanguageCloud/>
-        <Logo/>
-        <div style={styles.titles}>
-          <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
-          <div>
-            <h1 style={styles.subTitle}>
-              Search, filter and help easily on the issues of the repositories you starred
-            </h1>
-            <BlinkSquare/>
-          </div>
-        </div>
-        <div style={styles.interactive}>
-          <div style={styles.rateLimit}>
-            {
-              isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
-            }
-          </div>
-          {
-            isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
-          }
-          <div style={styles.bottom}>
-            <RawButton
-              onClick={this.onToggleAccess}>
-              {
-                isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
-              }
-            </RawButton>
-            {
-              isTokenAccess && (
-                <RawButton
-                  style={styles.howToToken}
-                  onClick={this.onGetToken}>
-                  How to get a token
-                </RawButton>
-              )
-            }
-          </div>
-        </div>
-        <footer>
-          <div style={styles.footerContainer}>
-            <div style={styles.first}>
-              Giistr works on your way to do a pull of issues you liked and register to your localstorage.
-            </div>
-            <div style={styles.rightContainer}>
-              <div style={styles.footerItem}>
-                Giistr © 2016
+        {
+          !loading && (
+            <div style={styles.container}>
+              <Logo/>
+              <div style={styles.titles}>
+                <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
+                <div>
+                  <h1 style={styles.subTitle}>
+                    Search, filter and help easily on the issues of the repositories you starred
+                  </h1>
+                  <BlinkSquare/>
+                </div>
               </div>
-              <div
-                style={Object.assign({}, styles.footerItem, styles.about)}
-                onClick={this.onClickAbout}>
-                About
+              <div style={styles.interactive}>
+                <div style={styles.rateLimit}>
+                  {
+                    isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
+                  }
+                </div>
+                {
+                  isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
+                }
+                <div style={styles.bottom}>
+                  <RawButton
+                    onClick={this.onToggleAccess}>
+                    {
+                      isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
+                    }
+                  </RawButton>
+                  {
+                    isTokenAccess && (
+                      <RawButton
+                        style={styles.howToToken}
+                        onClick={this.onGetToken}>
+                        How to get a token
+                      </RawButton>
+                    )
+                  }
+                </div>
               </div>
+              <footer>
+                <div style={styles.footerContainer}>
+                  <div style={styles.first}>
+                    Giistr works on your way to do a pull of issues you liked and register to your localstorage.
+                  </div>
+                  <div style={styles.rightContainer}>
+                    <div style={styles.footerItem}>
+                      Giistr © 2016
+                    </div>
+                    <div
+                      style={Object.assign({}, styles.footerItem, styles.about)}
+                      onClick={this.onClickAbout}>
+                      About
+                    </div>
+                  </div>
+                </div>
+              </footer>
             </div>
-          </div>
-        </footer>
+          )
+        }
+        {
+          loading && load
+        }
       </div>
     );
   }
