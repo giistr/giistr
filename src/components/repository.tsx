@@ -56,7 +56,7 @@ const styles = {
     color: Colors.middleLightGrey,
     fontWeight: 400,
     paddingTop: 16,
-    transition: 'border 1.5s ease'
+    transition: 'border 1s ease'
   },
   subline: {
     flex: 1,
@@ -82,20 +82,14 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
   private interval = undefined;
 
   public state = {
-    borderIndex: 0
+    borderIndex: 1
   };
 
   public componentWillMount() {
-    if (this.props.repo.size === 0) {
-      this.interval = setInterval(() => {
-        if (this.props.repo.size === 0) {
-          this.setState({
-            borderIndex: this.state.borderIndex === 0 ? 1 : 0
-          });
-        } else {
-          clearInterval(this.interval);
-        }
-      }, 2000);
+    const { repo } = this.props;
+
+    if (repo.size === 0) {
+      this.interval = setInterval(this.onUpdateBorder.bind(this, repo), 1500);
     }
   }
 
@@ -105,6 +99,16 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
 
   public shouldComponentUpdate(nextProps, nextState) {
     return !nextProps.repo.equals(this.props.repo) || nextState.borderIndex !== this.state.borderIndex;
+  }
+
+  private onUpdateBorder(repo) {
+    if (repo.size === 0) {
+      this.setState({
+        borderIndex: this.state.borderIndex === 0 ? 1 : 0
+      });
+    } else {
+      clearInterval(this.interval);
+    }
   }
 
   public render() {
