@@ -11,4 +11,3 @@ declare var require: {
 
 /// <reference path="stilr.d.ts" />
 /// <reference path="react-ga/react-ga.d.ts" />
-/// <reference path="react-loading.d.ts" />
