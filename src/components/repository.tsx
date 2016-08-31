@@ -116,7 +116,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any> }, 
     const { borderIndex } = this.state;
 
     const border = {
-      borderTop: borderSwitch[borderIndex]
+      borderTop: repo.size === 0 ? borderSwitch[borderIndex] : borderSwitch[0]
     };
 
     return (
