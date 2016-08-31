@@ -49,7 +49,8 @@ const styles = {
     marginTop: 6
   },
   landingLinks: {
-    display: 'flex'
+    display: 'flex',
+    marginRight: 30
   },
   or: {
     padding: '0px 10px',

@@ -101,7 +101,8 @@ class Landing extends React.Component<MainProps, any> {
 
   public state = {
     token: '',
-    isTokenAccess: false
+    isTokenAccess: false,
+    loading: false
   };
 
   public componentWillMount() {
@@ -114,6 +115,9 @@ class Landing extends React.Component<MainProps, any> {
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
       dispatch(githubOauthAction(params.code));
+      this.setState({
+        loading: true
+      });
     }
   }
 

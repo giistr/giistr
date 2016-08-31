@@ -18,7 +18,7 @@ const styles = {
     margin: '0px auto',
     maxWidth: 1270,
     marginTop: 60,
-    justifyContent: 'center'
+    justifyContent: 'space-between'
   },
   column: {
     flex: 8.5,
