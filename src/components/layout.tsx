@@ -32,7 +32,7 @@ const fakeRepos = OrderedMap<number, any>({
 
 class Layout extends React.Component<MainProps, any> {
 
-  state = {
+  public state = {
     column: window.innerWidth >= 1440 ? 2 : 1
   };
 
@@ -44,7 +44,7 @@ class Layout extends React.Component<MainProps, any> {
     window.removeEventListener('resize', this.onWindowResize);
   }
 
-  onWindowResize = () => {
+  private onWindowResize = () => {
     if (window.innerWidth >= 1440 && this.state.column === 1) {
       this.setState({ column: 2 });
     }

@@ -79,7 +79,7 @@ const styles = {
 
 export class Repository extends React.PureComponent<{ repo: Map<string, any> }, any> {
 
-  interval = undefined;
+  private interval = undefined;
 
   public state = {
     borderIndex: 0

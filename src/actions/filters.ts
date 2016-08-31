@@ -36,7 +36,7 @@ export const reset = (key: string) => {
 
 export const resetAll = () => {
   return dispatch => dispatch({ type: RESET_FILTER });
-}
+};
 
 export const replace = (key: string, payload: string | boolean) => {
   return dispatch => {

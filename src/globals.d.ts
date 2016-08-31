@@ -1,7 +1,3 @@
-/// <reference path="stilr.d.ts" />
-/// <reference path="react-ga/react-ga.d.ts" />
-/// <reference path="react-loading.d.ts" />
-
 import React = __React;
 import ReactDOM = __React.__DOM;
 
@@ -12,3 +8,7 @@ declare var require: {
     (paths: string[], callback: (...modules: any[]) => void): void;
     ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
 };
+
+/// <reference path="stilr.d.ts" />
+/// <reference path="react-ga/react-ga.d.ts" />
+/// <reference path="react-loading.d.ts" />

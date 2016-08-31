@@ -3,7 +3,6 @@ import { fromJS } from 'immutable';
 import { add as addRepositories } from './actions/repositories';
 import { serializeIssues } from './actions/issues';
 
-/// <reference path="require.d.ts" />
 const issues = fromJS(require('!json!../data/issues.json')); // tslint:disable-line
 const repositories = fromJS(require('!json!../data/repositories.json')); // tslint:disable-line
 

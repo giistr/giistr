@@ -14,7 +14,9 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import * as Loading from 'react-loading';
+import Loader from '../components/loader';
+
+// const Loading = require('react-loading');
 
 interface MainProps {
   dispatch: any;
@@ -91,10 +93,19 @@ const styles = {
   first: {
     fontSize: 11,
     color: Colors.grey
+  },
+  loader: {
+    position: 'absolute',
+    width: 120,
+    height: 120,
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    margin: 'auto'
   }
 };
 
-/// <reference path="require.d.ts" />
 const config = fromJS(require('!json!../config.json')); // tslint:disable-line
 const githubOauth = `https://github.com/login/oauth/authorize?client_id=${config.get('clientId')}`;
 
@@ -103,7 +114,7 @@ class Landing extends React.Component<MainProps, any> {
   public state = {
     token: '',
     isTokenAccess: false,
-    loading: true
+    loading: false
   };
 
   public componentWillMount() {
@@ -152,17 +163,15 @@ class Landing extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { isTokenAccess, loading } = this.state;
-    const load = ( <Loading type="cyclon" color="#4f7cf7"/> );
+    const { isTokenAccess } = this.state;
 
-    console.log(load);
     return (
       <div>
         <BackgroundCover/>
         <TagCloud/>
         <LanguageCloud/>
         {
-          !loading && (
+          !this.state.loading && (
             <div style={styles.container}>
               <Logo/>
               <div style={styles.titles}>
@@ -222,7 +231,12 @@ class Landing extends React.Component<MainProps, any> {
           )
         }
         {
-          loading && load
+          this.state.loading && (
+            <Loader
+              type="cyclon"
+              color="#4f7cf7"
+              style={styles.loader}/>
+          )
         }
       </div>
     );
