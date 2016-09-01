@@ -1,4 +1,4 @@
-<img title="giistr" src="/assets/logo.svg" width="120px"/>
+<img title="giistr" src="assets/logo@3x.png" width="120px"/>
 
 <br/>
 
