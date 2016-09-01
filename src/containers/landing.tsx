@@ -16,8 +16,6 @@ import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
 import Loader from '../components/loader';
 
-// const Loading = require('react-loading');
-
 interface MainProps {
   dispatch: any;
   githubOauthAction: any;
@@ -233,7 +231,6 @@ class Landing extends React.Component<MainProps, any> {
         {
           this.state.loading && (
             <Loader
-              type="cyclon"
               color="#4f7cf7"
               style={styles.loader}/>
           )

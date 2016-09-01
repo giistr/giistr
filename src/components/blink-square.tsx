@@ -10,7 +10,7 @@ const base = {
   display: 'inline-block'
 };
 
-export class BlinkSquare extends React.PureComponent<{}, any> {
+export class BlinkSquare extends React.PureComponent<any, { color: string; }> {
   public state = {
     color: Colors.blue
   };

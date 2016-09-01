@@ -58,7 +58,7 @@ interface MainProps {
   list: Set<string>;
 };
 
-class Input extends React.Component<MainProps, any> {
+class Input extends React.Component<MainProps, { focus: boolean; }> {
 
   public state = {
     focus: false

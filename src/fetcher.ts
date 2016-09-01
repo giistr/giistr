@@ -2,7 +2,6 @@ import { fromJS } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
 
-/// <reference path="require.d.ts" />
 const config = fromJS(require('!json!./config.json')); // tslint:disable-line
 
 function makeUrl(endpoint: string): string {

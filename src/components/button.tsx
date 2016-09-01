@@ -19,7 +19,7 @@ const base = {
   borderRadius: 5
 };
 
-class Button extends React.Component<MainProps, any> {
+class Button extends React.Component<MainProps, { color: string; }> {
 
   public state = {
     color: Colors.blueBackground

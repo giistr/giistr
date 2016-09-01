@@ -77,7 +77,7 @@ const styles = {
   }
 };
 
-export class Repository extends React.PureComponent<{ repo: Map<string, any> }, any> {
+export class Repository extends React.PureComponent<{ repo: Map<string, any>; }, { borderIndex: number; }> {
 
   private interval = undefined;
 

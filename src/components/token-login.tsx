@@ -23,7 +23,7 @@ const styles = {
   }
 };
 
-class TokenLogin extends React.Component<MainProps, any> {
+class TokenLogin extends React.Component<MainProps, { query: string; }> {
 
   public state = {
     query: ''

@@ -20,7 +20,7 @@ const styles = {
 
 const shift = 10;
 
-class LabelsFilters extends React.Component<MainProps, any> {
+class LabelsFilters extends React.Component<MainProps, { display: number; }> {
 
   public state = {
     display: shift

@@ -69,7 +69,7 @@ interface MainProps {
   location: any;
 };
 
-class UserCard extends React.PureComponent<MainProps, any> {
+class UserCard extends React.PureComponent<MainProps, { active: number; }> {
 
   public state = {
     active: this.getActiveRoute(this.props.location)
