@@ -7,6 +7,8 @@ Apply filter and search on these issues and repositories then pick one and contr
 
 [Learn more](https://medium.com/@alex_picprod/ce06811f3356)
 
+[Go to the app](https://www.giistr.io/)
+
 # Stack
 
 - React
