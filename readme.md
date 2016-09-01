@@ -1,7 +1,11 @@
-# Github issues tracker
+# Giistr
+
+<p align="center">
+  <img title="giistr" src='assets/logo.svg' width="120px"/>
+</p>
 
 Fetch a list of repositories you starred then display the issues immediately in one view.
-Apply filter and search on these issues and repository then pick one and contribute to your favorite library.
+Apply filter and search on these issues and repositories then pick one and contribute to your favorite library.
 
 # Stack
 
@@ -10,7 +14,7 @@ Apply filter and search on these issues and repository then pick one and contrib
 - Typescript
 - Immutable
 
-# Run the app localy (Development)
+# Run the app locally (Development)
 
 - Install dependencies 
 ```
@@ -26,15 +30,10 @@ npm run start
 
 # Run the app for Production
 
-- Configure the server-config.json file, it should look like this
+- Build the bundle
 ```
-{
-  "clientId": "your_client_id",
-  "clientSecret": "your_client_sevret"
-}
+npm run build
 ```
 
-- Run the docker image
-```
-./deploy.sh
-```
+Target the `/dist` folder with an nginx, you should use the nginx.conf file provided in the dist folder.
+You should also set the `CLIENT_SECRET` and `CLIENT_ID` env variable on nginx.
