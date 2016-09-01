@@ -82,7 +82,7 @@ const styles = {
 class About extends React.Component<MainProps, any> {
 
   private onClickProjectLink() {
-    window.open('https://github.com/alex3165/github-issues', '_blank').focus();
+    window.open('https://github.com/giistr/giistr', '_blank').focus();
   }
 
   public render() {
