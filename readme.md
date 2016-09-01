@@ -1,11 +1,11 @@
-# Giistr
+<img title="giistr" src="/assets/logo.svg" width="120px"/>
 
-<p align="center">
-  <img title="giistr" src='assets/logo.svg' width="120px"/>
-</p>
+<br/>
 
 Fetch a list of repositories you starred then display the issues immediately in one view.
 Apply filter and search on these issues and repositories then pick one and contribute to your favorite library.
+
+[Learn more](https://medium.com/@alex_picprod/ce06811f3356)
 
 # Stack
 
