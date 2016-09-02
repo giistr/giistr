@@ -30,7 +30,8 @@ const styles = {
     display: 'flex',
     height: '100vh',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '0px 40px'
   },
   mainTitle: {
     fontSize: 40,

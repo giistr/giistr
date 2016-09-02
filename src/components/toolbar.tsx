@@ -29,6 +29,7 @@ const styles = {
     maxWidth: 360,
     flex: 3,
     marginTop: 40,
+    paddingRight: 40,
     minHeight: '100vh'
   },
   languageFilter: {},
