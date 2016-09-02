@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Set, Map } from 'immutable';
 import Input from './input-autocomplete';
+import InputText from './input-text';
 import { Colors } from '../style';
 import LabelsFilter from './labels-filter';
 import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
@@ -9,7 +10,7 @@ import { remove, add, replace, reset, resetAll } from '../actions/filters';
 import { Check } from './check';
 import { RawButton } from './raw-button';
 
-const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
+const [ languages, period, labels, withIssues, withoutAssignee, searchIssue ] = FILTER_KEYS;
 
 interface MainProps {
   languages: Set<string>;
@@ -35,10 +36,9 @@ const styles = {
   languageFilter: {},
   filterTitle: {
     color: Colors.lightGrey,
-    padding: '10px 0px',
+    paddingBottom: 10,
     marginLeft: 20,
-    fontSize: 14,
-    borderBottom: `1px solid ${Colors.borderGrey}`
+    fontSize: 14
   },
   section: {
     padding: '10px 20px'
@@ -70,6 +70,13 @@ class Toolbar extends React.Component<MainProps, any> {
     } else {
       add(labels, id)(dispatch);
     }
+  };
+
+  private onSearchIssue = evt => {
+    const text = evt.target.value;
+    const { replace, dispatch } = this.props;
+
+    replace(searchIssue, text)(dispatch);
   };
 
   private onSelectLanguage = language => {
@@ -117,6 +124,11 @@ class Toolbar extends React.Component<MainProps, any> {
         <h3 style={styles.filterTitle}>
           Filters
         </h3>
+        <div style={styles.section}>
+          <InputText
+            onChange={this.onSearchIssue}
+            placeholder="Search on issues"/>
+        </div>
         <div style={styles.section}>
           <h3>Updated before</h3>
           <Input

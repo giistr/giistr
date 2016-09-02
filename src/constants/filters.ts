@@ -20,7 +20,8 @@ export const FILTER_DEFAULT = {
   period: Set<number>([ pOptions[0] ]),
   labels: Set<string>(),
   withIssues: true,
-  withoutAssignee: false
+  withoutAssignee: false,
+  searchIssue: Set<string>([''])
 };
 
 export const FILTER_KEYS = Object.keys(FILTER_DEFAULT);

@@ -1,7 +1,7 @@
 import { FILTER_KEYS, pOptions, languageDefaultOption } from './constants/filters';
 import * as moment from 'moment';
 
-const [ languages, period, labels, withIssues, withoutAssignee ] = FILTER_KEYS;
+const [ languages, period, labels, withIssues, withoutAssignee, searchIssue ] = FILTER_KEYS;
 
 function periodInterpretation(option) {
   switch (option) {
@@ -48,6 +48,11 @@ export function applyRepositoryFilters(filters) {
 
 export function applyIssueFilters(filters) {
   return issue => {
+
+    // Apply search filter on the title of the issue
+    if (!issue.get('title').toLowerCase().includes(filters.get(searchIssue).first().toLowerCase())) {
+      return false;
+    }
 
     // Apply period filter
     if (
