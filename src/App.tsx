@@ -1,5 +1,5 @@
 // tslint:disable-next-line
-/// <reference path='globals.d.ts' />
+/// <reference path='typings/globals.d.ts'/>
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as StyleSheet from 'stilr';
