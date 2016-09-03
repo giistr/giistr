@@ -21,7 +21,7 @@ Apply filter and search on these issues and repositories then pick one and contr
 - Install dependencies 
 ```
 npm install
-npm install -g typescript
+npm install -g typescript typings
 typings install
 ```
 

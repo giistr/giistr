@@ -1,6 +1,17 @@
 language: node_js
+
 node_js:
-- '5.11'
+  - '5.11'
+
+install:
+  - npm install
+  - npm install -g typescript typings
+  - typings install
+
+script:
+  - npm run test
+  - npm run build
+
 deploy:
   provider: cloudfoundry
   api: https://api.ng.bluemix.net
