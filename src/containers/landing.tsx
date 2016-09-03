@@ -70,13 +70,18 @@ const styles = {
   howToToken: {
     marginLeft: 8
   },
-  footerContainer: {
+  wrapper: {
+    borderBottom: `1px solid ${Colors.borderGrey}`,
+    zIndex: 2
+  },
+  headerContainer: {
     maxWidth: 1200,
     margin: '0px auto',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '100%'
+    padding: 30,
+    backgroundColor: 'white'
   },
   footerItem: {
     padding: '0px 10px',
@@ -84,14 +89,16 @@ const styles = {
     color: Colors.middleGrey
   },
   about: {
-    cursor: 'pointer'
+    cursor: 'pointer',
+    zIndex: 2,
+    color: Colors.lightGrey
   },
   rightContainer: {
     display: 'flex'
   },
   first: {
-    fontSize: 11,
-    color: Colors.grey
+    fontSize: 12,
+    color: Colors.blueMiddle
   },
   loader: {
     position: 'absolute',
@@ -166,13 +173,27 @@ class Landing extends React.Component<MainProps, any> {
 
     return (
       <div>
+        <header style={styles.wrapper}>
+          <div style={styles.headerContainer}>
+            <Logo width={60}/>
+            <div style={styles.first}>
+              Giistr give you all the functionalities you need to quickly find the right issue.
+            </div>
+            <div style={styles.rightContainer}>
+              <div
+                style={Object.assign({}, styles.footerItem, styles.about)}
+                onClick={this.onClickAbout}>
+                About
+              </div>
+            </div>
+          </div>
+        </header>
         <BackgroundCover/>
         <TagCloud/>
         <LanguageCloud/>
         {
           !this.state.loading && (
             <div style={styles.container}>
-              <Logo/>
               <div style={styles.titles}>
                 <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
                 <div>
@@ -209,23 +230,6 @@ class Landing extends React.Component<MainProps, any> {
                   }
                 </div>
               </div>
-              <footer>
-                <div style={styles.footerContainer}>
-                  <div style={styles.first}>
-                    Giistr works on your way to do a pull of issues you liked and register to your localstorage.
-                  </div>
-                  <div style={styles.rightContainer}>
-                    <div style={styles.footerItem}>
-                      Giistr © 2016
-                    </div>
-                    <div
-                      style={Object.assign({}, styles.footerItem, styles.about)}
-                      onClick={this.onClickAbout}>
-                      About
-                    </div>
-                  </div>
-                </div>
-              </footer>
             </div>
           )
         }
