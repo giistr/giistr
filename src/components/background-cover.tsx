@@ -3,10 +3,8 @@ import { Colors } from '../style';
 
 const container = {
   position: 'absolute',
-  height: '100vh',
   overflow: 'hidden',
   left: 0,
-  right: 0,
   top: 0,
   zIndex: -1
 };
@@ -33,12 +31,41 @@ const middleCircle = extendCircle({
   left: window.innerWidth / 2
 });
 
-export function BackgroundCover() {
+export class BackgroundCover extends React.PureComponent<any, any> {
 
-  return (
-    <div style={container}>
-      <div style={leftCircle}></div>
-      <div style={middleCircle}></div>
-    </div>
-  );
+  public refs: {
+    [T: string]: any;
+    canvas: any;
+  };
+
+  private drawCircle(ctx, x, y, radius) {
+    const canvas = this.refs.canvas;
+
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+    ctx.strokeStyle = Colors.blueBackgroundMiddle;
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  }
+
+  public componentDidMount() {
+    const canvas = this.refs.canvas;
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const ctx: CanvasRenderingContext2D = canvas.getContext('2d');
+    const ww = window.innerWidth;
+
+    this.drawCircle(ctx, cw / 1.5, ch, ww / 5);
+    this.drawCircle(ctx, cw - (cw / 1.2) , ch / 1.1, ww / 2.8);
+    this.drawCircle(ctx, cw / 3 , ch - (ch / 1.4), ww / 3.5);
+    this.drawCircle(ctx, cw / 1.1 , ch + ch / 5, ww / 5);
+  }
+
+  public render() {
+    return (
+      <div>
+        <canvas ref="canvas" style={container} width={window.innerWidth} height={window.innerHeight}/>
+      </div>
+    );
+  }
 }

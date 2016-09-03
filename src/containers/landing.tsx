@@ -72,7 +72,8 @@ const styles = {
   },
   wrapper: {
     borderBottom: `1px solid ${Colors.borderGrey}`,
-    zIndex: 2
+    zIndex: 2,
+    backgroundColor: 'white'
   },
   headerContainer: {
     maxWidth: 1200,
@@ -80,8 +81,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 30,
-    backgroundColor: 'white'
+    padding: 30
   },
   footerItem: {
     padding: '0px 10px',
