@@ -2,7 +2,7 @@
 
 # dependencies
 node_modules
-typings
+/typings
 dist
 
 # production
