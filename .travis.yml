@@ -18,7 +18,7 @@ deploy:
   username: alexr.3165@gmail.com
   password:
     secure: KV5vhPJmjl2mi3SR9QAtOd5k4ylG+M9OG2MTrVcUBW6qDRYZIqNFVOgMrsa1rvmjCcBlPpU1B2tANHncvB7QHCjT0z5P/bRDts2Djudz0HoDD/rFxaA5NTkRqYVS4VNIjzFIMfcG/1Hjo1T0XfSFaBx7gkrs7Ab2aBx0zDI9QGmtfOUS4o8WiQanF5jsu3Z7EFcf/XF1iJJAeIEMNCOnhKgimT1ZfU2HsebLjX+xpY6WcwYfQPTLfvX15PQh3al86vcwQytBn1HycGOg57zX4y6QCiqxmkvOR293Mf+1HpGCen+vj++hgFiIPf/+u9oJ7audcMdSMfZERUjL/PG6Nt+RLbD8fQWySUBRFBNziv9tNEMpy4DSNordhRUQYGdN9l0UImlMt7UhZ6mg+Wgelgdh29VzAGAvon5bJNpCt9OeSoTD2JEehmiddLSegaJ8DvN2n+1wPBNkYGNsZ6E76wOBIuzKSpygHLXzkdb7017VuATg71+VmkgB6A0nM6JPSH5zmR4+adBL09q9OWp5V3bcDFJ5Vzujb6OJRsrPXlK2MaROIDEqwT2iVgwfmTodwzgULpOnTdYSWfb0sVW0tHOVxLBLwDRrMl2kfA8m3rq9xpfWLL9rmzlExqQtR7MVnOwWtH4htNtuj5+Rrx9o8owFoX5iDiD43XhyqurJYyk=
-  organization: giistr
+  organization: numeractive
   space: giistr
   on:
     repo: giistr/giistr
