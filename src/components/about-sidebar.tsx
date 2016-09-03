@@ -91,7 +91,8 @@ export function AboutSidebar() {
         <div style={styles.userNext}>
           <h1 style={styles.userTitle}>Jason_Boyer<span style={styles.second}>/designer</span></h1>
           <div style={styles.description}>
-            Jason is interested in everything about creativity, design and learning. He also recently started to be addict at tea.
+            Jason is interested in everything about creativity,
+            design and learning. He also recently started to be addict at tea.
           </div>
           <div style={styles.links}>
             <RawButton

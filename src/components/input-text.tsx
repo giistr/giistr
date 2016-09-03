@@ -40,7 +40,6 @@ class Input extends React.Component<MainProps, any> {
     }
   };
 
-
   public render() {
     const { placeholder, style } = this.props;
 
