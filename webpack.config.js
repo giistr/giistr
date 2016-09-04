@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var env = process.env.NODE_ENV;
@@ -19,7 +18,6 @@ var toCopy = [
 
 var plugins = [
   new webpack.PrefetchPlugin('react'),
-  new ExtractTextPlugin('css/style.css'),
   new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: "'" + env + "'"
@@ -47,7 +45,7 @@ module.exports = {
   output: output,
   devtool: devtool,
   resolve: {
-    extensions: ['', '.ts', '.tsx', '.js', '.css', '.html', 'png', 'jpg']
+    extensions: ['', '.ts', '.tsx', '.js', '.css', '.html']
   },
   cache: true,
   module: {
@@ -58,7 +56,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: 'style-loader!css-loader'
       },
       {
         test: /\.json$/,
