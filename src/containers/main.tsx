@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { OrderedMap } from 'immutable';
-import { getRepos } from '../actions/repositories';
+import { getRepos, getAllRepos } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
@@ -34,6 +34,7 @@ export type Label = Map<string, string>;
 interface MainProps {
   dispatch: any;
   getRepos: any;
+  getAllRepos: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
@@ -77,6 +78,13 @@ class Main extends React.Component<MainProps, any> {
     this.onGetRepository(page);
   };
 
+  private onAll = () => {
+    const { dispatch, getAllRepos, user } = this.props;
+    const { page } = this.state;
+
+    dispatch(getAllRepos(user.get('login'), page));
+  }
+
   public render() {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
@@ -93,6 +101,7 @@ class Main extends React.Component<MainProps, any> {
           <Layout
             loaded={loaded}
             hasNext={30 * page === totalRepositories}
+            onClickAll={this.onAll}
             onClickMore={this.onNext.bind(this, page + 1)}
             repositories={repositories}/>
           <ToolBar
@@ -124,5 +133,6 @@ connect((state, props) => {
   };
 }, dispatch => ({
   getRepos,
+  getAllRepos,
   dispatch
 }))(Main);

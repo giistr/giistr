@@ -7,6 +7,7 @@ import LoadMore from '../components/load-more';
 interface MainProps {
   repositories: OrderedMap<number, any>;
   onClickMore: Function;
+  onClickAll: Function;
   loaded: boolean;
   hasNext: boolean;
 };
@@ -85,7 +86,7 @@ class Layout extends React.Component<MainProps, { column: number; }> {
   }
 
   public render() {
-    const { repositories, onClickMore, loaded, hasNext } = this.props;
+    const { repositories, onClickMore, onClickAll, loaded, hasNext } = this.props;
     const { column } = this.state;
 
     return (
@@ -99,6 +100,7 @@ class Layout extends React.Component<MainProps, { column: number; }> {
         {
           loaded && hasNext && (
             <LoadMore
+              onClickAll={onClickAll}
               onClickMore={onClickMore}/>
           )
         }

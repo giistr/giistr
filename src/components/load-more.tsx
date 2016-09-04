@@ -4,6 +4,7 @@ import Button from './button';
 
 interface MainProps {
   onClickMore: Function;
+  onClickAll: Function;
 };
 
 const styles = {
@@ -26,13 +27,14 @@ const styles = {
   },
   more: {
     paddingLeft: 24,
-    paddingRight: 24
+    paddingRight: 24,
+    margin: '20px 10px'
   }
 };
 
 class LoadMore extends React.Component<MainProps, any> {
   public render() {
-    const { onClickMore } = this.props;
+    const { onClickMore, onClickAll } = this.props;
 
     return (
       <div style={styles.container}>
@@ -40,11 +42,18 @@ class LoadMore extends React.Component<MainProps, any> {
           <img src="/assets/warning.svg"/>
           <div style={styles.sentence}>Psst! you can load more repositories</div>
         </div>
-        <Button
-          style={styles.more}
-          onClick={onClickMore}>
-          See more repositories
-        </Button>
+        <div>
+          <Button
+            style={styles.more}
+            onClick={onClickMore}>
+            See more
+          </Button>
+          <Button
+            style={styles.more}
+            onClick={onClickAll}>
+            See all
+          </Button>
+        </div>
       </div>
     );
   }
