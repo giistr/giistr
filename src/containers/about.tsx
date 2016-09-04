@@ -18,6 +18,7 @@ const styles = {
     margin: '0px auto',
     maxWidth: 1270,
     marginTop: 60,
+    padding: '0px 40px',
     justifyContent: 'space-between'
   },
   column: {
