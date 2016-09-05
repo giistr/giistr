@@ -27,3 +27,4 @@ deploy:
   space: giistr
   on:
     repo: giistr/giistr
+    branch: release
