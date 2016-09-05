@@ -157,7 +157,7 @@ class Landing extends React.Component<MainProps, any> {
   };
 
   private redirectToApp(user) {
-    browserHistory.push(`/home/${user.get('login')}`);
+    browserHistory.push('/home');
   }
 
   private onGetToken() {
