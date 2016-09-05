@@ -1,6 +1,9 @@
 applications:
+
 - buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
   command: null
   path: dist/
   instances: 1
   memory: 64M
+
+- name: giistr
