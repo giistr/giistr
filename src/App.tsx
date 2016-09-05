@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as StyleSheet from 'stilr';
 
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, Redirect, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -46,6 +46,8 @@ ReactDOM.render(
       <Route path="/" component={Landing}/>
       <Route path="/home" component={Main}/>
       <Route path="/about" component={About}/>
+
+      <Redirect from="/home/:x" to="/home"/>
     </Router>
   </Provider>,
   document.getElementById('content')
