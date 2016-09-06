@@ -14,7 +14,7 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import Loader from '../components/loader';
+import TopLoader from '../components/top-loader';
 
 interface MainProps {
   dispatch: any;
@@ -168,7 +168,7 @@ class Landing extends React.Component<MainProps, any> {
     browserHistory.push('/about');
   }
 
-  public render() {
+  private renderMain() {
     const { isTokenAccess } = this.state;
 
     return (
@@ -191,55 +191,55 @@ class Landing extends React.Component<MainProps, any> {
         <BackgroundCover/>
         <TagCloud/>
         <LanguageCloud/>
-        {
-          !this.state.loading && (
-            <div style={styles.container}>
-              <div style={styles.titles}>
-                <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
-                <div>
-                  <h1 style={styles.subTitle}>
-                    Search, filter and help easily on the issues of the repositories you starred
-                  </h1>
-                  <BlinkSquare/>
-                </div>
-              </div>
-              <div style={styles.interactive}>
-                <div style={styles.rateLimit}>
-                  {
-                    isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
-                  }
-                </div>
-                {
-                  isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
-                }
-                <div style={styles.bottom}>
-                  <RawButton
-                    onClick={this.onToggleAccess}>
-                    {
-                      isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
-                    }
-                  </RawButton>
-                  {
-                    isTokenAccess && (
-                      <RawButton
-                        style={styles.howToToken}
-                        onClick={this.onGetToken}>
-                        How to get a token
-                      </RawButton>
-                    )
-                  }
-                </div>
-              </div>
+        <div style={styles.container}>
+          <div style={styles.titles}>
+            <h1 style={styles.mainTitle}>Contribute to build the open-source world.</h1>
+            <div>
+              <h1 style={styles.subTitle}>
+                Search, filter and help easily on the issues of the repositories you starred
+              </h1>
+              <BlinkSquare/>
             </div>
-          )
-        }
+          </div>
+          <div style={styles.interactive}>
+            <div style={styles.rateLimit}>
+              {
+                isTokenAccess ? 'Unlimited access using a token' : 'Limited access, 5,000 requests per hour'
+              }
+            </div>
+            {
+              isTokenAccess ? <TokenLogin onClickLogin={this.onTokenLogin}/> : (<GithubButton href={githubOauth}/>)
+            }
+            <div style={styles.bottom}>
+              <RawButton
+                onClick={this.onToggleAccess}>
+                {
+                  isTokenAccess ? 'Sign Up with Github' : 'Get unlimited access'
+                }
+              </RawButton>
+              {
+                isTokenAccess && (
+                  <RawButton
+                    style={styles.howToToken}
+                    onClick={this.onGetToken}>
+                    How to get a token
+                  </RawButton>
+                )
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  public render() {
+    return (
+      <div>
         {
-          this.state.loading && (
-            <Loader
-              color="#4f7cf7"
-              style={styles.loader}/>
-          )
+          !this.state.loading && this.renderMain()
         }
+        <TopLoader loading={this.state.loading}/>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { getRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
+import TopLoader from '../components/top-loader';
 
 import {
   applyRepositoryFilters,
@@ -69,12 +70,12 @@ class Main extends React.Component<MainProps, any> {
       this.setState({ loaded: false });
     }
 
-    dispatch(getRepos(user.get('login'), page)).then(() => {
+    getRepos(user.get('login'), page)(dispatch).then(() => {
       this.setState({ loaded: true });
     });
 
     // Fetch the total number of starred repositories by a user
-    dispatch(fetchTotalReposLength(user.get('login')));
+    fetchTotalReposLength(user.get('login'))(dispatch);
   };
 
   private onNext(page) {
@@ -86,7 +87,14 @@ class Main extends React.Component<MainProps, any> {
     const { dispatch, fetchReposAndIssues, user } = this.props;
     const { page } = this.state;
 
-    fetchReposAndIssues(user.get('login'), page)(dispatch);
+    if (this.state.loaded) {
+      this.setState({ loaded: false });
+    }
+
+    fetchReposAndIssues(user.get('login'), page)(dispatch)
+      .then(() => {
+        this.setState({ loaded: true });
+      });
   }
 
   public render() {
@@ -96,6 +104,7 @@ class Main extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
+        <TopLoader loading={!loaded}/>
         <NavigationBar
           user={user}
           location={location}

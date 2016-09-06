@@ -41,7 +41,7 @@ export const getRepos = (username, page) => {
       })
       .then((repos: List<any>) => {
         const proms: Array<Promise<any>> = repos.map(repo =>
-          getIssuesReq(repo.get('full_name'), repo.get('id'))
+          getIssuesReq(repo.get('full_name'), repo.get('id'))(dispatch)
         ).toArray();
 
         return Promise.all(proms);
@@ -55,7 +55,7 @@ export const getRepos = (username, page) => {
 
 export const fetchReposAndIssues = (username, starting) => {
   return dispatch => {
-    getAllRepos(username)(starting)(dispatch)
+    return getAllRepos(username)(starting)(dispatch)
       .then(repos =>
         fetchAllIssues(repos)(dispatch)
       )

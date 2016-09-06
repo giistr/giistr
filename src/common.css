@@ -102,11 +102,17 @@ time, mark, audio, video {
 
 textarea, input { outline: none; }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  height: 40px;
-  left: 0;
-  right: 0;
-  background-color: #fafafc;
+@keyframes shift-rightwards{
+  0% {
+    transform:translateX(-100%)
+  }
+  40% {
+    transform:translateX(0)
+  }
+  60% {
+    transform:translateX(0)
+  }
+  100% {
+    transform:translateX(100%)
+  }
 }
