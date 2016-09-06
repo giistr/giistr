@@ -17,20 +17,20 @@ const styles = {
     animation: 'shift-rightwards 1s ease-in-out infinite',
     animationDelay: 0.8
   }
-}
+};
 
 export default class TopLoader extends React.PureComponent<{ loading: boolean; }, any> {
 
   public render() {
     let style = styles.container;
 
-    if(this.props.loading) {
+    if (this.props.loading) {
       style = Object.assign({}, style, styles.loading);
     }
 
     return (
       <div style={style}>
       </div>
-    )
+    );
   }
 }

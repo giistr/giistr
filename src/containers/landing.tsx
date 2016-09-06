@@ -25,25 +25,29 @@ interface MainProps {
 
 const styles = {
   container: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     margin: '0px auto',
     maxWidth: 1200,
     display: 'flex',
-    height: '100vh',
     justifyContent: 'center',
     flexDirection: 'column',
     padding: '0px 40px'
   },
   mainTitle: {
-    fontSize: 40,
+    fontSize: 34,
     lineHeight: '46px',
-    fontWeight: 500,
+    fontWeight: 600,
     color: Colors.grey
   },
   subTitle: {
     display: 'inline-block',
     color: Colors.middleGrey,
     marginTop: 14,
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: '24px',
     fontWeight: 400
   },
@@ -230,7 +234,7 @@ class Landing extends React.Component<MainProps, any> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   public render() {
