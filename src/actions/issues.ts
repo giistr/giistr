@@ -22,6 +22,14 @@ function addLabels(labels) {
   };
 }
 
+export const fetchAllIssues = (repositories: List<any>) => {
+  return dispatch => {
+    return Promise.all(repositories.map(repo =>
+      fetchIssues(repo.get('full_name'), repo.get('id'))(dispatch)
+    ).toArray());
+  };
+};
+
 export const fetchIssues = (repository: string, repoId: string, page?: string) => {
   return dispatch =>
     getIssuesReq(repository, repoId, page)

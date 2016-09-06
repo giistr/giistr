@@ -2,7 +2,7 @@ import { get } from '../fetcher';
 import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 import { List } from 'immutable';
 import { Repository } from '../reducers/repository';
-import { getIssuesReq, serializeIssues } from './issues';
+import { getIssuesReq, serializeIssues, fetchAllIssues } from './issues';
 
 export function clear() {
   return dispatch => {
@@ -42,14 +42,31 @@ export const getRepos = (username, page) => {
   };
 };
 
-export const getAllRepos = (username, starting) => {
+export const fetchReposAndIssues = (username, starting) => {
   return dispatch => {
-    get(`users/${username}/starred`, { page: starting })
+    getAllRepos(username)(starting)(dispatch)
+      .then(repos =>
+        fetchAllIssues(repos)(dispatch)
+      )
+  };
+};
+
+export const getAllRepos = username => {
+  let total = List<any>();
+
+  const closure = starting => dispatch => {
+    return get(`users/${username}/starred`, { page: starting })
       .then((repos: List<Repository>) => {
         add(repos)(dispatch);
+        total = total.concat(repos).toList();
+
         if (repos.size >= 30) {
-          dispatch(getAllRepos(username, starting + 1));
+          return dispatch(closure(starting + 1));
         }
-      });
+
+        return total;
+      })
   };
+
+  return closure;
 };
