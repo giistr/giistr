@@ -61,7 +61,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     })
     .then(x => {
       const res = fromJS(x[0]);
-      return preventBody ? x[1].get('link') : res;
+      return (preventBody && method !== 'POST') ? x[1].get('link') : res;
     });
 }
 
