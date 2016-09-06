@@ -25,14 +25,18 @@ function addLabels(labels) {
 export const fetchAllIssues = (repositories: List<any>) => {
   return dispatch => {
     return Promise.all(repositories.map(repo =>
-      fetchIssues(repo.get('full_name'), repo.get('id'))(dispatch)
-    ).toArray());
+      getIssuesReq(repo.get('full_name'), repo.get('id'))(dispatch)
+    ).toArray())
+    .then((res) => {
+      const issues = List(res).flatten(1).toList();
+      return serializeIssues(issues)(dispatch);
+    });
   };
 };
 
 export const fetchIssues = (repository: string, repoId: string, page?: string) => {
   return dispatch =>
-    getIssuesReq(repository, repoId, page)
+    getIssuesReq(repository, repoId, page)(dispatch)
       .then((issues: List<any>) => serializeIssues(issues)(dispatch));
 };
 
@@ -55,14 +59,20 @@ export const serializeIssues = (issues: List<any>) => {
 
     formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 
-    addLabels(labels)(dispatch);
-    add(formattedIssues)(dispatch);
+    if (labels.size > 0) {
+      addLabels(labels)(dispatch);
+    }
+
+    if (formattedIssues.size > 0) {
+      add(formattedIssues)(dispatch);
+    }
 
     return formattedIssues;
   };
 };
 
 export const getIssuesReq = (repository: string, repoId: string, page?: string) => {
-  return get(`repos/${repository}/issues`, { page })
-    .then((issues: List<any>) => issues.map(issue => issue.set('repositoryId', repoId)).toList());
+  return dispatch =>
+    get(`repos/${repository}/issues`, { page })
+      .then((issues: List<any>) => issues.map(issue => issue.set('repositoryId', repoId)).toList());
 };

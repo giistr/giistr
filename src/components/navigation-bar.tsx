@@ -76,10 +76,11 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
     return (
       <div style={styles.repoCounter}>
         <span>Viewing </span>
-        <span style={styles.marked}>{after}</span>
+        <span style={styles.marked}>{ after }</span>
         <span> on </span>
-        <span style={styles.marked}>{total}</span>
-        <span> starred repositories</span>
+        <span style={styles.marked}>{ total }</span>
+        <span> starred repositories of a total of </span>
+        <span style={styles.marked}>{ this.props.user.get('starred') }</span>
       </div>
     );
   };
