@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { OrderedMap } from 'immutable';
-import { getRepos, getAllRepos } from '../actions/repositories';
+import { getRepos, fetchReposAndIssues } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
@@ -34,7 +34,7 @@ export type Label = Map<string, string>;
 interface MainProps {
   dispatch: any;
   getRepos: any;
-  getAllRepos: any;
+  fetchReposAndIssues: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
@@ -79,10 +79,10 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onAll = () => {
-    const { dispatch, getAllRepos, user } = this.props;
+    const { dispatch, fetchReposAndIssues, user } = this.props;
     const { page } = this.state;
 
-    dispatch(getAllRepos(user.get('login'), page));
+    fetchReposAndIssues(user.get('login'), page)(dispatch);
   }
 
   public render() {
@@ -133,6 +133,6 @@ connect((state, props) => {
   };
 }, dispatch => ({
   getRepos,
-  getAllRepos,
+  fetchReposAndIssues,
   dispatch
 }))(Main);
