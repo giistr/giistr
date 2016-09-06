@@ -234,7 +234,7 @@ class Landing extends React.Component<MainProps, any> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   public render() {

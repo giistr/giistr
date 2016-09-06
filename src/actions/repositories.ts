@@ -30,11 +30,12 @@ export const fetchTotalReposLength = (username) => {
       resHeader: true
     })
     .then(headers => {
-      const len = parseInt(headers.get('link').match(/rel="next", <.*&page=(\d+)>; rel="last"/i)[1]);
+      const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
+      const len = parseInt(headers.get('link').match(reg)[1], 10);
       return append('starred', len)(dispatch);
     });
   };
-}
+};
 
 export const getRepos = (username, page) => {
   return dispatch => {
@@ -65,7 +66,7 @@ export const fetchReposAndIssues = (username, starting) => {
     return getAllRepos(username)(starting)(dispatch)
       .then(repos =>
         fetchAllIssues(repos)(dispatch)
-      )
+      );
   };
 };
 
@@ -86,7 +87,7 @@ export const getAllRepos = username => {
       }
 
       return total;
-    })
+    });
   };
 
   return closure;

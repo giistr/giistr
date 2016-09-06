@@ -1,6 +1,5 @@
 import { get, post } from '../fetcher';
 import { ADD_USER, CLEAR_USER, APPEND_TO_USER } from '../constants/user';
-import { Map } from 'immutable';
 import { User } from '../reducers/user';
 
 export function clear() {
@@ -63,7 +62,7 @@ export const githubOauthAction = code => {
     return post({
       fullEndpoint: '/api/github-login',
       preventBody: true,
-      params: { code },
+      params: { code }
     })
     .then(res =>
       oauthFromToken(res.get('access_token'))(dispatch)
