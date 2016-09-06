@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { OrderedMap } from 'immutable';
-import { getRepos, fetchReposAndIssues } from '../actions/repositories';
+import { getRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
@@ -35,6 +35,7 @@ interface MainProps {
   dispatch: any;
   getRepos: any;
   fetchReposAndIssues: any;
+  fetchTotalReposLength: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
@@ -62,7 +63,7 @@ class Main extends React.Component<MainProps, any> {
   }
 
   private onGetRepository(page, user: User = this.props.user) {
-    const { dispatch, getRepos } = this.props;
+    const { dispatch, getRepos, fetchTotalReposLength } = this.props;
 
     if (this.state.loaded) {
       this.setState({ loaded: false });
@@ -71,6 +72,9 @@ class Main extends React.Component<MainProps, any> {
     dispatch(getRepos(user.get('login'), page)).then(() => {
       this.setState({ loaded: true });
     });
+
+    // Fetch the total number of starred repositories by a user
+    dispatch(fetchTotalReposLength(user.get('login')));
   };
 
   private onNext(page) {
@@ -134,5 +138,6 @@ connect((state, props) => {
 }, dispatch => ({
   getRepos,
   fetchReposAndIssues,
+  fetchTotalReposLength,
   dispatch
 }))(Main);

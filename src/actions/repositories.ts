@@ -3,6 +3,7 @@ import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 import { List } from 'immutable';
 import { Repository } from '../reducers/repository';
 import { getIssuesReq, serializeIssues, fetchAllIssues } from './issues';
+import { append } from './user';
 
 export function clear() {
   return dispatch => {
@@ -18,6 +19,16 @@ export function add(repos) {
       payload: repos,
       type: ADD_REPO
     });
+  };
+}
+
+export const fetchTotalReposLength = (username) => {
+  return dispatch => {
+    return get(`users/${username}/starred`, { per_page: 1 }, undefined, true)
+      .then(str => {
+        const len = parseInt(str.match(/rel="next", <.*&page=(\d+)>; rel="last"/i)[1]);
+        append('starred', len)(dispatch);
+      });
   };
 }
 

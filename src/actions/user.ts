@@ -1,5 +1,5 @@
 import { get, post } from '../fetcher';
-import { ADD_USER, CLEAR_USER } from '../constants/user';
+import { ADD_USER, CLEAR_USER, APPEND_TO_USER } from '../constants/user';
 import { Map } from 'immutable';
 import { User } from '../reducers/user';
 
@@ -7,6 +7,18 @@ export function clear() {
   return dispatch => {
     dispatch({
       type: CLEAR_USER
+    });
+  };
+}
+
+export function append(key, value) {
+  return dispatch => {
+    dispatch({
+      type: APPEND_TO_USER,
+      payload: {
+        key,
+        value
+      }
     });
   };
 }

@@ -54,16 +54,22 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
         throw res;
       }
 
-      return res.json();
+      return Promise.all([
+        res.json(),
+        Promise.resolve(res.headers)
+      ]);
     })
-    .then(data => fromJS(data));
+    .then(x => {
+      const res = fromJS(x[0]);
+      return preventBody ? x[1].get('link') : res;
+    });
 }
 
-export function get(endpoint: string, args?: any, fullEndpoint?: string) {
-  return request('GET', endpoint, args, fullEndpoint);
+export function get(endpoint: string, args?: any, fullEndpoint?: string, resHeader?: boolean) {
+  return request('GET', endpoint, args, fullEndpoint, resHeader);
 }
 
-export function post(endpoint: string, args: any, fullEndpoint?: string, preventBody?: Boolean) {
+export function post(endpoint: string, args: any, fullEndpoint?: string, preventBody?: boolean) {
   return request('POST', endpoint, args, fullEndpoint, preventBody);
 }
 
