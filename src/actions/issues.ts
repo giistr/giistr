@@ -73,6 +73,11 @@ export const serializeIssues = (issues: List<any>) => {
 
 export const getIssuesReq = (repository: string, repoId: string, page?: string) => {
   return dispatch =>
-    get(`repos/${repository}/issues`, { page })
-      .then((issues: List<any>) => issues.map(issue => issue.set('repositoryId', repoId)).toList());
+    get({
+      endpoint: `repos/${repository}/issues`,
+      params: { page }
+    })
+    .then((issues: List<any>) =>
+      issues.map(issue => issue.set('repositoryId', repoId)).toList()
+    );
 };

@@ -4,8 +4,21 @@ import { get as getFromStorage } from './localStorage';
 
 const config = fromJS(require('!json!./config.json')); // tslint:disable-line
 
-function makeUrl(endpoint: string): string {
-  return `${config.get('mainUrl')}/${endpoint}?`;
+interface Args {
+  endpoint?: string;
+  params?: Object;
+  fullEndpoint?: string;
+  resHeader?: boolean;
+  preventBody?: boolean;
+};
+
+interface ReqArgs extends Args {
+  method: string;
+};
+
+function makeUrl(endpoint: string, url?: string): string {
+  const base = url || config.get('mainUrl');
+  return endpoint ? base + `/${endpoint}?` : base + '?';
 }
 
 const shallowRequest = (method: string) => (
@@ -15,17 +28,17 @@ const shallowRequest = (method: string) => (
   method === 'DELETE'
 );
 
-export function request(method: string, endpoint: string, args: any, fullEndpoint?: string, preventBody?: Boolean) {
-  const shallow = shallowRequest(method);
+export function request(args: ReqArgs) {
+  const shallow = shallowRequest(args.method);
   let body;
-  let url = fullEndpoint || makeUrl(endpoint);
+  let url = makeUrl(args.endpoint, args.fullEndpoint);
 
-  if (!shallow && !preventBody) {
+  if (!shallow && !args.preventBody) {
     body = JSON.stringify(args);
   }
 
-  if (shallow || preventBody) {
-    url += qs.stringify(args);
+  if (shallow || args.preventBody) {
+    url += qs.stringify(args.params);
   }
 
   let rawHeader: { [index: string]: string; } = {
@@ -43,7 +56,7 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
   const headers = new Headers(rawHeader);
 
   const req = new Request(url, {
-    method,
+    method: args.method,
     headers,
     body
   });
@@ -61,24 +74,24 @@ export function request(method: string, endpoint: string, args: any, fullEndpoin
     })
     .then(x => {
       const res = fromJS(x[0]);
-      return (preventBody && method !== 'POST') ? x[1].get('link') : res;
+      return args.resHeader ? x[1] : res;
     });
 }
 
-export function get(endpoint: string, args?: any, fullEndpoint?: string, resHeader?: boolean) {
-  return request('GET', endpoint, args, fullEndpoint, resHeader);
+export function get(args: Args) {
+  return request(Object.assign({}, args, { method: 'GET' }));
 }
 
-export function post(endpoint: string, args: any, fullEndpoint?: string, preventBody?: boolean) {
-  return request('POST', endpoint, args, fullEndpoint, preventBody);
+export function post(args: Args) {
+  return request(Object.assign({}, args, { method: 'POST' }));
 }
 
-export function put(endpoint: string, args: any) {
-  return request('PUT', endpoint, args);
+export function put(args: Args) {
+  return request(Object.assign({}, args, { method: 'PUT' }));
 }
 
-export function remove(endpoint: string, args: any) {
-  return request('REMOVE', endpoint, args);
+export function remove(args: Args) {
+  return request(Object.assign({}, args, { method: 'DELETE' }));
 }
 
 export default request;
