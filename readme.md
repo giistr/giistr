@@ -2,6 +2,8 @@
 
 <br/>
 
+[![Build Status](https://travis-ci.org/giistr/giistr.svg?branch=release)](https://travis-ci.org/giistr/giistr)
+
 Fetch a list of repositories you starred then display the issues immediately in one view.
 Apply filter and search on these issues and repositories then pick one and contribute to your favorite library.
 
