@@ -10,8 +10,6 @@ branches:
 
 install:
   - npm install
-  - npm install -g typescript typings
-  - typings install
 
 script:
   - npm run test
