@@ -32,6 +32,10 @@ const styles = {
     color: Colors.grey,
     fontSize: 14
   },
+  pr: {
+    marginLeft: 10,
+    color: Colors.lightGrey
+  },
   updatedValue: {
     color: Colors.middleGrey
   },
@@ -104,6 +108,11 @@ export class Issue extends React.PureComponent<MainProps, any> {
               )
             }
             <div style={styles.updatedValue}>Updated: <span>{ updated }</span></div>
+            {
+              issue.get('pull_request') && (
+                <div style={styles.pr}>(Pull request)</div>
+              )
+            }
           </div>
           <div style={styles.secondColumn}>
             <div style={styles.item}>
