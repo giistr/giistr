@@ -16,6 +16,7 @@ import * as ReactGA from 'react-ga';
 import Main from './containers/main';
 import Landing from './containers/landing';
 import About from './containers/about';
+import ListView from './containers/list';
 
 import rootReducer from './reducers';
 import './common.css';
@@ -44,6 +45,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history} onUpdate={logPageView}>
       <Route path="/" component={Landing}/>
+      <Route path="/lists" component={ListView}/>
       <Route path="/home" component={Main}/>
       <Route path="/about" component={About}/>
 

@@ -77,8 +77,12 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
 
   private menu = fromJS([
     {
-      title: 'My home',
+      title: 'Starred',
       action: this.onClickHome
+    },
+    {
+      title: 'Lists',
+      action: this.onClickList
     },
     {
       title: 'About',
@@ -95,13 +99,21 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
       return 0;
     }
 
-    if (location.pathname.includes('about')) {
+    if (location.pathname.includes('lists')) {
       return 1;
+    }
+
+    if (location.pathname.includes('about')) {
+      return 2;
     }
   }
 
   public shouldComponentUpdate(nextProps) {
     return !nextProps.user.equals(this.props.user);
+  }
+
+  private onClickList() {
+    browserHistory.push('/lists');
   }
 
   private onClickAbout() {
