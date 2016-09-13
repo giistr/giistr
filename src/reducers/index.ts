@@ -6,6 +6,7 @@ import userReducer from './user';
 import labelReducer from './labels';
 import filterReducer from './filters';
 import locationReducer from './location';
+import configReducer from './config';
 
 export default combineReducers({
   issues: issuesReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   label: labelReducer,
   filters: filterReducer,
   location: locationReducer,
-  routing: routerReducer
+  routing: routerReducer,
+  config: configReducer
 });

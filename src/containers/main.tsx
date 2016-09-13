@@ -5,7 +5,7 @@ import { getRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
-import TopLoader from '../components/top-loader';
+import { startLoading, stopLoading } from '../actions/config';
 
 import {
   applyRepositoryFilters,
@@ -42,13 +42,14 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   location?: any;
+  startLoading: any;
+  stopLoading: any;
 };
 
 class Main extends React.Component<MainProps, any> {
 
   public state = {
-    page: 1,
-    loaded: this.props.repositories.size > 0
+    page: 1
   };
 
   public componentWillMount() {
@@ -64,14 +65,18 @@ class Main extends React.Component<MainProps, any> {
   }
 
   private onGetRepository(page, user: User = this.props.user) {
-    const { dispatch, getRepos, fetchTotalReposLength } = this.props;
+    const {
+      dispatch,
+      getRepos,
+      fetchTotalReposLength,
+      startLoading,
+      stopLoading
+    } = this.props;
 
-    if (this.state.loaded) {
-      this.setState({ loaded: false });
-    }
+    startLoading()(dispatch);
 
     getRepos(user.get('login'), page)(dispatch).then(() => {
-      this.setState({ loaded: true });
+      stopLoading()(dispatch);
     });
 
     // Fetch the total number of starred repositories by a user
@@ -84,27 +89,31 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onAll = () => {
-    const { dispatch, fetchReposAndIssues, user } = this.props;
+    const {
+      dispatch,
+      fetchReposAndIssues,
+      user,
+      startLoading,
+      stopLoading
+    } = this.props;
+
     const { page } = this.state;
 
-    if (this.state.loaded) {
-      this.setState({ loaded: false });
-    }
+    startLoading()(dispatch);
 
     fetchReposAndIssues(user.get('login'), page)(dispatch)
       .then(() => {
-        this.setState({ loaded: true });
+        stopLoading()(dispatch);
       });
   }
 
   public render() {
     const { user, filters, totalRepositories, location } = this.props;
     let { repositories } = this.props;
-    const { page, loaded } = this.state;
+    const { page } = this.state;
 
     return (
       <div style={styles.container}>
-        <TopLoader loading={!loaded}/>
         <NavigationBar
           user={user}
           location={location}
@@ -112,7 +121,6 @@ class Main extends React.Component<MainProps, any> {
           after={repositories.size}/>
         <div style={styles.mainList}>
           <Layout
-            loaded={loaded}
             hasNext={30 * page === totalRepositories}
             onClickAll={this.onAll}
             onClickMore={this.onNext.bind(this, page + 1)}
@@ -148,5 +156,7 @@ connect((state, props) => {
   getRepos,
   fetchReposAndIssues,
   fetchTotalReposLength,
-  dispatch
+  dispatch,
+  startLoading,
+  stopLoading
 }))(Main);

@@ -14,13 +14,14 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import TopLoader from '../components/top-loader';
+import { startLoading } from '../actions/config';
 
 interface MainProps {
   dispatch: any;
   githubOauthAction: any;
   oauthFromToken: any;
   user: Map<string, string | number>;
+  startLoading: any;
 };
 
 const styles = {
@@ -123,12 +124,11 @@ class Landing extends React.Component<MainProps, any> {
 
   public state = {
     token: '',
-    isTokenAccess: false,
-    loading: false
+    isTokenAccess: false
   };
 
   public componentWillMount() {
-    const { githubOauthAction, dispatch, user } = this.props;
+    const { githubOauthAction, dispatch, user, startLoading } = this.props;
 
     if (user.size > 0) {
       this.redirectToApp(user);
@@ -137,9 +137,7 @@ class Landing extends React.Component<MainProps, any> {
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
       dispatch(githubOauthAction(params.code));
-      this.setState({
-        loading: true
-      });
+      startLoading()(dispatch);
     }
   }
 
@@ -241,9 +239,8 @@ class Landing extends React.Component<MainProps, any> {
     return (
       <div>
         {
-          !this.state.loading && this.renderMain()
+          this.renderMain()
         }
-        <TopLoader loading={this.state.loading}/>
       </div>
     );
   }
@@ -253,5 +250,6 @@ export default connect(state => ({ user: state.get('user') }),
 dispatch => ({
   dispatch,
   githubOauthAction,
-  oauthFromToken
+  oauthFromToken,
+  startLoading
 }))(Landing);
