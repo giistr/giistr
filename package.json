@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=dev node dev.server.js",
-    "build": "NODE_ENV=prod webpack --config ./webpack.config.js"
+    "build": "NODE_ENV=prod webpack --config ./webpack.config.js",
+    "postinstall": "typings install",
+    "typings": "typings"
   },
   "repository": {
     "type": "git",
