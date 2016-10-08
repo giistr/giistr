@@ -1,17 +1,23 @@
 import { get } from '../fetcher';
 import { List } from 'immutable';
-import { ADD_ISSUE } from '../constants/issues';
+import { ADD_ISSUE, FETCH_ISSUES } from '../constants/issues';
 import { ADD_LABEL } from '../constants/labels';
 import * as hash from 'object-hash';
 
-const add = issues => ({
+export const add = issues => ({
   payload: issues,
   type: ADD_ISSUE
 });
 
-const addLabels = labels => ({
+export const addLabels = labels => ({
   payload: labels,
   type: ADD_LABEL
+});
+
+export const fetchIssues = (repoId: string, page?: string) => ({
+  type: FETCH_ISSUES,
+  repoId,
+  page
 });
 
 export const fetchAllIssues = (repositories: List<any>) => {
@@ -26,11 +32,11 @@ export const fetchAllIssues = (repositories: List<any>) => {
   };
 };
 
-export const fetchIssues = (repository: string, repoId: string, page?: string) => {
-  return dispatch =>
-    getIssuesReq(repository, repoId, page)(dispatch)
-      // .then((issues: List<any>) => serializeIssues(issues)(dispatch));
-};
+// export const fetchIssues = (repository: string, repoId: string, page?: string) => {
+//   return dispatch =>
+//     getIssuesReq(repository, repoId, page)(dispatch)
+//       // .then((issues: List<any>) => serializeIssues(issues)(dispatch));
+// };
 
 export const serializeIssues = (issues: List<any>) => {
   return dispatch => {
