@@ -1,5 +1,6 @@
 // tslint:disable-next-line
 /// <reference path='typings/globals.d.ts'/>
+import 'rxjs';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as StyleSheet from 'stilr';
@@ -9,7 +10,8 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { Map } from 'immutable';
-import thunk from 'redux-thunk';
+import { createEpicMiddleware, combineEpics } from 'redux-observable';
+
 import * as createLogger from 'redux-logger';
 import * as ReactGA from 'react-ga';
 
@@ -18,12 +20,13 @@ import Landing from './containers/landing';
 import About from './containers/about';
 import Wrapper from './containers/wrapper';
 
+import rootEpics from './epics';
 import rootReducer from './reducers';
 import './common.css';
 
 declare var process: any;
 const env = process.env.NODE_ENV;
-const middlewares: Array<any> = [ thunk ];
+const middlewares: Array<any> = [ createEpicMiddleware(combineEpics(...rootEpics)) ];
 
 interface ReduxWindow extends Window {
   devToolsExtension(): () => void;

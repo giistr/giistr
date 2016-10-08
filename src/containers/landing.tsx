@@ -1,6 +1,6 @@
 import * as React from 'react';
-
-import { githubOauthAction, oauthFromToken } from '../actions/user';
+import { bindActionCreators } from 'redux';
+import { oauthUser, fetchGithubToken } from '../actions/user';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
 import { browserHistory } from 'react-router';
@@ -14,14 +14,11 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import { startLoading } from '../actions/config';
 
 interface MainProps {
-  dispatch: any;
-  githubOauthAction: any;
-  oauthFromToken: any;
+  oauthUser: any;
+  fetchGithubToken: any;
   user: Map<string, string | number>;
-  startLoading: any;
 };
 
 const styles = {
@@ -128,7 +125,7 @@ class Landing extends React.Component<MainProps, any> {
   };
 
   public componentWillMount() {
-    const { githubOauthAction, dispatch, user, startLoading } = this.props;
+    const { fetchGithubToken, user } = this.props;
 
     if (user.size > 0) {
       this.redirectToApp(user);
@@ -136,8 +133,9 @@ class Landing extends React.Component<MainProps, any> {
 
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
-      dispatch(githubOauthAction(params.code));
-      startLoading()(dispatch);
+      fetchGithubToken(params.code);
+      // dispatch(githubOauthAction(params.code));
+      // startLoading()(dispatch);
     }
   }
 
@@ -154,8 +152,9 @@ class Landing extends React.Component<MainProps, any> {
   };
 
   private onTokenLogin = token => {
-    const { oauthFromToken, dispatch } = this.props;
-    dispatch(oauthFromToken(token));
+    const { oauthUser } = this.props;
+    oauthUser(token);
+    // dispatch(oauthFromToken(token));
   };
 
   private redirectToApp(user) {
@@ -248,8 +247,6 @@ class Landing extends React.Component<MainProps, any> {
 
 export default connect(state => ({ user: state.get('user') }),
 dispatch => ({
-  dispatch,
-  githubOauthAction,
-  oauthFromToken,
-  startLoading
+  oauthUser: bindActionCreators(oauthUser, dispatch),
+  fetchGithubToken: bindActionCreators(fetchGithubToken, dispatch)
 }))(Landing);

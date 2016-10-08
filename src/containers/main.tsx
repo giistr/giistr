@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { OrderedMap } from 'immutable';
-import { getRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions/repositories';
+import { fetchRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
-import { startLoading, stopLoading } from '../actions/config';
+// import { startLoading, stopLoading } from '../actions/config';
 
 import {
   applyRepositoryFilters,
@@ -33,8 +34,8 @@ const styles = {
 export type Label = Map<string, string>;
 
 interface MainProps {
-  dispatch: any;
-  getRepos: any;
+  // dispatch: any;
+  fetchRepos: any;
   fetchReposAndIssues: any;
   fetchTotalReposLength: any;
   totalRepositories: number;
@@ -42,8 +43,8 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   location?: any;
-  startLoading: any;
-  stopLoading: any;
+  // startLoading: any;
+  // stopLoading: any;
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -66,21 +67,23 @@ class Main extends React.Component<MainProps, any> {
 
   private onGetRepository(page, user: User = this.props.user) {
     const {
-      dispatch,
-      getRepos,
-      fetchTotalReposLength,
-      startLoading,
-      stopLoading
+      // dispatch,
+      fetchRepos,
+      fetchTotalReposLength
+      // startLoading,
+      // stopLoading
     } = this.props;
 
-    startLoading()(dispatch);
+    // startLoading()(dispatch);
 
-    getRepos(user.get('login'), page)(dispatch).then(() => {
-      stopLoading()(dispatch);
-    });
+    fetchRepos(user.get('login'), page);
+    // (dispatch).then(() => {
+    //   stopLoading()(dispatch);
+    // });
 
     // Fetch the total number of starred repositories by a user
-    fetchTotalReposLength(user.get('login'))(dispatch);
+    fetchTotalReposLength(user.get('login'));
+    // (dispatch);
   };
 
   private onNext(page) {
@@ -90,21 +93,22 @@ class Main extends React.Component<MainProps, any> {
 
   private onAll = () => {
     const {
-      dispatch,
+      // dispatch,
       fetchReposAndIssues,
-      user,
-      startLoading,
-      stopLoading
+      user
+      // startLoading,
+      // stopLoading
     } = this.props;
 
     const { page } = this.state;
 
-    startLoading()(dispatch);
+    // startLoading()(dispatch);
 
-    fetchReposAndIssues(user.get('login'), page)(dispatch)
-      .then(() => {
-        stopLoading()(dispatch);
-      });
+    fetchReposAndIssues(user.get('login'), page);
+    // (dispatch)
+    //   .then(() => {
+    //     stopLoading()(dispatch);
+    //   });
   }
 
   public render() {
@@ -153,10 +157,10 @@ connect((state, props) => {
     filters: state.get('filters')
   };
 }, dispatch => ({
-  getRepos,
-  fetchReposAndIssues,
-  fetchTotalReposLength,
-  dispatch,
-  startLoading,
-  stopLoading
+  fetchRepos: bindActionCreators(fetchRepos, dispatch),
+  fetchReposAndIssues: bindActionCreators(fetchReposAndIssues, dispatch),
+  fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch)
+  // dispatch,
+  // startLoading,
+  // stopLoading
 }))(Main);

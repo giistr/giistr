@@ -1,33 +1,42 @@
 import { get } from '../fetcher';
+import { combineEpics } from 'redux-observable';
 import {
-  ADD_REPO,
-  CLEAR_REPO,
   FETCH_USER_REPOS,
   FETCH_TOTAL_REPO_STARRED
 } from '../constants/repos';
-import { List } from 'immutable';
-// import { Repository } from '../reducers/repository';
-// import { getIssuesReq, serializeIssues, fetchAllIssues } from './issues';
+import { AddRepos } from '../actions/repositories';
+import { append } from '../actions/user';
 
-export const clear = () => ({
-  type: CLEAR_REPO
-});
+const fetchReposEpic = (action$) => (
+  action$
+    .ofType(FETCH_USER_REPOS)
+    .flatMap(({ username, page }) =>
+      get({
+        endpoint: `users/${username}/starred`,
+        params: { page }
+      })
+    )
+    .map(AddRepos)
+);
 
-export const AddRepos = repos => ({
-  payload: repos,
-  type: ADD_REPO
-});
+const fetchTotalReposLengthEpic = (action$) => (
+  action$
+    .ofType(FETCH_TOTAL_REPO_STARRED)
+    .flatMap(({ username }) => (
+      get({
+        endpoint: `users/${username}/starred`,
+        params: { per_page: 1 },
+        resHeader: true
+      })
+    ))
+    .map(headers => {
+      const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
+      const len = parseInt(headers.get('link').match(reg)[1], 10);
+      return append('starred', len);
+    })
+);
 
-export const fetchRepos = (username: string, page: number) => ({
-  type: FETCH_USER_REPOS,
-  username,
-  page
-});
-
-export const fetchTotalReposLength = (username: string) => ({
-  type: FETCH_TOTAL_REPO_STARRED,
-  username
-});
+export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic);
 
 // export const fetchTotalReposLength = (username) => {
 //   return dispatch => {
@@ -67,35 +76,3 @@ export const fetchTotalReposLength = (username: string) => ({
 //     // });
 //   };
 // };
-
-export const fetchReposAndIssues = (username, starting) => {
-  return dispatch => {
-    return getAllRepos(username)(starting)(dispatch)
-      // .then(repos =>
-      //   fetchAllIssues(repos)(dispatch)
-      // );
-  };
-};
-
-export const getAllRepos = username => {
-  let total = List<any>();
-
-  const closure = starting => dispatch => {
-    return get({
-      endpoint: `users/${username}/starred`,
-      params: { page: starting }
-    })
-    // .then((repos: List<Repository>) => {
-    //   add(repos)(dispatch);
-    //   total = total.concat(repos).toList();
-
-    //   if (repos.size >= 30) {
-    //     return dispatch(closure(starting + 1));
-    //   }
-
-    //   return total;
-    // });
-  };
-
-  return closure;
-};

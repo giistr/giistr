@@ -4,40 +4,32 @@ import { ADD_ISSUE } from '../constants/issues';
 import { ADD_LABEL } from '../constants/labels';
 import * as hash from 'object-hash';
 
-function add(issues) {
-  return dispatch => {
-    dispatch({
-      payload: issues,
-      type: ADD_ISSUE
-    });
-  };
-}
+const add = issues => ({
+  payload: issues,
+  type: ADD_ISSUE
+});
 
-function addLabels(labels) {
-  return dispatch => {
-    dispatch({
-      payload: labels,
-      type: ADD_LABEL
-    });
-  };
-}
+const addLabels = labels => ({
+  payload: labels,
+  type: ADD_LABEL
+});
 
 export const fetchAllIssues = (repositories: List<any>) => {
   return dispatch => {
     return Promise.all(repositories.map(repo =>
       getIssuesReq(repo.get('full_name'), repo.get('id'))(dispatch)
     ).toArray())
-    .then((res) => {
-      const issues = List(res).flatten(1).toList();
-      return serializeIssues(issues)(dispatch);
-    });
+    // .then((res) => {
+    //   const issues = List(res).flatten(1).toList();
+    //   return serializeIssues(issues)(dispatch);
+    // });
   };
 };
 
 export const fetchIssues = (repository: string, repoId: string, page?: string) => {
   return dispatch =>
     getIssuesReq(repository, repoId, page)(dispatch)
-      .then((issues: List<any>) => serializeIssues(issues)(dispatch));
+      // .then((issues: List<any>) => serializeIssues(issues)(dispatch));
 };
 
 export const serializeIssues = (issues: List<any>) => {
@@ -60,11 +52,11 @@ export const serializeIssues = (issues: List<any>) => {
     formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 
     if (labels.size > 0) {
-      addLabels(labels)(dispatch);
+      addLabels(labels);
     }
 
     if (formattedIssues.size > 0) {
-      add(formattedIssues)(dispatch);
+      add(formattedIssues);
     }
 
     return formattedIssues;
@@ -77,7 +69,7 @@ export const getIssuesReq = (repository: string, repoId: string, page?: string) 
       endpoint: `repos/${repository}/issues`,
       params: { page }
     })
-    .then((issues: List<any>) =>
-      issues.map(issue => issue.set('repositoryId', repoId)).toList()
-    );
+    // .then((issues: List<any>) =>
+    //   issues.map(issue => issue.set('repositoryId', repoId)).toList()
+    // );
 };
