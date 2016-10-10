@@ -112,9 +112,10 @@ class Main extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { user, filters, totalRepositories, location } = this.props;
-    let { repositories } = this.props;
+    const { user, filters, totalRepositories, location, repositories } = this.props;
     const { page } = this.state;
+
+    // console.log(repositories);
 
     return (
       <div style={styles.container}>

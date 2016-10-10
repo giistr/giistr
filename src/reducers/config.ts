@@ -1,7 +1,9 @@
 import { Map } from 'immutable';
 import { START_LOADING, STOP_LOADING } from '../constants/config';
 
-const initialState: Map<string, any> = Map<string, any>();
+const initialState: Map<string, any> = Map<string, any>({
+  loading: true
+});
 
 export interface ConfigAction {
   type: string;
