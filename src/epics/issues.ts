@@ -1,6 +1,6 @@
 import { get } from '../fetcher';
 import { combineEpics } from 'redux-observable';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import * as hash from 'object-hash';
 import { List } from 'immutable';
 import {
@@ -15,10 +15,8 @@ const reposToIssuesEpic = (action$) => (
     .ofType(ADD_REPO)
     .filter(({ payload }) => List.isList(payload))
     .flatMap(({ payload }) =>
-      Observable.merge(
-        payload.map(repo =>
-          Observable.of(fetchIssues(repo.get('id'), 1))
-        ).toArray()
+      Observable.of(
+        ...payload.map(repo => fetchIssues(repo.get('id'), 1)).toArray()
       )
     )
 );

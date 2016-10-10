@@ -1,5 +1,5 @@
 import { get, post } from '../fetcher';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { combineEpics } from 'redux-observable';
 import {
   FETCH_USER,
