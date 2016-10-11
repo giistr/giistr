@@ -134,8 +134,6 @@ class Landing extends React.Component<MainProps, any> {
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
       fetchGithubToken(params.code);
-      // dispatch(githubOauthAction(params.code));
-      // startLoading()(dispatch);
     }
   }
 
@@ -154,7 +152,6 @@ class Landing extends React.Component<MainProps, any> {
   private onTokenLogin = token => {
     const { oauthUser } = this.props;
     oauthUser(token);
-    // dispatch(oauthFromToken(token));
   };
 
   private redirectToApp(user) {
