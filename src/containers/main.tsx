@@ -6,7 +6,7 @@ import { fetchRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actio
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
-// import { startLoading, stopLoading } from '../actions/config';
+import { startLoading } from '../actions/config';
 
 import {
   applyRepositoryFilters,
@@ -34,7 +34,7 @@ const styles = {
 export type Label = Map<string, string>;
 
 interface MainProps {
-  // dispatch: any;
+  startLoading: any;
   fetchRepos: any;
   fetchReposAndIssues: any;
   fetchTotalReposLength: any;
@@ -43,8 +43,6 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   location?: any;
-  // startLoading: any;
-  // stopLoading: any;
 };
 
 class Main extends React.Component<MainProps, any> {
@@ -54,7 +52,7 @@ class Main extends React.Component<MainProps, any> {
   };
 
   public componentWillMount() {
-    const { user, repositories } = this.props;
+    const { user, repositories, fetchTotalReposLength } = this.props;
 
     if (!user.size) {
       browserHistory.push('/');
@@ -62,28 +60,18 @@ class Main extends React.Component<MainProps, any> {
 
     if (user.size && !repositories.size) {
       this.onGetRepository(this.state.page);
+      fetchTotalReposLength(this.props.user.get('login'));
     }
   }
 
   private onGetRepository(page, user: User = this.props.user) {
     const {
-      // dispatch,
       fetchRepos,
-      fetchTotalReposLength
-      // startLoading,
-      // stopLoading
+      startLoading
     } = this.props;
 
-    // startLoading()(dispatch);
-
+    startLoading();
     fetchRepos(user.get('login'), page);
-    // (dispatch).then(() => {
-    //   stopLoading()(dispatch);
-    // });
-
-    // Fetch the total number of starred repositories by a user
-    fetchTotalReposLength(user.get('login'));
-    // (dispatch);
   };
 
   private onNext(page) {
@@ -93,29 +81,18 @@ class Main extends React.Component<MainProps, any> {
 
   private onAll = () => {
     const {
-      // dispatch,
       fetchReposAndIssues,
       user
-      // startLoading,
-      // stopLoading
     } = this.props;
 
     const { page } = this.state;
 
-    // startLoading()(dispatch);
-
     fetchReposAndIssues(user.get('login'), page);
-    // (dispatch)
-    //   .then(() => {
-    //     stopLoading()(dispatch);
-    //   });
   }
 
   public render() {
     const { user, filters, totalRepositories, location, repositories } = this.props;
     const { page } = this.state;
-
-    // console.log(repositories);
 
     return (
       <div style={styles.container}>
@@ -160,8 +137,6 @@ connect((state, props) => {
 }, dispatch => ({
   fetchRepos: bindActionCreators(fetchRepos, dispatch),
   fetchReposAndIssues: bindActionCreators(fetchReposAndIssues, dispatch),
-  fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch)
-  // dispatch,
-  // startLoading,
-  // stopLoading
+  fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch),
+  startLoading: bindActionCreators(startLoading, dispatch)
 }))(Main);

@@ -9,7 +9,6 @@ interface MainProps {
 };
 
 const styles = {
-  container: {},
   more: {
     marginLeft: 8
   },
@@ -37,7 +36,7 @@ class LabelsFilters extends React.Component<MainProps, { display: number; }> {
     const { display } = this.state;
 
     return (
-      <div style={styles.container}>
+      <div>
       {
         labels
           .take(display)

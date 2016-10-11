@@ -76,8 +76,6 @@ const fetchIssuesEpic = (action$, { getState }) => {
 
       formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 
-      console.log('LABELLLLL', labels);
-
       return Observable.of(
         add(formattedIssues),
         addLabels(labels),
@@ -85,11 +83,5 @@ const fetchIssuesEpic = (action$, { getState }) => {
       );
     });
 };
-
-// const createLabelsEpic = (action$) => (
-//   action$
-//     .ofType(ADD_ISSUE)
-//     .map(({ labels }) => addLabels(labels))
-// );
 
 export default combineEpics(reposToIssuesEpic, fetchIssuesEpic);
