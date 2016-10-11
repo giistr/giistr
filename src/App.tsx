@@ -62,7 +62,6 @@ ReactDOM.render(
         <Route path="home" component={Main}/>
         <Route path="about" component={About}/>
         <Redirect from="home/:x" to="home"/>
-
       </Route>
     </Router>
   </Provider>,

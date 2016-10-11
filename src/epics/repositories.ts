@@ -1,7 +1,10 @@
 import { get } from '../fetcher';
 import { combineEpics } from 'redux-observable';
+import { Observable } from 'rxjs/Observable';
+import { Range, List } from 'immutable';
 import {
   FETCH_USER_REPOS,
+  FETCH_ALL_REPOS,
   FETCH_TOTAL_REPO_STARRED
 } from '../constants/repos';
 import { AddRepos } from '../actions/repositories';
@@ -36,4 +39,25 @@ const fetchTotalReposLengthEpic = (action$) => (
     })
 );
 
-export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic);
+const fetchAllRepos = (action$, { getState }) => (
+  action$
+    .ofType(FETCH_ALL_REPOS)
+    .flatMap(({ username, startPage }) => {
+      const userTotalRepos = getState().getIn([ 'user', 'starred' ]);
+      const totalPages = Math.ceil(userTotalRepos / 30) + 1;
+
+      return Observable.forkJoin(
+        ...Range(startPage, totalPages)
+          .map((page) =>
+            get({
+              endpoint: `users/${username}/starred`,
+              params: { page }
+            })
+          )
+          .toArray()
+      );
+    })
+    .map(repos => AddRepos(List(repos).flatten(1)))
+);
+
+export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos);

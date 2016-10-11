@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { OrderedMap } from 'immutable';
-import { fetchRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions/repositories';
+import { fetchRepos, fetchAllRepos, fetchTotalReposLength } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
@@ -36,7 +36,7 @@ export type Label = Map<string, string>;
 interface MainProps {
   startLoading: any;
   fetchRepos: any;
-  fetchReposAndIssues: any;
+  fetchAllRepos: any;
   fetchTotalReposLength: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
@@ -81,13 +81,13 @@ class Main extends React.Component<MainProps, any> {
 
   private onAll = () => {
     const {
-      fetchReposAndIssues,
-      user
+      fetchAllRepos,
+      user,
+      startLoading
     } = this.props;
 
-    const { page } = this.state;
-
-    fetchReposAndIssues(user.get('login'), page);
+    startLoading();
+    fetchAllRepos(user.get('login'), this.state.page);
   }
 
   public render() {
@@ -136,7 +136,7 @@ connect((state, props) => {
   };
 }, dispatch => ({
   fetchRepos: bindActionCreators(fetchRepos, dispatch),
-  fetchReposAndIssues: bindActionCreators(fetchReposAndIssues, dispatch),
+  fetchAllRepos: bindActionCreators(fetchAllRepos, dispatch),
   fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch),
   startLoading: bindActionCreators(startLoading, dispatch)
 }))(Main);
