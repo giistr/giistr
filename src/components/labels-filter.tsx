@@ -39,18 +39,20 @@ class LabelsFilters extends React.Component<MainProps, { display: number; }> {
     return (
       <div style={styles.container}>
       {
-        labels.take(display).map((label, key) =>
-          <Tag
-            key={key}
-            style={{
-              marginRight: 11,
-              marginLeft: 0,
-              marginBottom: 11
-            }}
-            onSelect={onToggleTag.bind(this, label.get('id'))}
-            inactive={!selected.includes(label.get('id'))}
-            label={label}/>
-        ).toArray()
+        labels
+          .take(display)
+          .map((label, key) =>
+            <Tag
+              key={key}
+              style={{
+                marginRight: 11,
+                marginLeft: 0,
+                marginBottom: 11
+              }}
+              onSelect={onToggleTag.bind(this, label.get('id'))}
+              inactive={!selected.includes(label.get('id'))}
+              label={label}/>
+          ).toArray()
       }
       {
         labels.size > display && (

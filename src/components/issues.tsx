@@ -148,10 +148,11 @@ export default
 connect((state, props) => ({
   issues: props.issues
     .map(issue =>
-      issue.update('labelsIds', labelsIds =>
-        labelsIds.map(labelId =>
-          state.getIn([ 'label', labelId ])
-        )
+      issue
+      .update('labelsIds', labelsIds =>
+        labelsIds
+          .map(labelId => state.getIn([ 'label', labelId ]))
+          .filter(Boolean)
       )
     )
 }), null)(Issues);

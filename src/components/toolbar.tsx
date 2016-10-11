@@ -16,7 +16,7 @@ interface MainProps {
   languages: Set<string>;
   labels: any;
   filters: Map<string, any>;
-  dispatch: any;
+  // dispatch: any;
   remove: any;
   add: any;
   replace: any;
@@ -63,61 +63,63 @@ const periodOptions = Set<string>(pOptions);
 
 class Toolbar extends React.Component<MainProps, any> {
   private onToggleTag = id => {
-    const { filters, remove, add, dispatch } = this.props;
+    // const { filters, remove, add, dispatch } = this.props;
 
-    if (filters.get(labels).includes(id)) {
-      remove(labels, id)(dispatch);
-    } else {
-      add(labels, id)(dispatch);
-    }
+    // if (filters.get(labels).includes(id)) {
+    //   remove(labels, id)(dispatch);
+    // } else {
+    //   add(labels, id)(dispatch);
+    // }
   };
 
   private onSearchIssue = evt => {
-    const text = evt.target.value;
-    const { replace, dispatch } = this.props;
+    // const text = evt.target.value;
+    // const { replace, dispatch } = this.props;
 
-    replace(searchIssue, text)(dispatch);
+    // replace(searchIssue, text)(dispatch);
   };
 
   private onSelectLanguage = language => {
-    const { reset, replace, dispatch } = this.props;
+    // const { reset, replace, dispatch } = this.props;
 
-    if (!language) {
-      reset(languages)(dispatch);
-    } else {
-      replace(languages, language)(dispatch);
-    }
+    // if (!language) {
+    //   reset(languages)(dispatch);
+    // } else {
+    //   replace(languages, language)(dispatch);
+    // }
   };
 
   private onSelectPeriod = time => {
-    const { reset, replace, dispatch } = this.props;
+    // const { reset, replace, dispatch } = this.props;
 
-    if (!time) {
-      reset(period)(dispatch);
-    } else {
-      replace(period, time)(dispatch);
-    }
+    // if (!time) {
+    //   reset(period)(dispatch);
+    // } else {
+    //   replace(period, time)(dispatch);
+    // }
   };
 
   private onToggleAssignee = val => {
-    const { replace, dispatch } = this.props;
+    // const { replace, dispatch } = this.props;
 
-    replace(withoutAssignee, !val)(dispatch);
+    // replace(withoutAssignee, !val)(dispatch);
   };
 
   private onToggleIssues = val => {
-    const { replace, dispatch } = this.props;
+    // const { replace, dispatch } = this.props;
 
-    replace(withIssues, !val)(dispatch);
+    // replace(withIssues, !val)(dispatch);
   };
 
   private onResetFilters = () => {
-    const { resetAll, dispatch } = this.props;
-    resetAll()(dispatch);
+    // const { resetAll, dispatch } = this.props;
+    // resetAll()(dispatch);
   };
 
   public render() {
     const { filters } = this.props;
+
+    console.log(filters, this.props.labels);
 
     return (
       <div style={styles.container}>
@@ -191,7 +193,7 @@ connect((state, props) => ({
       .filter(Boolean)
   )
 }), dispatch => ({
-  dispatch,
+  // dispatch,
   remove,
   add,
   replace,

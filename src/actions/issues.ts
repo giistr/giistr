@@ -1,9 +1,8 @@
 import { ADD_ISSUE, FETCH_ISSUES } from '../constants/issues';
 import { ADD_LABEL } from '../constants/labels';
 
-export const add = (issues, labels) => ({
+export const add = (issues) => ({
   payload: issues,
-  labels,
   type: ADD_ISSUE
 });
 

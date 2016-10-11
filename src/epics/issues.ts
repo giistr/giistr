@@ -4,8 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import * as hash from 'object-hash';
 import { List } from 'immutable';
 import {
-  FETCH_ISSUES,
-  ADD_ISSUE
+  FETCH_ISSUES
 } from '../constants/issues';
 import { ADD_REPO } from '../constants/repos';
 import { add, addLabels, fetchIssues } from '../actions/issues';
@@ -25,10 +24,14 @@ const reposToIssuesEpic = (action$) => (
     )
 );
 
-const fetchIssuesEpic = (action$, { getState }) => (
-  action$
+const fetchIssuesEpic = (action$, { getState }) => {
+  let rId;
+
+  return action$
     .ofType(FETCH_ISSUES)
     .flatMap(({ repoId, page }) => {
+      rId = repoId;
+
       if (List.isList(repoId)) {
         return Observable.forkJoin(
           ...repoId.map(id =>
@@ -47,7 +50,13 @@ const fetchIssuesEpic = (action$, { getState }) => (
     })
     .flatMap(issues => {
       if (List.isList(issues[0])) {
-        issues = List(issues).flatten(1);
+        issues = List(issues).map((issueArr: any, index) => {
+          return issueArr.map(issue =>
+            issue.set('repositoryId', rId.get(index))
+          );
+        }).flatten(1);
+      } else {
+        issues = issues.map(issue => issue.set('repositoryId', rId));
       }
 
       let formattedIssues = issues.map(issue => {
@@ -67,30 +76,20 @@ const fetchIssuesEpic = (action$, { getState }) => (
 
       formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 
+      console.log('LABELLLLL', labels);
+
       return Observable.of(
-        add(formattedIssues, labels),
+        add(formattedIssues),
+        addLabels(labels),
         stopLoading()
       );
-    })
-);
+    });
+};
 
-const createLabelsEpic = (action$) => (
-  action$
-    .ofType(ADD_ISSUE)
-    .map(({ labels }) => addLabels(labels))
-);
+// const createLabelsEpic = (action$) => (
+//   action$
+//     .ofType(ADD_ISSUE)
+//     .map(({ labels }) => addLabels(labels))
+// );
 
-export default combineEpics(reposToIssuesEpic, fetchIssuesEpic, createLabelsEpic);
-
-// Add label epics which is listening when adding issue and process them to store labels separatedely
-
-// export const getIssuesReq = (repository: string, repoId: string, page?: string) => {
-//   return dispatch =>
-//     get({
-//       endpoint: `repos/${repository}/issues`,
-//       params: { page }
-//     })
-//     // .then((issues: List<any>) =>
-//     //   issues.map(issue => issue.set('repositoryId', repoId)).toList()
-//     // );
-// };
+export default combineEpics(reposToIssuesEpic, fetchIssuesEpic);
