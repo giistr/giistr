@@ -24,16 +24,14 @@ const reposToIssuesEpic = (action$) => (
     )
 );
 
-const fetchIssuesEpic = (action$, { getState }) => {
-  let rId;
-
-  return action$
+const fetchIssuesEpic = (action$, { getState }) => (
+  action$
     .ofType(FETCH_ISSUES)
     .flatMap(({ repoId, page }) => {
-      rId = repoId;
+      let res;
 
       if (List.isList(repoId)) {
-        return Observable.forkJoin(
+        res = Observable.forkJoin(
           ...repoId.map(id =>
             get({
               endpoint: `repos/${getState().getIn(['repository', id, 'full_name'])}/issues`,
@@ -43,22 +41,24 @@ const fetchIssuesEpic = (action$, { getState }) => {
         );
       }
 
-      return get({
+      res = get({
         endpoint: `repos/${getState().getIn(['repository', repoId, 'full_name'])}/issues`,
         params: { page }
       });
+
+      return res.map(issues => {
+        if (List.isList(issues[0])) {
+          return List(issues).map((issueArr: any, index) => {
+            return issueArr.map(issue =>
+              issue.set('repositoryId', repoId.get(index))
+            );
+          }).flatten(1);
+        } else {
+          return issues.map(issue => issue.set('repositoryId', repoId));
+        }
+      });
     })
     .flatMap(issues => {
-      if (List.isList(issues[0])) {
-        issues = List(issues).map((issueArr: any, index) => {
-          return issueArr.map(issue =>
-            issue.set('repositoryId', rId.get(index))
-          );
-        }).flatten(1);
-      } else {
-        issues = issues.map(issue => issue.set('repositoryId', rId));
-      }
-
       let formattedIssues = issues.map(issue => {
         const issueBis = issue.update('labels', labels =>
           labels.map(label => label.set('id', hash(label.get('name').toLowerCase())))
@@ -81,7 +81,7 @@ const fetchIssuesEpic = (action$, { getState }) => {
         addLabels(labels),
         stopLoading()
       );
-    });
-};
+    })
+);
 
 export default combineEpics(reposToIssuesEpic, fetchIssuesEpic);
