@@ -20,10 +20,8 @@ const fetchTokenEpic = (action$) => (
     .map(res => oauthUser(res.get('access_token')))
 );
 
-const oauthUserEpic = (action$) => {
-  let horribleSideEffect;
-
-  return action$
+const oauthUserEpic = (action$) => (
+  action$
     .ofType(OAUTH_USER)
     .concatMap(({ token }) =>
       get({
@@ -32,12 +30,11 @@ const oauthUserEpic = (action$) => {
       })
       .map((user) =>
         addUser(
-          user.set('access_token', horribleSideEffect)
+          user.set('access_token', token)
         )
       )
-    );
-
-};
+    )
+);
 
 const fetchUserEpic = (action$) => (
   action$
