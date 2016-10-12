@@ -39,12 +39,12 @@ const fetchIssuesEpic = (action$, { getState }) => (
             })
           ).toArray()
         );
+      } else {
+        res = get({
+          endpoint: `repos/${getState().getIn(['repository', repoId, 'full_name'])}/issues`,
+          params: { page }
+        });
       }
-
-      res = get({
-        endpoint: `repos/${getState().getIn(['repository', repoId, 'full_name'])}/issues`,
-        params: { page }
-      });
 
       return res.map(issues => {
         if (List.isList(issues[0])) {
