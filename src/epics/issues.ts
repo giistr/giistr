@@ -14,13 +14,8 @@ const reposToIssuesEpic = (action$) => (
   action$
     .ofType(ADD_REPO)
     .filter(({ payload }) => List.isList(payload))
-    .flatMap(({ payload }) =>
-      Observable.of(
-        fetchIssues(
-          payload.map(repo => repo.get('id')),
-          1
-        )
-      )
+    .map(({ payload }) =>
+      fetchIssues(payload.map(repo => repo.get('id')), 1)
     )
 );
 
