@@ -9,8 +9,9 @@ import {
 } from '../constants/repos';
 import { AddRepos } from '../actions/repositories';
 import { append } from '../actions/user';
+import { setError, stopLoading } from '../actions/config';
 
-const fetchReposEpic = (action$) => (
+const fetchReposEpic = action$ => (
   action$
     .ofType(FETCH_USER_REPOS)
     .flatMap(({ username, page }) =>
@@ -18,8 +19,14 @@ const fetchReposEpic = (action$) => (
         endpoint: `users/${username}/starred`,
         params: { page }
       })
+      .map(AddRepos)
+      .catch(err =>
+        Observable.of(
+          setError(err),
+          stopLoading()
+        )
+      )
     )
-    .map(AddRepos)
 );
 
 const fetchTotalReposLengthEpic = (action$) => (
@@ -31,12 +38,18 @@ const fetchTotalReposLengthEpic = (action$) => (
         params: { per_page: 1 },
         resHeader: true
       })
+      .map(headers => {
+        const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
+        const len = parseInt(headers.get('link').match(reg)[1], 10);
+        return append('starred', len);
+      })
+      .catch(err =>
+        Observable.of(
+          setError(err),
+          stopLoading()
+        )
+      )
     ))
-    .map(headers => {
-      const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
-      const len = parseInt(headers.get('link').match(reg)[1], 10);
-      return append('starred', len);
-    })
 );
 
 const fetchAllRepos = (action$, { getState }) => (
@@ -55,9 +68,15 @@ const fetchAllRepos = (action$, { getState }) => (
             })
           )
           .toArray()
+      )
+      .map(repos => AddRepos(List(repos).flatten(1)))
+      .catch(err =>
+        Observable.of(
+          setError(err),
+          stopLoading()
+        )
       );
     })
-    .map(repos => AddRepos(List(repos).flatten(1)))
 );
 
 export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos);

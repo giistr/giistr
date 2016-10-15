@@ -96,18 +96,7 @@ class Issues extends React.PureComponent<MainProps, any> {
 
   private onSeeMore = () => {
     const { onLoadMore } = this.props;
-
-    this.setState({
-      page: this.state.page + 1
-    });
-
-    onLoadMore(this.state.page + 1).then(issues => {
-      if (issues.size < 30) {
-        this.setState({
-          limit: true
-        });
-      }
-    });
+    onLoadMore(this.state.page + 1);
   };
 
   public render() {
