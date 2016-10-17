@@ -72,12 +72,17 @@ const fetchIssuesEpic = (action$, { getState }) => (
 
       formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
 
-      return Observable.of(
+      const actions = [
         add(formattedIssues),
         addLabels(labels),
-        stopLoading(),
-        issues.size % 30 !== 0 && setIssuesLimit(formattedIssues.first().get('repositoryId'))
-      );
+        stopLoading()
+      ];
+
+      if (issues.size % 30 !== 0) {
+        actions.push(setIssuesLimit(formattedIssues.first().get('repositoryId')));
+      }
+
+      return Observable.of(...actions);
     })
 );
 

@@ -96,7 +96,13 @@ class Issues extends React.PureComponent<MainProps, any> {
 
   private onSeeMore = () => {
     const { onLoadMore } = this.props;
-    onLoadMore(this.state.page + 1);
+    const newPageNumber = this.state.page + 1;
+
+    this.setState({
+      page: newPageNumber
+    });
+
+    onLoadMore(newPageNumber);
   };
 
   public render() {
