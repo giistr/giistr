@@ -1,7 +1,9 @@
 import {
   START_LOADING,
   STOP_LOADING,
-  ERROR
+  ERROR,
+  INCREMENT_PAGINATION,
+  SET_REPOS_LIMIT
 } from '../constants/config';
 
 export const startLoading = () => ({
@@ -20,4 +22,12 @@ export const setError = err => ({
 export const stopError = () => ({
   type: ERROR,
   payload: null
+});
+
+export const incrementPagination = () => ({
+  type: INCREMENT_PAGINATION
+});
+
+export const setReposLimit = () => ({
+  type: SET_REPOS_LIMIT
 });

@@ -43,23 +43,21 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   location?: any;
+  page: number;
+  limit: boolean;
 };
 
 class Main extends React.Component<MainProps, any> {
 
-  public state = {
-    page: 1
-  };
-
   public componentWillMount() {
-    const { user, repositories, fetchTotalReposLength } = this.props;
+    const { user, repositories, fetchTotalReposLength, page } = this.props;
 
     if (!user.size) {
       browserHistory.push('/');
     }
 
     if (user.size && !repositories.size) {
-      this.onGetRepository(this.state.page);
+      this.onGetRepository(page);
       fetchTotalReposLength(this.props.user.get('login'));
     }
   }
@@ -72,27 +70,34 @@ class Main extends React.Component<MainProps, any> {
 
     startLoading();
     fetchRepos(user.get('login'), page);
-  };
+  }
 
-  private onNext(page) {
-    this.setState({ page });
-    this.onGetRepository(page);
+  private onNext = () => {
+    const { page } = this.props;
+    this.onGetRepository(page + 1);
   };
 
   private onAll = () => {
     const {
       fetchAllRepos,
       user,
-      startLoading
+      startLoading,
+      page
     } = this.props;
 
     startLoading();
-    fetchAllRepos(user.get('login'), this.state.page);
+    fetchAllRepos(user.get('login'), page);
   }
 
   public render() {
-    const { user, filters, totalRepositories, location, repositories } = this.props;
-    const { page } = this.state;
+    const {
+      user,
+      filters,
+      totalRepositories,
+      location,
+      repositories,
+      limit
+    } = this.props;
 
     return (
       <div style={styles.container}>
@@ -103,9 +108,9 @@ class Main extends React.Component<MainProps, any> {
           after={repositories.size}/>
         <div style={styles.mainList}>
           <Layout
-            hasNext={30 * page === totalRepositories}
+            hasNext={!limit}
             onClickAll={this.onAll}
-            onClickMore={this.onNext.bind(this, page + 1)}
+            onClickMore={this.onNext}
             repositories={repositories}/>
           <ToolBar
             filters={filters}/>
@@ -132,7 +137,9 @@ connect((state, props) => {
       )
       .filter(applyRepositoryFilters(state.get('filters'))),
     user: state.get('user'),
-    filters: state.get('filters')
+    filters: state.get('filters'),
+    page: state.getIn(['config', 'page']),
+    limit: state.getIn(['config', 'limit'])
   };
 }, dispatch => ({
   fetchRepos: bindActionCreators(fetchRepos, dispatch),

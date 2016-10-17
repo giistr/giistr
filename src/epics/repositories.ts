@@ -9,7 +9,12 @@ import {
 } from '../constants/repos';
 import { AddRepos } from '../actions/repositories';
 import { append } from '../actions/user';
-import { setError, stopLoading } from '../actions/config';
+import {
+  setError,
+  stopLoading,
+  incrementPagination,
+  setReposLimit
+} from '../actions/config';
 
 const fetchReposEpic = action$ => (
   action$
@@ -19,7 +24,18 @@ const fetchReposEpic = action$ => (
         endpoint: `users/${username}/starred`,
         params: { page }
       })
-      .map(AddRepos)
+      .flatMap(repos => {
+        const actions = [
+          AddRepos(repos),
+          incrementPagination()
+        ];
+
+        if (repos.size % 30 !== 0) {
+          actions.push(setReposLimit());
+        }
+
+        return Observable.of(...actions);
+      })
       .catch(err =>
         Observable.of(
           setError(err),
