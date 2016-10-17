@@ -1,4 +1,7 @@
-import { ADD_ISSUE, FETCH_ISSUES } from '../constants/issues';
+import {
+  ADD_ISSUE,
+  FETCH_ISSUES
+} from '../constants/issues';
 import { ADD_LABEL } from '../constants/labels';
 
 export const add = (issues) => ({

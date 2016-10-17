@@ -1,17 +1,18 @@
 import { OrderedMap, List, Map } from 'immutable';
-import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
+import { ADD_REPO, CLEAR_REPO, SET_ISSUES_LIMIT } from '../constants/repos';
 
 const initialState: OrderedMap<number, Repository> = OrderedMap<number, Repository>();
 
-export type Repository = Map<string, string|number>;
+export type Repository = Map<string, string|number|boolean>;
 
 export interface RepositoryAction {
   payload?: List<Repository>;
   type: string;
+  repoId?: number;
 }
 
 export default (state = initialState, action: RepositoryAction) => {
-  const { type, payload } = action;
+  const { type, payload, repoId } = action;
 
   switch (type) {
     case ADD_REPO:
@@ -25,6 +26,11 @@ export default (state = initialState, action: RepositoryAction) => {
 
     case CLEAR_REPO:
       return OrderedMap<number, Repository>();
+
+    case SET_ISSUES_LIMIT:
+      return state.update(repoId, repo =>
+        repo.set('issuesLimit', true)
+      );
 
     default:
       return state;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { OrderedMap, List, Map } from 'immutable';
+import { OrderedMap, Map } from 'immutable';
 import Issues from '../components/issues';
 import { Repository } from '../components/repository';
 import { fetchIssues } from '../actions/issues';
@@ -23,10 +23,10 @@ const styles = {
 
 class RepoColumn extends React.PureComponent<MainProps, any> {
 
-  private onLoadMoreIssues(repo, page: number): Promise<List<any>> {
+  private onLoadMoreIssues(repo, page: number) {
     const { fetchIssues, dispatch } = this.props;
 
-    return dispatch(fetchIssues(repo.get('full_name'), repo.get('id'), page));
+    return dispatch(fetchIssues(repo.get('id'), page));
   };
 
   public render() {
@@ -44,6 +44,7 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
                 repo.get('issues', Map<string, any>()).size > 0 && (
                   <Issues
                     onLoadMore={this.onLoadMoreIssues.bind(this, repo)}
+                    limit={repo.get('issuesLimit')}
                     issues={repo.get('issues')}/>
                 )
               }

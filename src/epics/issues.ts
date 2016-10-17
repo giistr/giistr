@@ -8,6 +8,7 @@ import {
 } from '../constants/issues';
 import { ADD_REPO } from '../constants/repos';
 import { add, addLabels, fetchIssues } from '../actions/issues';
+import { setIssuesLimit } from '../actions/repositories';
 import { stopLoading } from '../actions/config';
 
 const reposToIssuesEpic = (action$) => (
@@ -74,7 +75,8 @@ const fetchIssuesEpic = (action$, { getState }) => (
       return Observable.of(
         add(formattedIssues),
         addLabels(labels),
-        stopLoading()
+        stopLoading(),
+        issues.size % 30 !== 0 && setIssuesLimit(formattedIssues.first().get('repositoryId'))
       );
     })
 );

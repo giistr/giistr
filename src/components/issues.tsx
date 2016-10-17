@@ -32,6 +32,7 @@ const styles = {
 
 interface MainProps {
   issues: any;
+  limit?: boolean;
   onLoadMore: Function;
 };
 
@@ -41,7 +42,6 @@ class Issues extends React.PureComponent<MainProps, any> {
 
   public state = {
     page: 1,
-    limit: this.props.issues.size < 30,
     rendered: shift
   };
 
@@ -100,8 +100,8 @@ class Issues extends React.PureComponent<MainProps, any> {
   };
 
   public render() {
-    const { issues } = this.props;
-    const { limit, rendered } = this.state;
+    const { issues, limit } = this.props;
+    const { rendered } = this.state;
 
     return (
       <div>
