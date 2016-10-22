@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { OrderedMap } from 'immutable';
-import { getRepos, fetchReposAndIssues, fetchTotalReposLength } from '../actions/repositories';
+import { fetchRepos, fetchAllRepos, fetchTotalReposLength } from '../actions/repositories';
 import { browserHistory } from 'react-router';
 import Layout from '../components/layout';
 import { Colors } from '../style';
-import { startLoading, stopLoading } from '../actions/config';
+import { startLoading } from '../actions/config';
 
 import {
   applyRepositoryFilters,
@@ -33,84 +34,70 @@ const styles = {
 export type Label = Map<string, string>;
 
 interface MainProps {
-  dispatch: any;
-  getRepos: any;
-  fetchReposAndIssues: any;
+  startLoading: any;
+  fetchRepos: any;
+  fetchAllRepos: any;
   fetchTotalReposLength: any;
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
   filters: Map<string, any>;
   location?: any;
-  startLoading: any;
-  stopLoading: any;
+  page: number;
+  limit: boolean;
 };
 
 class Main extends React.Component<MainProps, any> {
 
-  public state = {
-    page: 1
-  };
-
   public componentWillMount() {
-    const { user, repositories } = this.props;
+    const { user, repositories, fetchTotalReposLength, page } = this.props;
 
     if (!user.size) {
       browserHistory.push('/');
     }
 
     if (user.size && !repositories.size) {
-      this.onGetRepository(this.state.page);
+      this.onGetRepository(page);
+      fetchTotalReposLength(this.props.user.get('login'));
     }
   }
 
   private onGetRepository(page, user: User = this.props.user) {
     const {
-      dispatch,
-      getRepos,
-      fetchTotalReposLength,
-      startLoading,
-      stopLoading
+      fetchRepos,
+      startLoading
     } = this.props;
 
-    startLoading()(dispatch);
+    startLoading();
+    fetchRepos(user.get('login'), page);
+  }
 
-    getRepos(user.get('login'), page)(dispatch).then(() => {
-      stopLoading()(dispatch);
-    });
-
-    // Fetch the total number of starred repositories by a user
-    fetchTotalReposLength(user.get('login'))(dispatch);
-  };
-
-  private onNext(page) {
-    this.setState({ page });
-    this.onGetRepository(page);
+  private onNext = () => {
+    const { page } = this.props;
+    this.onGetRepository(page + 1);
   };
 
   private onAll = () => {
     const {
-      dispatch,
-      fetchReposAndIssues,
+      fetchAllRepos,
       user,
       startLoading,
-      stopLoading
+      page
     } = this.props;
 
-    const { page } = this.state;
-
-    startLoading()(dispatch);
-
-    fetchReposAndIssues(user.get('login'), page)(dispatch)
-      .then(() => {
-        stopLoading()(dispatch);
-      });
+    startLoading();
+    fetchAllRepos(user.get('login'), page);
   }
 
   public render() {
-    const { user, filters, totalRepositories, location } = this.props;
-    let { repositories } = this.props;
-    const { page } = this.state;
+    const {
+      user,
+      filters,
+      totalRepositories,
+      location,
+      repositories,
+      limit
+    } = this.props;
 
     return (
       <div style={styles.container}>
@@ -121,9 +108,9 @@ class Main extends React.Component<MainProps, any> {
           after={repositories.size}/>
         <div style={styles.mainList}>
           <Layout
-            hasNext={30 * page === totalRepositories}
+            hasNext={!limit}
             onClickAll={this.onAll}
-            onClickMore={this.onNext.bind(this, page + 1)}
+            onClickMore={this.onNext}
             repositories={repositories}/>
           <ToolBar
             filters={filters}/>
@@ -150,13 +137,13 @@ connect((state, props) => {
       )
       .filter(applyRepositoryFilters(state.get('filters'))),
     user: state.get('user'),
-    filters: state.get('filters')
+    filters: state.get('filters'),
+    page: state.getIn(['config', 'page']),
+    limit: state.getIn(['config', 'limit'])
   };
 }, dispatch => ({
-  getRepos,
-  fetchReposAndIssues,
-  fetchTotalReposLength,
-  dispatch,
-  startLoading,
-  stopLoading
+  fetchRepos: bindActionCreators(fetchRepos, dispatch),
+  fetchAllRepos: bindActionCreators(fetchAllRepos, dispatch),
+  fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch),
+  startLoading: bindActionCreators(startLoading, dispatch)
 }))(Main);

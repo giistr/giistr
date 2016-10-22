@@ -1,7 +1,7 @@
 import { fromJS } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
-
+import { Observable } from 'rxjs/Observable';
 const config = fromJS(require('!json!./config.json')); // tslint:disable-line
 
 interface Args {
@@ -61,7 +61,7 @@ export function request(args: ReqArgs) {
     body
   });
 
-  return fetch(req)
+  return Observable.fromPromise(fetch(req)
     .then(res => {
       if (res.status >= 400) {
         throw res;
@@ -75,7 +75,8 @@ export function request(args: ReqArgs) {
     .then(x => {
       const res = fromJS(x[0]);
       return args.resHeader ? x[1] : res;
-    });
+    })
+  );
 }
 
 export function get(args: Args) {

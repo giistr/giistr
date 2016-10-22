@@ -9,7 +9,6 @@ interface MainProps {
 };
 
 const styles = {
-  container: {},
   more: {
     marginLeft: 8
   },
@@ -37,20 +36,22 @@ class LabelsFilters extends React.Component<MainProps, { display: number; }> {
     const { display } = this.state;
 
     return (
-      <div style={styles.container}>
+      <div>
       {
-        labels.take(display).map((label, key) =>
-          <Tag
-            key={key}
-            style={{
-              marginRight: 11,
-              marginLeft: 0,
-              marginBottom: 11
-            }}
-            onSelect={onToggleTag.bind(this, label.get('id'))}
-            inactive={!selected.includes(label.get('id'))}
-            label={label}/>
-        ).toArray()
+        labels
+          .take(display)
+          .map((label, key) =>
+            <Tag
+              key={key}
+              style={{
+                marginRight: 11,
+                marginLeft: 0,
+                marginBottom: 11
+              }}
+              onSelect={onToggleTag.bind(this, label.get('id'))}
+              inactive={!selected.includes(label.get('id'))}
+              label={label}/>
+          ).toArray()
       }
       {
         labels.size > display && (

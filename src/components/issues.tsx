@@ -32,6 +32,7 @@ const styles = {
 
 interface MainProps {
   issues: any;
+  limit?: boolean;
   onLoadMore: Function;
 };
 
@@ -41,7 +42,6 @@ class Issues extends React.PureComponent<MainProps, any> {
 
   public state = {
     page: 1,
-    limit: this.props.issues.size < 30,
     rendered: shift
   };
 
@@ -96,23 +96,18 @@ class Issues extends React.PureComponent<MainProps, any> {
 
   private onSeeMore = () => {
     const { onLoadMore } = this.props;
+    const newPageNumber = this.state.page + 1;
 
     this.setState({
-      page: this.state.page + 1
+      page: newPageNumber
     });
 
-    onLoadMore(this.state.page + 1).then(issues => {
-      if (issues.size < 30) {
-        this.setState({
-          limit: true
-        });
-      }
-    });
+    onLoadMore(newPageNumber);
   };
 
   public render() {
     const { issues } = this.props;
-    const { limit, rendered } = this.state;
+    const { rendered } = this.state;
 
     return (
       <div>
@@ -128,7 +123,7 @@ class Issues extends React.PureComponent<MainProps, any> {
             })
           }
           {
-            !limit && (
+            issues.size % 30 === 0 && (
               <li style={styles.more}>
                 <RawButton
                   style={styles.moreBtn}
@@ -148,10 +143,11 @@ export default
 connect((state, props) => ({
   issues: props.issues
     .map(issue =>
-      issue.update('labelsIds', labelsIds =>
-        labelsIds.map(labelId =>
-          state.getIn([ 'label', labelId ])
-        )
+      issue
+      .update('labelsIds', labelsIds =>
+        labelsIds
+          .map(labelId => state.getIn([ 'label', labelId ]))
+          .filter(Boolean)
       )
     )
 }), null)(Issues);

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import TopLoader from '../components/top-loader';
+import NotificationManager from '../components/notification-manager';
 
 interface MainProps {
   loading: boolean;
@@ -14,6 +15,7 @@ class Wrapper extends React.Component<MainProps, any> {
     return (
       <div>
         <TopLoader loading={loading}/>
+        <NotificationManager/>
         {
           children
         }

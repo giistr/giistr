@@ -3,6 +3,7 @@ import { Colors } from '../style';
 import { Logo } from './logo';
 import UserCard from './user-card';
 import { clear as clearUser } from '../actions/user';
+import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import { User } from '../reducers/user';
 import { connect } from 'react-redux';
@@ -67,8 +68,8 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
   };
 
   private onLogout = () => {
-    const { dispatch, clearUser } = this.props;
-    clearUser()(dispatch);
+    const { clearUser } = this.props;
+    clearUser();
     browserHistory.push('/');
   };
 
@@ -142,6 +143,5 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
 
 export default
 connect((state, props) => props, dispatch => ({
-  dispatch,
-  clearUser
+  clearUser: bindActionCreators(clearUser, dispatch)
 }))(NavigationBar);

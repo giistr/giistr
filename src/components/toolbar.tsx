@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Set, Map } from 'immutable';
 import Input from './input-autocomplete';
 import InputText from './input-text';
@@ -16,7 +17,6 @@ interface MainProps {
   languages: Set<string>;
   labels: any;
   filters: Map<string, any>;
-  dispatch: any;
   remove: any;
   add: any;
   replace: any;
@@ -63,57 +63,53 @@ const periodOptions = Set<string>(pOptions);
 
 class Toolbar extends React.Component<MainProps, any> {
   private onToggleTag = id => {
-    const { filters, remove, add, dispatch } = this.props;
+    const { filters, remove, add } = this.props;
 
     if (filters.get(labels).includes(id)) {
-      remove(labels, id)(dispatch);
+      remove(labels, id);
     } else {
-      add(labels, id)(dispatch);
+      add(labels, id);
     }
   };
 
   private onSearchIssue = evt => {
-    const text = evt.target.value;
-    const { replace, dispatch } = this.props;
-
-    replace(searchIssue, text)(dispatch);
+    const { replace } = this.props;
+    replace(searchIssue, evt.target.value);
   };
 
   private onSelectLanguage = language => {
-    const { reset, replace, dispatch } = this.props;
+    const { reset, replace } = this.props;
 
     if (!language) {
-      reset(languages)(dispatch);
+      reset(languages);
     } else {
-      replace(languages, language)(dispatch);
+      replace(languages, language);
     }
   };
 
   private onSelectPeriod = time => {
-    const { reset, replace, dispatch } = this.props;
+    const { reset, replace } = this.props;
 
     if (!time) {
-      reset(period)(dispatch);
+      reset(period);
     } else {
-      replace(period, time)(dispatch);
+      replace(period, time);
     }
   };
 
   private onToggleAssignee = val => {
-    const { replace, dispatch } = this.props;
-
-    replace(withoutAssignee, !val)(dispatch);
+    const { replace } = this.props;
+    replace(withoutAssignee, !val);
   };
 
   private onToggleIssues = val => {
-    const { replace, dispatch } = this.props;
-
-    replace(withIssues, !val)(dispatch);
+    const { replace } = this.props;
+    replace(withIssues, !val);
   };
 
   private onResetFilters = () => {
-    const { resetAll, dispatch } = this.props;
-    resetAll()(dispatch);
+    const { resetAll } = this.props;
+    resetAll();
   };
 
   public render() {
@@ -191,10 +187,9 @@ connect((state, props) => ({
       .filter(Boolean)
   )
 }), dispatch => ({
-  dispatch,
-  remove,
-  add,
-  replace,
-  reset,
-  resetAll
+  remove: bindActionCreators(remove, dispatch),
+  add: bindActionCreators(add, dispatch),
+  replace: bindActionCreators(replace, dispatch),
+  reset: bindActionCreators(reset, dispatch),
+  resetAll: bindActionCreators(resetAll, dispatch)
 }))(Toolbar);
