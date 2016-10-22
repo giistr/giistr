@@ -3,8 +3,7 @@ import {
   CLEAR_REPO,
   FETCH_USER_REPOS,
   FETCH_ALL_REPOS,
-  FETCH_TOTAL_REPO_STARRED,
-  SET_ISSUES_LIMIT
+  FETCH_TOTAL_REPO_STARRED
 } from '../constants/repos';
 
 export const clear = () => ({
@@ -31,9 +30,4 @@ export const fetchAllRepos = (username: string, startPage: number) => ({
   type: FETCH_ALL_REPOS,
   username,
   startPage
-});
-
-export const setIssuesLimit = (repoId: number) => ({
-  type: SET_ISSUES_LIMIT,
-  repoId
 });

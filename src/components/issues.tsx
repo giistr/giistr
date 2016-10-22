@@ -106,7 +106,7 @@ class Issues extends React.PureComponent<MainProps, any> {
   };
 
   public render() {
-    const { issues, limit } = this.props;
+    const { issues } = this.props;
     const { rendered } = this.state;
 
     return (
@@ -123,7 +123,7 @@ class Issues extends React.PureComponent<MainProps, any> {
             })
           }
           {
-            !limit && (
+            issues.size % 30 === 0 && (
               <li style={styles.more}>
                 <RawButton
                   style={styles.moreBtn}
