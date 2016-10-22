@@ -5,6 +5,7 @@
     "immutable": "registry:npm/immutable#3.7.6+20160411060006"
   },
   "globalDependencies": {
+    "aphrodite": "registry:dt/aphrodite#0.5.0+20160724060110",
     "moment": "registry:dt/moment#2.11.1+20160829143156",
     "object-hash": "registry:dt/object-hash#0.5.0+20160317120654",
     "qs": "registry:dt/qs#6.2.0+20160707010053",
@@ -17,7 +18,6 @@
     "redux": "registry:dt/redux#3.5.2+20160703092728",
     "redux-immutable": "registry:dt/redux-immutable#3.0.5+20160703120921",
     "redux-logger": "registry:dt/redux-logger#2.6.0+20160619033847",
-    "redux-thunk": "registry:dt/redux-thunk#2.1.0+20160703120921",
     "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160829180742",
     "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20160829180742"
   }

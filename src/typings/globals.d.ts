@@ -9,5 +9,8 @@ declare var require: {
     ensure: (paths: string[], callback: (require: <T>(path: string) => T) => void) => void;
 };
 
-/// <reference path="stilr.d.ts" />
+interface ReduxWindow extends Window {
+  devToolsExtension(): () => void;
+}
+
 /// <reference path="react-ga/react-ga.d.ts" />

@@ -1,6 +1,6 @@
 import * as React from 'react';
-
-import { githubOauthAction, oauthFromToken } from '../actions/user';
+import { bindActionCreators } from 'redux';
+import { oauthUser, fetchGithubToken } from '../actions/user';
 import { connect } from 'react-redux';
 import { Map, fromJS } from 'immutable';
 import { browserHistory } from 'react-router';
@@ -14,12 +14,10 @@ import { TagCloud } from '../components/tag-cloud';
 import { LanguageCloud } from '../components/language-cloud';
 import { BlinkSquare } from '../components/blink-square';
 import { RawButton } from '../components/raw-button';
-import TopLoader from '../components/top-loader';
 
 interface MainProps {
-  dispatch: any;
-  githubOauthAction: any;
-  oauthFromToken: any;
+  oauthUser: any;
+  fetchGithubToken: any;
   user: Map<string, string | number>;
 };
 
@@ -123,12 +121,11 @@ class Landing extends React.Component<MainProps, any> {
 
   public state = {
     token: '',
-    isTokenAccess: false,
-    loading: false
+    isTokenAccess: false
   };
 
   public componentWillMount() {
-    const { githubOauthAction, dispatch, user } = this.props;
+    const { fetchGithubToken, user } = this.props;
 
     if (user.size > 0) {
       this.redirectToApp(user);
@@ -136,10 +133,7 @@ class Landing extends React.Component<MainProps, any> {
 
     const params = parse(location.search.replace('?', ''));
     if (params.code) {
-      dispatch(githubOauthAction(params.code));
-      this.setState({
-        loading: true
-      });
+      fetchGithubToken(params.code);
     }
   }
 
@@ -156,8 +150,8 @@ class Landing extends React.Component<MainProps, any> {
   };
 
   private onTokenLogin = token => {
-    const { oauthFromToken, dispatch } = this.props;
-    dispatch(oauthFromToken(token));
+    const { oauthUser } = this.props;
+    oauthUser(token);
   };
 
   private redirectToApp(user) {
@@ -241,9 +235,8 @@ class Landing extends React.Component<MainProps, any> {
     return (
       <div>
         {
-          !this.state.loading && this.renderMain()
+          this.renderMain()
         }
-        <TopLoader loading={this.state.loading}/>
       </div>
     );
   }
@@ -251,7 +244,6 @@ class Landing extends React.Component<MainProps, any> {
 
 export default connect(state => ({ user: state.get('user') }),
 dispatch => ({
-  dispatch,
-  githubOauthAction,
-  oauthFromToken
+  oauthUser: bindActionCreators(oauthUser, dispatch),
+  fetchGithubToken: bindActionCreators(fetchGithubToken, dispatch)
 }))(Landing);

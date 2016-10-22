@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { OrderedMap, Map } from 'immutable';
+import { connect } from 'react-redux';
 
 import RepoColumn from '../components/repo-column';
 import LoadMore from '../components/load-more';
 
 interface MainProps {
   repositories: OrderedMap<number, any>;
-  onClickMore: Function;
-  onClickAll: Function;
+  onClickMore: MouseEventHandler;
+  onClickAll: MouseEventHandler;
   loaded: boolean;
   hasNext: boolean;
 };
@@ -109,4 +111,6 @@ class Layout extends React.Component<MainProps, { column: number; }> {
   }
 }
 
-export default Layout;
+export default connect((state, props) => ({
+  loaded: !state.getIn([ 'config', 'loading' ], false)
+}), null)(Layout);

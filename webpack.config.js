@@ -13,7 +13,8 @@ var toCopy = [
   { from: 'assets', to: 'assets' },
   { from: 'icons', to: 'icons' },
   { from: 'index.html' },
-  { from: 'nginx.conf' }
+  { from: 'nginx.conf' },
+  { from: 'google45b2ab8f1ffadc49.html' },
 ];
 
 var plugins = [
@@ -56,7 +57,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loaders: ['style-loader', 'css-loader']
       },
       {
         test: /\.json$/,

@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { Colors } from '../style';
-import * as StyleSheet from 'stilr';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +22,7 @@ export function RawButton({
   style,
   children
 }: {
-  onClick: Function;
+  onClick: MouseEventHandler;
   style?: any;
   children?: any;
 }) {
@@ -29,7 +30,7 @@ export function RawButton({
   return (
     <div
       onClick={onClick}
-      className={styles.container}
+      className={css(styles.container)}
       style={style}>
       {
         children
