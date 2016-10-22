@@ -2,7 +2,7 @@ import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
 import { browserHistory } from 'react-router';
-import * as StyleSheet from 'stilr';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import { fromJS } from 'immutable';
 
 const styles = {
@@ -119,7 +119,7 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
       <div style={styles.container}>
         <div style={styles.first}>
           <a
-            href={user.get('html_url')}
+            href={user.get('html_url') as string}
             target="_blank"
             style={Object.assign({}, styles.avatar, {
               backgroundImage: `url('${user.get('avatar_url')}')`
@@ -132,7 +132,7 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
               <div
                 key={index}
                 style={index === this.state.active ? styles.active : {}}
-                className={improvedStyle.item}
+                className={css(improvedStyle.item)}
                 onClick={el.get('action')}>
                 { el.get('title') }
               </div>

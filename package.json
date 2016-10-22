@@ -46,6 +46,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "dependencies": {
+    "aphrodite": "^1.0.0",
     "immutable": "^3.8.1",
     "moment": "^2.14.1",
     "object-hash": "^1.1.4",
@@ -60,8 +61,9 @@
     "redux-immutable": "3.0.6",
     "redux-logger": "^2.6.1",
     "redux-observable": "^0.12.1",
-    "rxjs": "^5.0.0-beta.12",
-    "stilr": "^1.2.4",
+    "rxjs": "^5.0.0-rc.1",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
     "url-join": "^1.1.0"
   }
 }

@@ -5,6 +5,7 @@
     "immutable": "registry:npm/immutable#3.7.6+20160411060006"
   },
   "globalDependencies": {
+    "aphrodite": "registry:dt/aphrodite#0.5.0+20160724060110",
     "moment": "registry:dt/moment#2.11.1+20160829143156",
     "object-hash": "registry:dt/object-hash#0.5.0+20160317120654",
     "qs": "registry:dt/qs#6.2.0+20160707010053",

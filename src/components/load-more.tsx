@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { Colors } from '../style';
 import Button from './button';
 
 interface MainProps {
-  onClickMore: Function;
-  onClickAll: Function;
+  onClickMore: MouseEventHandler;
+  onClickAll: MouseEventHandler;
 };
 
 const styles = {

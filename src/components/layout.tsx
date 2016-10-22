@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { OrderedMap, Map } from 'immutable';
 import { connect } from 'react-redux';
 
@@ -7,8 +8,8 @@ import LoadMore from '../components/load-more';
 
 interface MainProps {
   repositories: OrderedMap<number, any>;
-  onClickMore: Function;
-  onClickAll: Function;
+  onClickMore: MouseEventHandler;
+  onClickAll: MouseEventHandler;
   loaded: boolean;
   hasNext: boolean;
 };

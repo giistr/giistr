@@ -3,9 +3,8 @@
 import 'rxjs';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import * as StyleSheet from 'stilr';
 
-import { Router, Route, IndexRoute, Redirect, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
@@ -27,10 +26,6 @@ import './common.css';
 declare var process: any;
 const env = process.env.NODE_ENV;
 const middlewares: Array<any> = [ createEpicMiddleware(combineEpics(...rootEpics)) ];
-
-interface ReduxWindow extends Window {
-  devToolsExtension(): () => void;
-}
 
 declare var window: ReduxWindow;
 
@@ -61,11 +56,8 @@ ReactDOM.render(
         <IndexRoute component={Landing}/>
         <Route path="home" component={Main}/>
         <Route path="about" component={About}/>
-        <Redirect from="home/:x" to="home"/>
       </Route>
     </Router>
   </Provider>,
   document.getElementById('content')
 );
-
-document.getElementById('stylesheet').textContent = StyleSheet.render();

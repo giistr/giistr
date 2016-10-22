@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { MouseEventHandler } from 'react';
 import { Colors } from '../style';
 
 const container = {
@@ -37,7 +38,7 @@ export function Check({
   inactive,
   style
 }: {
-  onSelect?: Function,
+  onSelect?: MouseEventHandler,
   inactive?: Boolean,
   style?: Object
 }) {

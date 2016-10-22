@@ -1,5 +1,7 @@
 import * as React from 'react';
-import * as StyleSheet from 'stilr';
+import { MouseEventHandler } from 'react';
+
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 import { convertHex } from '../helpers/color';
 import { Colors } from '../style';
@@ -14,6 +16,13 @@ const styles = StyleSheet.create({
     lineHeight: '20px',
     margin: 'auto 4px',
     cursor: 'pointer'
+  },
+  inactiveContainer: {
+    color: Colors.lightGrey,
+    backgroundColor: Colors.backgroundGrey,
+    ':hover': {
+      backgroundColor: Colors.backgroundGrey
+    }
   }
 });
 
@@ -24,31 +33,25 @@ export function Tag({
   style
 }: {
   label: any,
-  onSelect?: Function,
+  onSelect?: MouseEventHandler,
   inactive?: Boolean,
   style?: Object
 }) {
-  const tmp = StyleSheet.create({
-    container: {
-      color: inactive ? Colors.lightGrey : `#${label.get('color')}`,
-      backgroundColor: inactive ? Colors.backgroundGrey : convertHex(label.get('color'), 0.2),
+
+  if (!inactive) {
+    style = Object.assign({}, style, {
+      color: `#${label.get('color')}`,
+      backgroundColor: convertHex(label.get('color'), 0.2),
       ':hover': {
-        backgroundColor: inactive ? Colors.backgroundGrey : convertHex(label.get('color'), 0.4)
+        backgroundColor: convertHex(label.get('color'), 0.4)
       }
-    }
-  });
-
-  const final = [
-    styles.base,
-    tmp.container
-  ].join(' ');
-
-  document.getElementById('stylesheet').textContent = StyleSheet.render();
+    });
+  }
 
   return (
     <div
       onClick={onSelect}
-      className={final}
+      className={css(styles.base, styles.inactiveContainer)}
       style={style}>
       { label.get('name') }
     </div>
