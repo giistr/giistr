@@ -23,6 +23,8 @@ class ListView extends React.Component<MainProps, any> {
         <NavigationBar
           user={user}
           location={location}/>
+        <div>
+        </div>
         <ToolBar
           filters={filters}/>
       </div>

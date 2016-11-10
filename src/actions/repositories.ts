@@ -3,7 +3,8 @@ import {
   CLEAR_REPO,
   FETCH_USER_REPOS,
   FETCH_ALL_REPOS,
-  FETCH_TOTAL_REPO_STARRED
+  FETCH_TOTAL_REPO_STARRED,
+  GET_ALL_API_REPOS
 } from '../constants/repos';
 
 export const clear = () => ({
@@ -30,4 +31,8 @@ export const fetchAllRepos = (username: string, startPage: number) => ({
   type: FETCH_ALL_REPOS,
   username,
   startPage
+});
+
+export const getAllApiRepository = () => ({
+  type: GET_ALL_API_REPOS
 });

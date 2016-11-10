@@ -8,6 +8,7 @@ import {
 } from '../constants/issues';
 import { ADD_REPO } from '../constants/repos';
 import { add, addLabels, fetchIssues } from '../actions/issues';
+import { setIssuesLimit } from '../actions/repositories';
 import { stopLoading } from '../actions/config';
 
 const reposToIssuesEpic = (action$) => (
@@ -70,11 +71,13 @@ const fetchIssuesEpic = (action$, { getState }) => (
       .toList();
 
       formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
+      const issuesLimitAction = setIssuesLimit(formattedIssues.first().get('repositoryId'));
 
       const actions = [
         add(formattedIssues),
         addLabels(labels),
-        stopLoading()
+        stopLoading(),
+        issuesLimitAction(issues.size % 30 !== 0)
       ];
 
       return Observable.of(...actions);

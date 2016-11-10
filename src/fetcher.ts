@@ -24,7 +24,6 @@ function makeUrl(endpoint: string, url?: string): string {
 const shallowRequest = (method: string) => (
   method === 'GET' ||
   method === 'HEAD' ||
-  method === 'REMOVE' ||
   method === 'DELETE'
 );
 
@@ -49,7 +48,8 @@ export function request(args: ReqArgs) {
 
   if (getFromStorage('user')) {
     rawHeader = Object.assign({}, rawHeader, {
-      Authorization: `token ${getFromStorage('user').access_token}`
+      Authorization: `token ${getFromStorage('user').access_token}`,
+      'X-Github-Token': getFromStorage('user').access_token
     });
   }
 

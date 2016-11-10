@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Colors } from '../style';
 import { Map } from 'immutable';
 import * as moment from 'moment';
-
+import RepoActionsDropdown from './repo-action-dropdown';
 const borderSwitch = [
   `1px solid ${Colors.borderGrey}`,
   `1px solid ${Colors.blueDarkBorder}`
@@ -136,6 +136,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
                 )
               }
             </div>
+            <RepoActionsDropdown/>
           </div>
           <div style={styles.description}>
             { repo.get('description') }
