@@ -122,6 +122,7 @@ class Toolbar extends React.Component<MainProps, any> {
         </h3>
         <div style={styles.section}>
           <InputText
+            icon
             onChange={this.onSearchIssue}
             placeholder="Search on issues"/>
         </div>

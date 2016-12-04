@@ -10,7 +10,8 @@ const getAllTags = action$ => (
     .ofType(GET_ALL_TAGS)
     .switchMap(() =>
       get({
-        fullEndpoint: 'https://api.giistr.io/api/v1/tags'
+        fullEndpoint: 'https://api.giistr.io/api/v1/tags',
+        allocatedApi: true
       })
       .map(setTags)
     )

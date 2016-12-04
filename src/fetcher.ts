@@ -10,6 +10,7 @@ interface Args {
   fullEndpoint?: string;
   resHeader?: boolean;
   preventBody?: boolean;
+  allocatedApi?: boolean;
 };
 
 interface ReqArgs extends Args {
@@ -47,10 +48,13 @@ export function request(args: ReqArgs) {
   };
 
   if (getFromStorage('user')) {
-    rawHeader = Object.assign({}, rawHeader, {
-      Authorization: `token ${getFromStorage('user').access_token}`,
-      'X-Github-Token': getFromStorage('user').access_token
-    });
+    if (args.allocatedApi) {
+      rawHeader['X-Github-Token'] = getFromStorage('user').access_token;
+    } else {
+      rawHeader = Object.assign({}, rawHeader, {
+        Authorization: `token ${getFromStorage('user').access_token}`
+      });
+    }
   }
 
   const headers = new Headers(rawHeader);

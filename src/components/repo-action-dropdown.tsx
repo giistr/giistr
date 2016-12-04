@@ -1,7 +1,39 @@
 import * as React from 'react';
 import { Colors } from '../style';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-const base = {};
+const styles = {
+  wrapper: {
+    position: 'relative'
+  },
+  arrow: {
+    cursor: 'pointer',
+    padding: 5
+  },
+  list: {
+    position: 'absolute',
+    top: 20,
+    left: -120,
+    textAlign: 'right',
+    width: 140,
+    backgroundColor: 'white',
+    border: `1px solid ${Colors.borderGrey}`,
+    borderRadius: 5,
+    fontSize: 14,
+    color: Colors.lightGrey,
+    padding: '4px 0px'
+  }
+};
+
+const enhancedStyle = StyleSheet.create({
+  item: {
+    padding: 6,
+    cursor: 'pointer',
+    ':hover': {
+      color: Colors.middleGrey
+    }
+  }
+});
 
 class RepoActionsDropdown extends React.Component<any, any> {
 
@@ -17,15 +49,12 @@ class RepoActionsDropdown extends React.Component<any, any> {
 
   public render() {
     return (
-        <div>
-          <img src="/assets/arrow.svg" onClick={this.onFocus}/>
+        <div style={styles.wrapper}>
+          <img style={styles.arrow} src="/assets/arrow.svg" onClick={this.onFocus}/>
           {
             this.state.focused && (
-              <ul>
-                <li>Add to list</li>
-                <li>Add to list 2</li>
-                <li>Add to list 3</li>
-                <li>Add to list 4</li>
+              <ul style={styles.list}>
+                <li className={css(enhancedStyle.item)}>Add to list</li>
               </ul>
             )
           }

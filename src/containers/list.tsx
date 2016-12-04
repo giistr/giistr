@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Colors } from '../style';
 import { connect } from 'react-redux';
 import { User } from '../reducers/user';
 import NavigationBar from '../components/navigation-bar';
 import ToolBar from '../components/toolbar';
+import ListMenu from '../components/list-menu';
 
 interface MainProps {
   location?: any;
@@ -11,7 +11,14 @@ interface MainProps {
   filters: Map<string, any>;
 };
 
-const styles = {};
+const styles = {
+  listWrapper: {
+    display: 'flex'
+  },
+  listContent: {
+    flex: 1
+  }
+};
 
 class ListView extends React.Component<MainProps, any> {
 
@@ -23,10 +30,13 @@ class ListView extends React.Component<MainProps, any> {
         <NavigationBar
           user={user}
           location={location}/>
-        <div>
+        <div style={styles.listWrapper}>
+          <div style={styles.listContent}>
+            <ListMenu/>
+          </div>
+          <ToolBar
+            filters={filters}/>
         </div>
-        <ToolBar
-          filters={filters}/>
       </div>
     );
   }
