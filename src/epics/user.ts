@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { get, post } from '../fetcher';
 import { combineEpics } from 'redux-observable';
 import {
