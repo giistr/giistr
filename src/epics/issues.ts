@@ -8,8 +8,29 @@ import {
 } from '../constants/issues';
 import { ADD_REPO } from '../constants/repos';
 import { add, addLabels, fetchIssues } from '../actions/issues';
-import { setIssuesLimit } from '../actions/repositories';
 import { stopLoading } from '../actions/config';
+
+const serializeIssuesLabels = (issues) => {
+  let formattedIssues = issues.map(issue => {
+    const issueBis = issue.update('labels', labels =>
+      labels.map(label => label.set('id', hash(label.get('name').toLowerCase())))
+    );
+
+    return issueBis.set('labelsIds', issueBis.get('labels').map(label => label.get('id')));
+  });
+
+  const labels = formattedIssues
+  .map(issue => issue.get('labels'))
+  .flatten(1)
+  .toList();
+
+  formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
+
+  return {
+    formattedIssues,
+    labels
+  };
+};
 
 const reposToIssuesEpic = (action$) => (
   action$
@@ -20,64 +41,49 @@ const reposToIssuesEpic = (action$) => (
     )
 );
 
+const fetchMapIssues = (reposIds: List<string>, getState: Function, page: number) => (
+  Observable.forkJoin(
+    ...reposIds.map(id =>
+      get({
+        endpoint: `repos/${getState().getIn(['repository', id, 'full_name'])}/issues`,
+        params: { page }
+      })
+    ).toArray()
+  ).map(issues => {
+    return List(issues).map((issueArr: any, index) => {
+      return issueArr.map(issue =>
+        issue.set('repositoryId', reposIds.get(index))
+      );
+    }).flatten(1);
+  })
+);
+
+const fetchMapIssue = (repoId: string, getState: Function, page: number) => (
+  get({
+    endpoint: `repos/${getState().getIn(['repository', repoId, 'full_name'])}/issues`,
+    params: { page }
+  }).map(issues =>
+    issues.map(issue => issue.set('repositoryId', repoId))
+  )
+);
+
 const fetchIssuesEpic = (action$, { getState }) => (
   action$
     .ofType(FETCH_ISSUES)
     .flatMap(({ repoId, page }) => {
-      let res;
-
       if (List.isList(repoId)) {
-        res = Observable.forkJoin(
-          ...repoId.map(id =>
-            get({
-              endpoint: `repos/${getState().getIn(['repository', id, 'full_name'])}/issues`,
-              params: { page }
-            })
-          ).toArray()
-        );
-      } else {
-        res = get({
-          endpoint: `repos/${getState().getIn(['repository', repoId, 'full_name'])}/issues`,
-          params: { page }
-        });
+        return fetchMapIssues(repoId as List<string>, getState, page);
       }
 
-      return res.map(issues => {
-        if (List.isList(issues[0])) {
-          return List(issues).map((issueArr: any, index) => {
-            return issueArr.map(issue =>
-              issue.set('repositoryId', repoId.get(index))
-            );
-          }).flatten(1);
-        } else {
-          return issues.map(issue => issue.set('repositoryId', repoId));
-        }
-      });
+      return fetchMapIssue(repoId as string, getState, page);
     })
     .flatMap(issues => {
-      let formattedIssues = issues.map(issue => {
-        const issueBis = issue.update('labels', labels =>
-          labels.map(label => label.set('id', hash(label.get('name').toLowerCase())))
-        );
-
-        return issueBis.set('labelsIds', issueBis.get('labels').map(label => label.get('id')));
-      });
-
-      const labels = formattedIssues
-      .map(issue =>
-        issue.get('labels')
-      )
-      .flatten(1)
-      .toList();
-
-      formattedIssues = formattedIssues.map(issue => issue.remove('labels'));
-      const issuesLimitAction = setIssuesLimit(formattedIssues.first().get('repositoryId'));
+      const { formattedIssues, labels } = serializeIssuesLabels(issues);
 
       const actions = [
         add(formattedIssues),
         addLabels(labels),
-        stopLoading(),
-        issuesLimitAction(issues.size % 30 !== 0)
+        stopLoading()
       ];
 
       return Observable.of(...actions);
