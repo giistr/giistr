@@ -6,7 +6,7 @@ interface State {
   active: boolean;
 }
 
-class ListMenu extends React.Component<null, State> {
+class ListMenu extends React.Component<any, State> {
   public state = {
     active: false
   };
@@ -19,9 +19,8 @@ class ListMenu extends React.Component<null, State> {
 
   private onValidate = (evt) => {
     if (evt.keyCode === 13) {
-      this.setState({
-        active: false
-      });
+      this.setState({ active: false });
+      this.props.postTag(evt.target.value);
     }
   };
 

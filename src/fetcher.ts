@@ -34,7 +34,7 @@ export function request(args: ReqArgs) {
   let url = makeUrl(args.endpoint, args.fullEndpoint);
 
   if (!shallow && !args.preventBody) {
-    body = JSON.stringify(args);
+    body = JSON.stringify(args.params);
   }
 
   if (shallow || args.preventBody) {

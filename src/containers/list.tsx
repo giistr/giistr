@@ -2,7 +2,8 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { User } from '../reducers/user';
-import { getAllTags } from '../actions/tags';
+import { getAllTags, postTag } from '../actions/tags';
+import { Tag } from '../reducers/tags';
 import NavigationBar from '../components/navigation-bar';
 import ToolBar from '../components/toolbar';
 import ListMenu from '../components/list-menu';
@@ -12,6 +13,8 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   getAllTags: any;
+  postTag: any;
+  tags: Map<string, Tag>
 };
 
 const styles = {
@@ -30,7 +33,7 @@ class ListView extends React.Component<MainProps, any> {
   }
 
   public render() {
-    const { location, user, filters } = this.props;
+    const { location, user, filters, postTag, tags } = this.props;
 
     return (
       <div>
@@ -39,7 +42,7 @@ class ListView extends React.Component<MainProps, any> {
           location={location}/>
         <div style={styles.listWrapper}>
           <div style={styles.listContent}>
-            <ListMenu/>
+            <ListMenu postTag={postTag} tags={tags}/>
           </div>
           <ToolBar
             filters={filters}/>
@@ -52,7 +55,9 @@ class ListView extends React.Component<MainProps, any> {
 export default
 connect((state, props) => ({
   user: state.get('user'),
-  filters: state.get('filters')
+  filters: state.get('filters'),
+  tags: state.get('tag')
 }), (dispatch) => ({
-  getAllTags: bindActionCreators(getAllTags, dispatch)
+  getAllTags: bindActionCreators(getAllTags, dispatch),
+  postTag: bindActionCreators(postTag, dispatch),
 }))(ListView);
