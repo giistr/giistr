@@ -7,6 +7,7 @@ import {
   FETCH_ALL_REPOS,
   FETCH_TOTAL_REPO_STARRED
 } from '../constants/repos';
+
 import { AddRepos } from '../actions/repositories';
 import { append } from '../actions/user';
 import {
@@ -95,4 +96,17 @@ const fetchAllRepos = (action$, { getState }) => (
     })
 );
 
-export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos);
+// TODO: Factorise the URL and handle the response from the serveur
+const fetchRegisteredRepos = (action$) => (
+  action$
+    .filter(({ type }) => type === FETCH_ALL_REPOS || type === FETCH_USER_REPOS)
+    .flatMap(() =>
+      get({
+        fullEndpoint: `https://api.giistr.io/api/v1/repos`,
+        allocatedApi: true
+      })
+    )
+    .map(() => ({ type: 'noop' }))
+);
+
+export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos, fetchRegisteredRepos);

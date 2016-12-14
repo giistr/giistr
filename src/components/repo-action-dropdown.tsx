@@ -38,7 +38,8 @@ const enhancedStyle = StyleSheet.create({
 class RepoActionsDropdown extends React.Component<any, any> {
 
   public state = {
-    focused: false
+    focused: false,
+    addList: false
   };
 
   private onFocus = () => {
@@ -47,14 +48,34 @@ class RepoActionsDropdown extends React.Component<any, any> {
     });
   };
 
+  private toggleAddList = () => {
+    this.setState({
+      addList: !this.state.addList
+    });
+  };
+
   public render() {
+    const { repoId, tags, addTagToRepo } = this.props;
+    const { focused, addList } = this.state;
+
     return (
         <div style={styles.wrapper}>
           <img style={styles.arrow} src="/assets/arrow.svg" onClick={this.onFocus}/>
           {
-            this.state.focused && (
+            focused && (
               <ul style={styles.list}>
-                <li className={css(enhancedStyle.item)}>Add to list</li>
+                <li className={css(enhancedStyle.item)} onClick={this.toggleAddList}>Add to list</li>
+                {
+                  addList && (
+                    <ul>
+                      {
+                        tags.map(tag =>
+                          <li onClick={() => addTagToRepo(repoId)}>{ tag.get('name') }</li>
+                        ).toArray()
+                      }
+                    </ul>
+                  )
+                }
               </ul>
             )
           }

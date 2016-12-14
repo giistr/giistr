@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Colors } from '../style';
 import { Map } from 'immutable';
+import { Tag } from '../reducers/tags';
+
 import * as moment from 'moment';
 import RepoActionsDropdown from './repo-action-dropdown';
 const borderSwitch = [
@@ -77,7 +79,17 @@ const styles = {
   }
 };
 
-export class Repository extends React.PureComponent<{ repo: Map<string, any>; }, { borderIndex: number; }> {
+interface RepoProps {
+  repo: Map<string, any>;
+  tags: Map<string, Tag>;
+  addTagToRepo: any;
+}
+
+interface RepoState {
+  borderIndex: number;
+}
+
+export class Repository extends React.PureComponent<RepoProps, RepoState> {
 
   private interval = undefined;
 
@@ -112,7 +124,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
   }
 
   public render() {
-    const { repo } = this.props;
+    const { repo, tags, addTagToRepo } = this.props;
     const { borderIndex } = this.state;
 
     const border = {
@@ -136,7 +148,10 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
                 )
               }
             </div>
-            <RepoActionsDropdown/>
+            <RepoActionsDropdown
+              tags={tags}
+              repoId={repo.get('id')}
+              addTagToRepo={addTagToRepo}/>
           </div>
           <div style={styles.description}>
             { repo.get('description') }

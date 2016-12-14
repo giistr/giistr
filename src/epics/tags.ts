@@ -3,7 +3,8 @@ import { get, post } from '../fetcher';
 import { setTags } from '../actions/tags';
 import {
   GET_ALL_TAGS,
-  POST_TAG
+  POST_TAG,
+  ADD_TAG_REPO
 } from '../constants/tags';
 
 const endpoint = 'https://api.giistr.io/';
@@ -31,7 +32,18 @@ const postTag = action$ => (
       })
       .map(setTags)
     )
+);
 
-)
+// TODO: handle the response when registering
+const addTagToRepo = action$ => (
+  action$
+    .ofType(ADD_TAG_REPO)
+    .switchMap(({ repoRegistrationId, tagId }) =>
+      post({
+        fullEndpoint: `${endpoint}api/v1/tag/${tagId}/repo/${repoRegistrationId}`,
+        allocatedApi: true,
+      })
+    )
+);
 
-export default combineEpics(getAllTags, postTag);
+export default combineEpics(getAllTags, postTag, addTagToRepo);
