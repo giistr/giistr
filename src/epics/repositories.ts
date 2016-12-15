@@ -5,10 +5,11 @@ import { Range, List } from 'immutable';
 import {
   FETCH_USER_REPOS,
   FETCH_ALL_REPOS,
-  FETCH_TOTAL_REPO_STARRED
+  FETCH_TOTAL_REPO_STARRED,
+  FETCH_MULTIPLE_REPOS
 } from '../constants/repos';
 
-import { AddRepos } from '../actions/repositories';
+import { AddRepos, setRegistration, fetchMultipleRepos } from '../actions/repositories';
 import { append } from '../actions/user';
 import {
   setError,
@@ -16,6 +17,21 @@ import {
   incrementPagination,
   setReposLimit
 } from '../actions/config';
+
+const fetchMultipleRepoEpic = action$ => (
+  action$
+    .ofType(FETCH_MULTIPLE_REPOS)
+    .flatMap((ownerRepos: string[][]) => (
+      Observable.forkJoin(
+        ...ownerRepos.map(orMap =>
+          get({
+            endpoint: `users/${orMap[0]}/${orMap[1]}`
+          })
+        )
+      )
+    ))
+    .map(repos => AddRepos(List(repos).flatten(1)))
+);
 
 const fetchReposEpic = action$ => (
   action$
@@ -96,8 +112,8 @@ const fetchAllRepos = (action$, { getState }) => (
     })
 );
 
-// TODO: Factorise the URL and handle the response from the serveur
-const fetchRegisteredRepos = (action$) => (
+// TODO: Factorise the URL and handle the fetch of multiple repositories
+const fetchRegisteredRepos = (action$, { getState }) => (
   action$
     .filter(({ type }) => type === FETCH_ALL_REPOS || type === FETCH_USER_REPOS)
     .flatMap(() =>
@@ -106,7 +122,23 @@ const fetchRegisteredRepos = (action$) => (
         allocatedApi: true
       })
     )
-    .map(() => ({ type: 'noop' }))
+    .flatMap((registeredRepos) => {
+      const stateRepos = getState().get('repository');
+      const reposToFetch = registeredRepos.filter(rr => !!stateRepos.get(rr.get('github_repo_id')));
+
+      if (reposToFetch.size) {
+        // return fetchMultipleRepos();
+      }
+
+      return Observable.of(List());
+    })
+    .map(setRegistration)
 );
 
-export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos, fetchRegisteredRepos);
+export default combineEpics(
+  fetchReposEpic,
+  fetchTotalReposLengthEpic,
+  fetchAllRepos,
+  fetchRegisteredRepos,
+  fetchMultipleRepoEpic
+);
