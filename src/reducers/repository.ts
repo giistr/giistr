@@ -1,5 +1,5 @@
 import { OrderedMap, List, Map } from 'immutable';
-import { ADD_REPO, CLEAR_REPO, SET_REGISTRATION } from '../constants/repos';
+import { ADD_REPO, CLEAR_REPO } from '../constants/repos';
 
 const initialState: OrderedMap<number, Repository> = OrderedMap<number, Repository>();
 
@@ -25,11 +25,6 @@ export default (state = initialState, action: RepositoryAction) => {
 
     case CLEAR_REPO:
       return OrderedMap<number, Repository>();
-
-    case SET_REGISTRATION:
-      // return state.map((repo: Repository) =>
-      //   repo.set('registrationId', )
-      // )
 
     default:
       return state;

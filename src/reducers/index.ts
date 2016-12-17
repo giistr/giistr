@@ -8,6 +8,7 @@ import filterReducer from './filters';
 import locationReducer from './location';
 import configReducer from './config';
 import tagReducer from './tags';
+import registeredRepositoriesReducer from './registered-repositories';
 
 export default combineReducers({
   issues: issuesReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   location: locationReducer,
   routing: routerReducer,
   config: configReducer,
-  tag: tagReducer
+  tag: tagReducer,
+  registeredRepositories: registeredRepositoriesReducer
 });

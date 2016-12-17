@@ -5,7 +5,6 @@ import {
   FETCH_ALL_REPOS,
   FETCH_TOTAL_REPO_STARRED,
   GET_ALL_API_REPOS,
-  SET_REGISTRATION,
   FETCH_MULTIPLE_REPOS
 } from '../constants/repos';
 
@@ -42,9 +41,4 @@ export const fetchAllRepos = (username: string, startPage: number) => ({
 
 export const getAllApiRepository = () => ({
   type: GET_ALL_API_REPOS
-});
-
-export const setRegistration = (repos) => ({
-  type: SET_REGISTRATION,
-  payload: repos
 });

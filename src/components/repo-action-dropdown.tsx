@@ -69,8 +69,8 @@ class RepoActionsDropdown extends React.Component<any, any> {
                   addList && (
                     <ul>
                       {
-                        tags.map(tag =>
-                          <li onClick={() => addTagToRepo(repoId)}>{ tag.get('name') }</li>
+                        tags.map((tag, index) =>
+                          <li key={index} onClick={() => addTagToRepo(repoId)}>{ tag.get('name') }</li>
                         ).toArray()
                       }
                     </ul>
