@@ -34,15 +34,17 @@ const postTag = action$ => (
     )
 );
 
-// TODO: handle the response when registering
 const addTagToRepo = action$ => (
   action$
     .ofType(ADD_TAG_REPO)
     .switchMap(({ repoRegistrationId, tagId }) =>
       post({
         fullEndpoint: `${endpoint}api/v1/tag/${tagId}/repo/${repoRegistrationId}`,
-        allocatedApi: true,
+        allocatedApi: true
       })
+    )
+    .flatMap(res =>
+
     )
 );
 

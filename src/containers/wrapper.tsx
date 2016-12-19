@@ -35,5 +35,5 @@ export default
 connect((state, props) => ({
   loading: state.getIn([ 'config', 'loading' ])
 }), (dispatch) => ({
-  getAllTags: bindActionCreators(getAllTags, dispatch),
+  getAllTags: bindActionCreators(getAllTags, dispatch)
 }))(Wrapper);

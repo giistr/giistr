@@ -1,4 +1,4 @@
-import { Map, List, OrderedMap } from 'immutable';
+import { Map, List } from 'immutable';
 import { SET_TAGS } from '../constants/tags';
 
 export interface TagAction {
@@ -16,7 +16,7 @@ export default (state = initialState, action: TagAction) => {
   switch (type) {
 
     case SET_TAGS:
-      if(List.isList(payload)) {
+      if (List.isList(payload)) {
         const payloadBis = payload.reduce((acc, next) => {
           return acc.set(next.get('id'), next);
         }, Map<any, Tag>());

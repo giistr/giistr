@@ -54,8 +54,18 @@ class RepoActionsDropdown extends React.Component<any, any> {
     });
   };
 
+  private handleTagAddedToRepo(tag) {
+    const { registeredRepoId, addTagToRepo, repo, createRepoAddTag } = this.props;
+
+    if (registeredRepoId) {
+      addTagToRepo(registeredRepoId, tag.get('id'));
+    } else {
+      createRepoAddTag(repo, tag.get('id'));
+    }
+  }
+
   public render() {
-    const { repoId, tags, addTagToRepo } = this.props;
+    const { tags } = this.props;
     const { focused, addList } = this.state;
 
     return (
@@ -70,7 +80,7 @@ class RepoActionsDropdown extends React.Component<any, any> {
                     <ul>
                       {
                         tags.map((tag, index) =>
-                          <li key={index} onClick={() => addTagToRepo(repoId)}>{ tag.get('name') }</li>
+                          <li key={index} onClick={this.handleTagAddedToRepo.bind(this, tag)}>{ tag.get('name') }</li>
                         ).toArray()
                       }
                     </ul>

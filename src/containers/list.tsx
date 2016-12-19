@@ -13,7 +13,7 @@ interface MainProps {
   user: User;
   filters: Map<string, any>;
   postTag: any;
-  tags: Map<string, Tag>
+  tags: Map<string, Tag>;
 };
 
 const styles = {
@@ -53,5 +53,5 @@ connect((state, props) => ({
   filters: state.get('filters'),
   tags: state.get('tag')
 }), (dispatch) => ({
-  postTag: bindActionCreators(postTag, dispatch),
+  postTag: bindActionCreators(postTag, dispatch)
 }))(ListView);

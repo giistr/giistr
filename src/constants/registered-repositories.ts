@@ -1,1 +1,3 @@
 export const ADD_REGISTERED_REPOS: string = 'ADD_REGISTERED_REPOS';
+export const CREATE_REPOSITORY_ADD_TAG: string = 'CREATE_REPOSITORY_ADD_TAG';
+export const ASSOCIATE_TAG: string = 'ASSOCIATE_TAG';

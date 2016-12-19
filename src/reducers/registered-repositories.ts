@@ -1,5 +1,5 @@
 import { OrderedMap, List, Map } from 'immutable';
-import { ADD_REGISTERED_REPOS } from '../constants/registered-repositories';
+import { ADD_REGISTERED_REPOS, ASSOCIATE_TAG } from '../constants/registered-repositories';
 
 export type RegisteredRepository = Map<string, any>;
 
@@ -8,6 +8,8 @@ const initialState: OrderedMap<string, RegisteredRepository> = OrderedMap<string
 export interface RegisteredRepositoryAction {
   payload?: List<RegisteredRepository> | RegisteredRepository;
   type: string;
+  tags?: any;
+  rrId?: string;
 }
 
 export default (state = initialState, action: RegisteredRepositoryAction) => {
@@ -24,6 +26,20 @@ export default (state = initialState, action: RegisteredRepositoryAction) => {
 
       return state.set((payload as RegisteredRepository).get('id'), (payload as RegisteredRepository));
 
+    case ASSOCIATE_TAG:
+      const { rrId, tags } = action;
+
+      state.updateIn([rrId, 'tags'], t => {
+        if (t) {
+          return t.concat(tags);
+        }
+
+        if (List.isList(tags)) {
+          return tags;
+        }
+
+        return List([tags]);
+      })
     default:
       return state;
   }

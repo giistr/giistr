@@ -20,7 +20,7 @@ export const AddRepos = repos => ({
 export const fetchMultipleRepos = (ownerRepos: string[][]) => ({
   type: FETCH_MULTIPLE_REPOS,
   ownerRepos
-})
+});
 
 export const fetchRepos = (username: string, page: number) => ({
   type: FETCH_USER_REPOS,

@@ -7,13 +7,16 @@ import Issues from '../components/issues';
 import { Repository } from '../components/repository';
 import { fetchIssues } from '../actions/issues';
 import { addTagToRepo } from '../actions/tags';
+import { createRepoAddTag } from '../actions/registered-repositories';
 import { Tag } from '../reducers/tags';
 
 interface MainProps {
   repositories: OrderedMap<number, any>;
   fetchIssues: any;
   addTagToRepo: any;
-  tags: Map<string, Tag>
+  createRepoAddTag: any;
+  tags: Map<string, Tag>;
+  registeredRepos: any;
 };
 
 const styles = {
@@ -35,7 +38,7 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
   };
 
   public render() {
-    const { repositories, tags, addTagToRepo } = this.props;
+    const { repositories, tags, addTagToRepo, registeredRepos, createRepoAddTag } = this.props;
 
     return (
       <div style={styles.container}>
@@ -44,7 +47,12 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
             <li
               style={key > 0 && styles.listContainer}
               key={key}>
-              <Repository repo={repo} tags={tags} addTagToRepo={addTagToRepo}/>
+              <Repository
+                repo={repo}
+                createRepoAddTag={createRepoAddTag}
+                registeredRepo={registeredRepos.find(rr => rr.get('github_repo_id') === repo.get('id'))}
+                tags={tags}
+                addTagToRepo={addTagToRepo}/>
               {
                 repo.get('issues', Map<string, any>()).size > 0 && (
                   <Issues
@@ -61,9 +69,13 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
   }
 }
 
-export default connect((state, props) => ({
+export default connect((state, { repositories }) => ({
+  registeredRepos: state
+    .get('registeredRepositories')
+    .filter(rr => repositories.get(rr.get('github_repo_id'))),
   tags: state.get('tag')
 }), dispatch => ({
   addTagToRepo: bindActionCreators(addTagToRepo, dispatch),
+  createRepoAddTag: bindActionCreators(createRepoAddTag, dispatch),
   fetchIssues: bindActionCreators(fetchIssues, dispatch)
 }))(RepoColumn);

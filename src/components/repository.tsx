@@ -83,6 +83,8 @@ interface RepoProps {
   repo: Map<string, any>;
   tags: Map<string, Tag>;
   addTagToRepo: any;
+  createRepoAddTag: any;
+  registeredRepo: any;
 }
 
 interface RepoState {
@@ -124,7 +126,7 @@ export class Repository extends React.PureComponent<RepoProps, RepoState> {
   }
 
   public render() {
-    const { repo, tags, addTagToRepo } = this.props;
+    const { repo, tags, addTagToRepo, registeredRepo, createRepoAddTag } = this.props;
     const { borderIndex } = this.state;
 
     const border = {
@@ -150,8 +152,10 @@ export class Repository extends React.PureComponent<RepoProps, RepoState> {
             </div>
             <RepoActionsDropdown
               tags={tags}
-              repoId={repo.get('id')}
-              addTagToRepo={addTagToRepo}/>
+              registeredRepoId={registeredRepo && registeredRepo.get('id')}
+              repo={repo}
+              addTagToRepo={addTagToRepo}
+              createRepoAddTag={createRepoAddTag}/>
           </div>
           <div style={styles.description}>
             { repo.get('description') }
