@@ -14,7 +14,7 @@
     "url": "git://github.com/alex3165/github-issues.git"
   },
   "author": "Alexandre Rieux",
-  "license": "ISC",
+  "license": "CC0-1.0",
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
