@@ -21,11 +21,11 @@ import {
 const fetchMultipleRepoEpic = action$ => (
   action$
     .ofType(FETCH_MULTIPLE_REPOS)
-    .flatMap((ownerRepos: string[][]) => (
+    .flatMap(({ ownerRepos }) => (
       Observable.forkJoin(
         ...ownerRepos.map(orMap =>
           get({
-            endpoint: `users/${orMap[0]}/${orMap[1]}`
+            endpoint: `repos/${orMap[0]}/${orMap[1]}`
           })
         )
       )

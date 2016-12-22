@@ -29,7 +29,7 @@ export default (state = initialState, action: RegisteredRepositoryAction) => {
     case ASSOCIATE_TAG:
       const { rrId, tags } = action;
 
-      state.updateIn([rrId, 'tags'], t => {
+      return state.updateIn([rrId, 'tags'], t => {
         if (t) {
           return t.concat(tags);
         }
@@ -39,7 +39,7 @@ export default (state = initialState, action: RegisteredRepositoryAction) => {
         }
 
         return List([tags]);
-      })
+      });
     default:
       return state;
   }

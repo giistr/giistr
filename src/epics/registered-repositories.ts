@@ -9,6 +9,7 @@ import {
   FETCH_ALL_REPOS
 } from '../constants/repos';
 import { CREATE_REPOSITORY_ADD_TAG } from '../constants/registered-repositories';
+import { Map } from 'immutable';
 
 const fetchRegisteredRepos = (action$, { getState }) => (
   action$
@@ -21,11 +22,12 @@ const fetchRegisteredRepos = (action$, { getState }) => (
     )
     .flatMap((registeredRepos) => {
       const stateRepos = getState().get('repository');
-      const reposToFetch = registeredRepos.filter(rr => !!stateRepos.get(rr.get('github_repo_id')));
+      const reposToFetch = registeredRepos.filter(rr => Map.isMap(stateRepos.get(rr.get('github_repo_id'))));
 
       const actions = [];
       if (reposToFetch.size) {
         actions.push(
+          // Fetch all the github repositories not in the store but registered by the giistr API
           fetchMultipleRepos(
             reposToFetch.map(repo =>
               [repo.get('user_login'), repo.get('repository_name')]
