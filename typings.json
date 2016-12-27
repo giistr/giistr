@@ -2,23 +2,23 @@
   "name": "webpack3",
   "version": false,
   "dependencies": {
-    "immutable": "registry:npm/immutable#3.7.6+20160411060006"
+    "aphrodite": "registry:dt/aphrodite#0.5.0+20160819225654",
+    "immutable": "registry:npm/immutable#3.7.6+20160411060006",
+    "object-hash": "registry:dt/object-hash#0.5.0+20160620211513",
+    "qs": "registry:dt/qs#6.2.0+20160727175746",
+    "react": "registry:dt/react#0.14.0+20161211160957",
+    "react-dom": "registry:dt/react-dom#0.14.0+20161119154402",
+    "react-redux": "registry:dt/react-redux#4.4.0+20161124155658",
+    "react-router": "registry:dt/react-router#2.0.0+20161123234806",
+    "react-router-redux": "registry:dt/react-router-redux#4.0.0+20161119044246",
+    "redux-immutable": "registry:dt/redux-immutable#3.0.5+20160727175746",
+    "redux-logger": "registry:dt/redux-logger#2.6.0+20160726205300"
   },
   "globalDependencies": {
-    "aphrodite": "registry:dt/aphrodite#0.5.0+20160724060110",
-    "moment": "registry:dt/moment#2.11.1+20160829143156",
-    "object-hash": "registry:dt/object-hash#0.5.0+20160317120654",
-    "qs": "registry:dt/qs#6.2.0+20160707010053",
-    "react": "registry:dt/react#0.14.0+20160829191040",
-    "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
-    "react-redux": "registry:dt/react-redux#4.4.0+20160724070751",
-    "react-router": "registry:dt/react-router#2.0.0+20160828232736",
-    "react-router-redux": "registry:dt/react-router-redux#4.0.0+20160724070902",
+    "moment": "registry:dt/moment#2.11.1+20161010105546",
     "react-router/history": "registry:dt/react-router/history#2.0.0+20160830150755",
     "redux": "registry:dt/redux#3.5.2+20160703092728",
-    "redux-immutable": "registry:dt/redux-immutable#3.0.5+20160703120921",
-    "redux-logger": "registry:dt/redux-logger#2.6.0+20160619033847",
-    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20160829180742",
-    "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20160829180742"
+    "whatwg-fetch": "registry:dt/whatwg-fetch#0.0.0+20161120230953",
+    "whatwg-streams": "registry:dt/whatwg-streams#0.0.0+20161214010628"
   }
 }

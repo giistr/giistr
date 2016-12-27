@@ -29,7 +29,7 @@ const styles = {
   }
 };
 
-class RepoColumn extends React.PureComponent<MainProps, any> {
+class RepoColumn extends React.Component<MainProps, any> {
 
   private onLoadMoreIssues(repo, page: number) {
     const { fetchIssues } = this.props;

@@ -14,6 +14,10 @@ interface MainProps {
   hasNext: boolean;
 };
 
+interface MainState {
+  column: number;
+}
+
 const styles = {
   container: {
     flex: 1
@@ -34,7 +38,7 @@ const fakeRepos = OrderedMap<number, any>({
   123190283031: Map<string, any>()
 });
 
-class Layout extends React.Component<MainProps, { column: number; }> {
+class Layout extends React.Component<MainProps, MainState> {
 
   public state = {
     column: window.innerWidth >= 1440 ? 2 : 1
