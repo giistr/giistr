@@ -4,8 +4,8 @@ import { Colors } from '../style';
 import Button from './button';
 
 interface MainProps {
-  onClickMore: MouseEventHandler;
-  onClickAll: MouseEventHandler;
+  onClickMore: MouseEventHandler<any>;
+  onClickAll: MouseEventHandler<any>;
 };
 
 const styles = {

@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=dev node dev.server.js",
-    "build": "NODE_ENV=prod webpack --config ./webpack.config.js",
-    "postinstall": "typings install",
-    "typings": "typings"
+    "build": "NODE_ENV=prod webpack --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +14,20 @@
   "author": "Alexandre Rieux",
   "license": "ISC",
   "devDependencies": {
+    "@types/aphrodite": "^0.5.4",
+    "@types/immutable": "^3.8.6",
+    "@types/moment": "^2.13.0",
+    "@types/object-hash": "^0.5.28",
+    "@types/qs": "^6.2.30",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "^0.14.19",
+    "@types/react-redux": "^4.4.35",
+    "@types/react-router": "^2.0.41",
+    "@types/react-router-redux": "^4.0.36",
+    "@types/redux": "^3.6.0",
+    "@types/redux-immutable": "^3.0.31",
+    "@types/redux-logger": "^2.6.32",
+    "@types/whatwg-fetch": "0.0.33",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-react-transform": "^2.0.2",

@@ -29,7 +29,7 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'space-between'
-  },
+  } as React.CSSProperties,
   fullName: {
     display: 'flex',
     color: Colors.grey,
@@ -64,7 +64,7 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'space-between'
-  },
+  } as React.CSSProperties,
   item: {
     marginLeft: 24
   },

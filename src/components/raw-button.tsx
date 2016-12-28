@@ -22,7 +22,7 @@ export function RawButton({
   style,
   children
 }: {
-  onClick: MouseEventHandler;
+  onClick: MouseEventHandler<any>;
   style?: any;
   children?: any;
 }) {

@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react';
 import { Colors } from '../style';
 
 interface MainProps {
-  onClick?: MouseEventHandler;
+  onClick?: MouseEventHandler<any>;
   style?: Object;
 };
 

@@ -31,7 +31,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     margin: '0px auto'
-  },
+  } as React.CSSProperties,
   logo: {
     marginLeft: 30,
     marginRight: 20
@@ -60,7 +60,7 @@ const styles = {
   }
 };
 
-class NavigationBar extends React.PureComponent<MainProps, any> {
+class NavigationBar extends React.Component<MainProps, any> {
 
   public static defaultProps = {
     total: 0,
@@ -142,6 +142,6 @@ class NavigationBar extends React.PureComponent<MainProps, any> {
 }
 
 export default
-connect((state, props) => props, dispatch => ({
+connect(null, dispatch => ({
   clearUser: bindActionCreators(clearUser, dispatch)
 }))(NavigationBar);

@@ -8,8 +8,8 @@ import LoadMore from '../components/load-more';
 
 interface MainProps {
   repositories: OrderedMap<number, any>;
-  onClickMore: MouseEventHandler;
-  onClickAll: MouseEventHandler;
+  onClickMore: MouseEventHandler<any>;
+  onClickAll: MouseEventHandler<any>;
   loaded: boolean;
   hasNext: boolean;
 };

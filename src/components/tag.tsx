@@ -33,7 +33,7 @@ export function Tag({
   style
 }: {
   label: any,
-  onSelect?: MouseEventHandler,
+  onSelect?: MouseEventHandler<any>,
   inactive?: Boolean,
   style?: Object
 }) {

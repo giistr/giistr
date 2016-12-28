@@ -31,7 +31,7 @@ const styles = {
     justifyContent: 'space-between',
     color: Colors.grey,
     fontSize: 14
-  },
+  } as React.CSSProperties,
   pr: {
     marginLeft: 10,
     color: Colors.lightGrey
