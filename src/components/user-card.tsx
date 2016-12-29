@@ -2,8 +2,9 @@ import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
 import { browserHistory } from 'react-router';
-import { StyleSheet, css } from 'aphrodite/no-important';
 import { fromJS } from 'immutable';
+import NavItem from './nav-item';
+import Nav from './nav';
 
 const styles = {
   container: {
@@ -36,32 +37,8 @@ const styles = {
     color: Colors.lightGrey,
     fontSize: 13,
     lineHeight: '22px'
-  },
-  menu: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: 24,
-    height: 20,
-    borderLeft: `1px solid ${Colors.borderGrey}`
-  },
-  active: {
-    fontWeight: 500,
-    color: Colors.blue
   }
 };
-
-const improvedStyle = StyleSheet.create({
-  item: {
-    fontSize: 12,
-    lineHeight: '18px',
-    color: Colors.lightGrey,
-    cursor: 'pointer',
-    margin: '0px 14px',
-    ':hover': {
-      color: Colors.middleGrey
-    }
-  }
-});
 
 interface MainProps {
   user: User;
@@ -77,8 +54,12 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
 
   private menu = fromJS([
     {
-      title: 'My home',
+      title: 'Starred',
       action: this.onClickHome
+    },
+    {
+      title: 'Lists',
+      action: this.onClickList
     },
     {
       title: 'About',
@@ -95,13 +76,21 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
       return 0;
     }
 
-    if (location.pathname.includes('about')) {
+    if (location.pathname.includes('lists')) {
       return 1;
+    }
+
+    if (location.pathname.includes('about')) {
+      return 2;
     }
   }
 
   public shouldComponentUpdate(nextProps) {
     return !nextProps.user.equals(this.props.user);
+  }
+
+  private onClickList() {
+    browserHistory.push('/lists');
   }
 
   private onClickAbout() {
@@ -126,19 +115,19 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
             })}/>
         </div>
 
-        <div style={styles.menu}>
+        <Nav>
           {
             this.menu.map((el, index) =>
-              <div
+              <NavItem
                 key={index}
-                style={index === this.state.active ? styles.active : {}}
-                className={css(improvedStyle.item)}
-                onClick={el.get('action')}>
+                active={index === this.state.active}
+                onClick={el.get('action')}
+                >
                 { el.get('title') }
-              </div>
+              </NavItem>
             )
           }
-        </div>
+        </Nav>
       </div>
     );
   }

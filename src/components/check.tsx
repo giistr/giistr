@@ -38,7 +38,7 @@ export function Check({
   inactive,
   style
 }: {
-  onSelect?: MouseEventHandler,
+  onSelect?: MouseEventHandler<any>,
   inactive?: Boolean,
   style?: Object
 }) {

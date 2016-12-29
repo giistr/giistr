@@ -3,7 +3,9 @@ import {
   CLEAR_REPO,
   FETCH_USER_REPOS,
   FETCH_ALL_REPOS,
-  FETCH_TOTAL_REPO_STARRED
+  FETCH_TOTAL_REPO_STARRED,
+  GET_ALL_API_REPOS,
+  FETCH_MULTIPLE_REPOS
 } from '../constants/repos';
 
 export const clear = () => ({
@@ -13,6 +15,11 @@ export const clear = () => ({
 export const AddRepos = repos => ({
   payload: repos,
   type: ADD_REPO
+});
+
+export const fetchMultipleRepos = (ownerRepos: string[][]) => ({
+  type: FETCH_MULTIPLE_REPOS,
+  ownerRepos
 });
 
 export const fetchRepos = (username: string, page: number) => ({
@@ -30,4 +37,8 @@ export const fetchAllRepos = (username: string, startPage: number) => ({
   type: FETCH_ALL_REPOS,
   username,
   startPage
+});
+
+export const getAllApiRepository = () => ({
+  type: GET_ALL_API_REPOS
 });

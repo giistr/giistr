@@ -38,7 +38,7 @@ interface MainProps {
 
 const shift = 4;
 
-class Issues extends React.PureComponent<MainProps, any> {
+class Issues extends React.Component<MainProps, any> {
 
   public state = {
     page: 1,
@@ -140,11 +140,9 @@ class Issues extends React.PureComponent<MainProps, any> {
 }
 
 export default
-connect((state, props) => ({
-  issues: props.issues
-    .map(issue =>
-      issue
-      .update('labelsIds', labelsIds =>
+connect<any, any, any>((state, { issues }) => ({
+  issues: issues.map(issue =>
+      issue.update('labelsIds', labelsIds =>
         labelsIds
           .map(labelId => state.getIn([ 'label', labelId ]))
           .filter(Boolean)

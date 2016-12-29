@@ -27,11 +27,17 @@ const styles = {
 
 interface MainProps {
   onChange?: Function;
+  onKeyUp?: Function;
   style?: Object;
   placeholder?: string;
+  icon?: boolean;
 };
 
 class Input extends React.Component<MainProps, any> {
+
+  public static defaultProps = {
+    icon: false
+  };
 
   private onChange = (...args) => {
     const { onChange } = this.props;
@@ -40,16 +46,24 @@ class Input extends React.Component<MainProps, any> {
     }
   };
 
+  private onKeyUp = (...args) => {
+    const { onKeyUp } = this.props;
+    if (typeof onKeyUp === 'function') {
+      onKeyUp(...args);
+    }
+  };
+
   public render() {
-    const { placeholder, style } = this.props;
+    const { placeholder, style, icon } = this.props;
 
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">
-        <img style={styles.cross} src="/assets/search.svg"/>
+        { icon && <img style={styles.cross} src="/assets/search.svg"/> }
         <input
           type="text"
           style={styles.input}
           onChange={this.onChange}
+          onKeyUp={this.onKeyUp}
           placeholder={placeholder}/>
       </div>
     );

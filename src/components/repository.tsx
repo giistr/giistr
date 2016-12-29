@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Colors } from '../style';
 import { Map } from 'immutable';
-import * as moment from 'moment';
+import { Tag } from '../reducers/tags';
 
+import * as moment from 'moment';
+import RepoActionsDropdown from './repo-action-dropdown';
 const borderSwitch = [
   `1px solid ${Colors.borderGrey}`,
   `1px solid ${Colors.blueDarkBorder}`
@@ -27,7 +29,7 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'space-between'
-  },
+  } as React.CSSProperties,
   fullName: {
     display: 'flex',
     color: Colors.grey,
@@ -62,7 +64,7 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'space-between'
-  },
+  } as React.CSSProperties,
   item: {
     marginLeft: 24
   },
@@ -77,7 +79,19 @@ const styles = {
   }
 };
 
-export class Repository extends React.PureComponent<{ repo: Map<string, any>; }, { borderIndex: number; }> {
+interface RepoProps {
+  repo: Map<string, any>;
+  tags: Map<string, Tag>;
+  addTagToRepo: any;
+  createRepoAddTag: any;
+  registeredRepo: any;
+}
+
+interface RepoState {
+  borderIndex: number;
+}
+
+export class Repository extends React.PureComponent<RepoProps, RepoState> {
 
   private interval = undefined;
 
@@ -112,7 +126,7 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
   }
 
   public render() {
-    const { repo } = this.props;
+    const { repo, tags, addTagToRepo, registeredRepo, createRepoAddTag } = this.props;
     const { borderIndex } = this.state;
 
     const border = {
@@ -136,6 +150,12 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
                 )
               }
             </div>
+            <RepoActionsDropdown
+              tags={tags}
+              registeredRepoId={registeredRepo && registeredRepo.get('id')}
+              repo={repo}
+              addTagToRepo={addTagToRepo}
+              createRepoAddTag={createRepoAddTag}/>
           </div>
           <div style={styles.description}>
             { repo.get('description') }

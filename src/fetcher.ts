@@ -10,6 +10,7 @@ interface Args {
   fullEndpoint?: string;
   resHeader?: boolean;
   preventBody?: boolean;
+  allocatedApi?: boolean;
 };
 
 interface ReqArgs extends Args {
@@ -24,7 +25,6 @@ function makeUrl(endpoint: string, url?: string): string {
 const shallowRequest = (method: string) => (
   method === 'GET' ||
   method === 'HEAD' ||
-  method === 'REMOVE' ||
   method === 'DELETE'
 );
 
@@ -34,7 +34,7 @@ export function request(args: ReqArgs) {
   let url = makeUrl(args.endpoint, args.fullEndpoint);
 
   if (!shallow && !args.preventBody) {
-    body = JSON.stringify(args);
+    body = JSON.stringify(args.params);
   }
 
   if (shallow || args.preventBody) {
@@ -48,9 +48,13 @@ export function request(args: ReqArgs) {
   };
 
   if (getFromStorage('user')) {
-    rawHeader = Object.assign({}, rawHeader, {
-      Authorization: `token ${getFromStorage('user').access_token}`
-    });
+    if (args.allocatedApi) {
+      rawHeader['X-Github-Token'] = getFromStorage('user').access_token;
+    } else {
+      rawHeader = Object.assign({}, rawHeader, {
+        Authorization: `token ${getFromStorage('user').access_token}`
+      });
+    }
   }
 
   const headers = new Headers(rawHeader);

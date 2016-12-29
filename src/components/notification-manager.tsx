@@ -19,7 +19,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  } as React.CSSProperties
 };
 
 class NotificationManager extends React.Component<MainProps, any> {

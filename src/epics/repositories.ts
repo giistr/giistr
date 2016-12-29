@@ -5,8 +5,10 @@ import { Range, List } from 'immutable';
 import {
   FETCH_USER_REPOS,
   FETCH_ALL_REPOS,
-  FETCH_TOTAL_REPO_STARRED
+  FETCH_TOTAL_REPO_STARRED,
+  FETCH_MULTIPLE_REPOS
 } from '../constants/repos';
+
 import { AddRepos } from '../actions/repositories';
 import { append } from '../actions/user';
 import {
@@ -15,6 +17,21 @@ import {
   incrementPagination,
   setReposLimit
 } from '../actions/config';
+
+const fetchMultipleRepoEpic = action$ => (
+  action$
+    .ofType(FETCH_MULTIPLE_REPOS)
+    .flatMap(({ ownerRepos }) => (
+      Observable.forkJoin(
+        ...ownerRepos.map(orMap =>
+          get({
+            endpoint: `repos/${orMap[0]}/${orMap[1]}`
+          })
+        )
+      )
+    ))
+    .map(repos => AddRepos(List(repos)))
+);
 
 const fetchReposEpic = action$ => (
   action$
@@ -95,4 +112,9 @@ const fetchAllRepos = (action$, { getState }) => (
     })
 );
 
-export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos);
+export default combineEpics(
+  fetchReposEpic,
+  fetchTotalReposLengthEpic,
+  fetchAllRepos,
+  fetchMultipleRepoEpic
+);

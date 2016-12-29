@@ -1,11 +1,15 @@
+import { Observable } from 'rxjs/Observable';
 import { get, post } from '../fetcher';
 import { combineEpics } from 'redux-observable';
 import {
   FETCH_USER,
   OAUTH_USER,
-  FETCH_GITHUB_TOKEN
+  FETCH_GITHUB_TOKEN,
+  ADD_USER
 } from '../constants/user';
 import { oauthUser, addUser } from '../actions/user';
+import { getAllTags } from '../actions/tags';
+import { getAllApiRepository } from '../actions/repositories';
 
 const fetchTokenEpic = (action$) => (
   action$
@@ -45,4 +49,15 @@ const fetchUserEpic = (action$) => (
     .map(addUser)
 );
 
-export default combineEpics(fetchTokenEpic, oauthUserEpic, fetchUserEpic);
+const postFetchUserEpic = (action$) => (
+  action$
+    .ofType(ADD_USER)
+    .flatMap(() =>
+      Observable.of(
+        getAllApiRepository(),
+        getAllTags()
+      )
+    )
+);
+
+export default combineEpics(fetchTokenEpic, oauthUserEpic, fetchUserEpic, postFetchUserEpic);

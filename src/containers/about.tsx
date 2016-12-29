@@ -20,7 +20,7 @@ const styles = {
     marginTop: 60,
     padding: '0px 40px',
     justifyContent: 'space-between'
-  },
+  } as React.CSSProperties,
   column: {
     flex: 8.5,
     marginRight: 100,

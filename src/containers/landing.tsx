@@ -34,7 +34,7 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'column',
     padding: '0px 40px'
-  },
+  } as React.CSSProperties,
   mainTitle: {
     fontSize: 34,
     lineHeight: '46px',
@@ -56,7 +56,7 @@ const styles = {
     flexDirection: 'column',
     zIndex: 2,
     maxWidth: 360
-  },
+  } as React.CSSProperties,
   rateLimit: {
     fontSize: 12,
     marginBottom: 10,
@@ -84,7 +84,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 30
-  },
+  } as React.CSSProperties,
   footerItem: {
     padding: '0px 10px',
     fontSize: 11,

@@ -1,14 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { OrderedMap, Map } from 'immutable';
 import Issues from '../components/issues';
 import { Repository } from '../components/repository';
 import { fetchIssues } from '../actions/issues';
+import { addTagToRepo } from '../actions/tags';
+import { createRepoAddTag } from '../actions/registered-repositories';
+import { Tag } from '../reducers/tags';
 
 interface MainProps {
   repositories: OrderedMap<number, any>;
   fetchIssues: any;
-  dispatch: any;
+  addTagToRepo: any;
+  createRepoAddTag: any;
+  tags: Map<string, Tag>;
+  registeredRepos: any;
 };
 
 const styles = {
@@ -21,16 +29,16 @@ const styles = {
   }
 };
 
-class RepoColumn extends React.PureComponent<MainProps, any> {
+class RepoColumn extends React.Component<MainProps, any> {
 
   private onLoadMoreIssues(repo, page: number) {
-    const { fetchIssues, dispatch } = this.props;
+    const { fetchIssues } = this.props;
 
-    return dispatch(fetchIssues(repo.get('id'), page));
+    return fetchIssues(repo.get('id'), page);
   };
 
   public render() {
-    const { repositories } = this.props;
+    const { repositories, tags, addTagToRepo, registeredRepos, createRepoAddTag } = this.props;
 
     return (
       <div style={styles.container}>
@@ -39,7 +47,12 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
             <li
               style={key > 0 && styles.listContainer}
               key={key}>
-              <Repository repo={repo}/>
+              <Repository
+                repo={repo}
+                createRepoAddTag={createRepoAddTag}
+                registeredRepo={registeredRepos.find(rr => rr.get('github_repo_id') === repo.get('id'))}
+                tags={tags}
+                addTagToRepo={addTagToRepo}/>
               {
                 repo.get('issues', Map<string, any>()).size > 0 && (
                   <Issues
@@ -56,7 +69,13 @@ class RepoColumn extends React.PureComponent<MainProps, any> {
   }
 }
 
-export default connect((state, props) => props, dispatch => ({
-  fetchIssues,
-  dispatch
+export default connect<any, any, any>((state, { repositories }) => ({
+  registeredRepos: state
+    .get('registeredRepositories')
+    .filter(rr => repositories.get(rr.get('github_repo_id'))),
+  tags: state.get('tag')
+}), dispatch => ({
+  addTagToRepo: bindActionCreators(addTagToRepo, dispatch),
+  createRepoAddTag: bindActionCreators(createRepoAddTag, dispatch),
+  fetchIssues: bindActionCreators(fetchIssues, dispatch)
 }))(RepoColumn);
