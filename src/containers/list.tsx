@@ -7,7 +7,7 @@ import { Tag } from '../reducers/tags';
 import NavigationBar from '../components/navigation-bar';
 import ToolBar from '../components/toolbar';
 import ListMenu from '../components/list-menu';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 
 interface MainProps {
   location?: any;
@@ -39,7 +39,7 @@ class ListView extends React.Component<MainProps, any> {
 
   public render() {
     const { location, user, filters, postTag, tags, registeredRepos } = this.props;
-    const reposToDisplay = registeredRepos.filter(rr => rr.get('tags').contains(this.state.selected));
+    const reposToDisplay = registeredRepos.filter(rr => rr.get('tags', List()).contains(this.state.selected));
 
     return (
       <div>

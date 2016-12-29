@@ -30,7 +30,7 @@ const fetchMultipleRepoEpic = action$ => (
         )
       )
     ))
-    .map(repos => AddRepos(List(repos).flatten(1)))
+    .map(repos => AddRepos(List(repos)))
 );
 
 const fetchReposEpic = action$ => (
