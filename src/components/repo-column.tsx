@@ -69,7 +69,7 @@ class RepoColumn extends React.Component<MainProps, any> {
   }
 }
 
-export default connect((state, { repositories }) => ({
+export default connect<any, any, any>((state, { repositories }) => ({
   registeredRepos: state
     .get('registeredRepositories')
     .filter(rr => repositories.get(rr.get('github_repo_id'))),

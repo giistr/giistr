@@ -34,20 +34,28 @@ const styles = {
 export type Label = Map<string, string>;
 
 interface MainProps {
-  startLoading: any;
-  fetchRepos: any;
-  fetchAllRepos: any;
-  fetchTotalReposLength: any;
+  location?: any;
+};
+
+interface StateProps {
   totalRepositories: number;
   repositories: OrderedMap<number, any>;
   user: User;
   filters: Map<string, any>;
-  location?: any;
   page: number;
   limit: boolean;
 };
 
-class Main extends React.Component<MainProps, any> {
+interface DispatchProps {
+  startLoading: any;
+  fetchRepos: any;
+  fetchAllRepos: any;
+  fetchTotalReposLength: any;
+};
+
+type ClassProps = MainProps & StateProps & DispatchProps;
+
+class Main extends React.Component<ClassProps, any> {
 
   public componentWillMount() {
     const { user, repositories, fetchTotalReposLength, page } = this.props;
@@ -121,7 +129,7 @@ class Main extends React.Component<MainProps, any> {
 }
 
 export default
-connect((state, props) => {
+connect<StateProps, DispatchProps, any>((state, props) => {
   const groupedIssues = state.get('issues').groupBy(issue => issue.get('repositoryId'));
 
   return {

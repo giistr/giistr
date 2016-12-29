@@ -177,7 +177,7 @@ class Toolbar extends React.Component<MainProps, any> {
 }
 
 export default
-connect((state, props) => ({
+connect<any, any, any>((state, props) => ({
   labels: state.get('label'),
   languages: Set<string>(
     state

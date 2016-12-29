@@ -142,6 +142,6 @@ class NavigationBar extends React.Component<MainProps, any> {
 }
 
 export default
-connect(null, dispatch => ({
+connect<any, any, any>(null, dispatch => ({
   clearUser: bindActionCreators(clearUser, dispatch)
 }))(NavigationBar);

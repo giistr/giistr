@@ -140,7 +140,7 @@ class Issues extends React.Component<MainProps, any> {
 }
 
 export default
-connect((state, { issues }) => ({
+connect<any, any, any>((state, { issues }) => ({
   issues: issues.map(issue =>
       issue.update('labelsIds', labelsIds =>
         labelsIds

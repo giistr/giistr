@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import RepoColumn from '../components/repo-column';
 import LoadMore from '../components/load-more';
 
-interface MainProps {
+export interface MainProps {
   repositories: OrderedMap<number, any>;
   onClickMore: MouseEventHandler<any>;
   onClickAll: MouseEventHandler<any>;
@@ -14,7 +14,7 @@ interface MainProps {
   hasNext: boolean;
 };
 
-interface MainState {
+export interface MainState {
   column: number;
 }
 
@@ -38,7 +38,7 @@ const fakeRepos = OrderedMap<number, any>({
   123190283031: Map<string, any>()
 });
 
-class Layout extends React.Component<MainProps, MainState> {
+export class Layout extends React.Component<MainProps, MainState> {
 
   public state = {
     column: window.innerWidth >= 1440 ? 2 : 1
@@ -115,6 +115,6 @@ class Layout extends React.Component<MainProps, MainState> {
   }
 }
 
-export default connect((state, props) => ({
+export default connect<any, any, any>((state, props) => ({
   loaded: !state.getIn([ 'config', 'loading' ], false)
 }), null)(Layout);
