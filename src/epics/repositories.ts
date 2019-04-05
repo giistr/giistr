@@ -1,3 +1,4 @@
+import 'rxjs/add/operator/catch';
 import { get } from '../fetcher';
 import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs';
@@ -29,9 +30,9 @@ const fetchReposEpic = action$ =>
           actions.push(setReposLimit());
         }
 
-        return (Observable as any).of(...actions);
+        return Observable.of(...actions);
       })
-      .catch(err => (Observable as any).of(setError(err), stopLoading()))
+      .catch(err => Observable.of(setError(err), stopLoading()))
   );
 
 const fetchTotalReposLengthEpic = action$ =>
@@ -46,27 +47,26 @@ const fetchTotalReposLengthEpic = action$ =>
         const len = parseInt(headers.get('link').match(reg)[1], 10);
         return append('starred', len);
       })
-      .catch(err => (Observable as any).of(setError(err), stopLoading()))
+      .catch(err => Observable.of(setError(err), stopLoading()))
   );
 
 const fetchAllRepos = (action$, { getState }) =>
   action$.ofType(FETCH_ALL_REPOS).flatMap(({ username, startPage }) => {
-    const userTotalRepos = getState().getIn(['user', 'starred']);
+    const userTotalRepos = getState().user.get('starred');
     const totalPages = Math.ceil(userTotalRepos / 30) + 1;
 
-    return (Observable as any)
-      .forkJoin(
-        ...Range(startPage, totalPages)
-          .map(page =>
-            get({
-              endpoint: `users/${username}/starred`,
-              params: { page }
-            })
-          )
-          .toArray()
-      )
+    return Observable.forkJoin(
+      ...Range(startPage, totalPages)
+        .map(page =>
+          get({
+            endpoint: `users/${username}/starred`,
+            params: { page }
+          })
+        )
+        .toArray()
+    )
       .map(repos => AddRepos(List(repos).flatten(1)))
-      .catch(err => (Observable as any).of(setError(err), stopLoading()));
+      .catch(err => Observable.of(setError(err), stopLoading()));
   });
 
 export default combineEpics(

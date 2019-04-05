@@ -26,6 +26,7 @@
     "@types/react-dom": "^16.8.3",
     "@types/react-redux": "^7.0.6",
     "@types/react-router": "^4.4.5",
+    "@types/redux-logger": "^3.0.7",
     "aphrodite": "^2.2.3",
     "connected-react-router": "6.3.2",
     "history": "^4.9.0",

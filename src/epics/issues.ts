@@ -1,4 +1,8 @@
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/zip';
+
 import { get } from '../fetcher';
 import { combineEpics } from 'redux-observable';
 import { Observable } from 'rxjs';
@@ -42,62 +46,48 @@ const reposToIssuesEpic = action$ =>
     .filter(({ payload }) => List.isList(payload))
     .map(({ payload }) => fetchIssues(payload.map(repo => repo.get('id')), 1));
 
-const fetchMapIssues = (
-  reposIds: List<string>,
-  getState: Function,
-  page: number
-) =>
-  (Observable as any)
-    .forkJoin(
-      ...reposIds
-        .map(id =>
-          get({
-            endpoint: `repos/${getState().getIn([
-              'repository',
-              id,
-              'full_name'
-            ])}/issues`,
-            params: { page }
-          })
-        )
-        .toArray()
-    )
-    .map(issues => {
-      return List(issues)
-        .map((issueArr: any, index) => {
-          return issueArr.map(issue =>
-            issue.set('repositoryId', reposIds.get(index))
-          );
+const fetchMapIssues = (reposIds: List<string>, state: any, page: number) =>
+  Observable.forkJoin(
+    ...reposIds
+      .map(id =>
+        get({
+          endpoint: `repos/${state.repository.getIn([id, 'full_name'])}/issues`,
+          params: { page }
         })
-        .flatten(1);
-    });
+      )
+      .toArray()
+  ).map(issues => {
+    return List(issues)
+      .map((issueArr: any, index) => {
+        return issueArr.map(issue =>
+          issue.set('repositoryId', reposIds.get(index))
+        );
+      })
+      .flatten(1);
+  });
 
-const fetchMapIssue = (repoId: string, getState: Function, page: number) =>
+const fetchMapIssue = (repoId: string, state: any, page: number) =>
   get({
-    endpoint: `repos/${getState().getIn([
-      'repository',
-      repoId,
-      'full_name'
-    ])}/issues`,
+    endpoint: `repos/${state.repository.getIn([repoId, 'full_name'])}/issues`,
     params: { page }
   }).map(issues => issues.map(issue => issue.set('repositoryId', repoId)));
 
-const fetchIssuesEpic = (action$, { getState }) =>
+const fetchIssuesEpic = (action$, store) =>
   action$
     .ofType(FETCH_ISSUES)
     .flatMap(({ repoId, page }) => {
       if (List.isList(repoId)) {
-        return fetchMapIssues(repoId as List<string>, getState, page);
+        return fetchMapIssues(repoId as List<string>, store.value, page);
       }
 
-      return fetchMapIssue(repoId as string, getState, page);
+      return fetchMapIssue(repoId as string, store.value, page);
     })
     .flatMap(issues => {
       const { formattedIssues, labels } = serializeIssuesLabels(issues);
 
       const actions = [add(formattedIssues), addLabels(labels), stopLoading()];
 
-      return (Observable as any).of(...actions);
+      return Observable.of(...actions);
     });
 
 export default combineEpics(reposToIssuesEpic, fetchIssuesEpic);

@@ -77,13 +77,6 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export class Issue extends React.PureComponent<MainProps, any> {
-  public shouldComponentUpdate(nextProps) {
-    return (
-      !nextProps.issue.equals(this.props.issue) ||
-      nextProps.isLast !== this.props.isLast
-    );
-  }
-
   private onClickIssue(url) {
     window.open(url, '_blank');
   }

@@ -109,10 +109,6 @@ class UserCard extends React.PureComponent<MainProps, { active: number }> {
     }
   }
 
-  public shouldComponentUpdate(nextProps) {
-    return !nextProps.user.equals(this.props.user);
-  }
-
   public render() {
     const { user } = this.props;
 

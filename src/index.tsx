@@ -35,9 +35,9 @@ ReactDOM.render(
         />
         <Route
           path="/home"
-          component={() => (
+          component={(props: any) => (
             <Wrapper>
-              <Main />
+              <Main location={props.location} />
             </Wrapper>
           )}
         />

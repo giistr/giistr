@@ -99,13 +99,6 @@ export class Repository extends React.PureComponent<
     clearInterval(this.interval);
   }
 
-  public shouldComponentUpdate(nextProps, nextState) {
-    return (
-      !nextProps.repo.equals(this.props.repo) ||
-      nextState.borderIndex !== this.state.borderIndex
-    );
-  }
-
   private onUpdateBorder(repo) {
     if (repo.size === 0) {
       this.setState({

@@ -1,3 +1,4 @@
+import 'rxjs/add/observable/fromPromise';
 import { fromJS } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
@@ -60,7 +61,7 @@ export function request(args: ReqArgs) {
     body
   });
 
-  return (Observable as any).fromPromise(
+  return Observable.fromPromise(
     fetch(req)
       .then(res => {
         if (res.status >= 400) {
