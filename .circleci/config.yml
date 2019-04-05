@@ -1,0 +1,34 @@
+defaults: &defaults
+  docker:
+    - image: jtredoux/node-aws:latest
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build/*
+
+  deploy:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: build
+      - run: aws configure set default.region eu-west-2
+      - run: aws s3 sync build/* $S3_BUCKET --delete
+
+workflows:
+  version: 2
+  release_branches:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
