@@ -22,7 +22,7 @@ jobs:
       - attach_workspace:
           at: build
       - run: aws configure set default.region eu-west-2
-      - run: aws s3 sync build/* $S3_BUCKET --delete
+      - run: aws s3 sync build/* S3_BUCKET --delete
 
 workflows:
   version: 2
