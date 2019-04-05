@@ -1,6 +1,6 @@
 import { get } from '../fetcher';
 import { combineEpics } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Range, List } from 'immutable';
 import {
   FETCH_USER_REPOS,
@@ -16,68 +16,48 @@ import {
   setReposLimit
 } from '../actions/config';
 
-const fetchReposEpic = action$ => (
-  action$
-    .ofType(FETCH_USER_REPOS)
-    .flatMap(({ username, page }) =>
-      get({
-        endpoint: `users/${username}/starred`,
-        params: { page }
-      })
+const fetchReposEpic = action$ =>
+  action$.ofType(FETCH_USER_REPOS).flatMap(({ username, page }) =>
+    get({
+      endpoint: `users/${username}/starred`,
+      params: { page }
+    })
       .flatMap(repos => {
-        const actions = [
-          AddRepos(repos),
-          incrementPagination()
-        ];
+        const actions = [AddRepos(repos), incrementPagination()];
 
         if (repos.size % 30 !== 0) {
           actions.push(setReposLimit());
         }
 
-        return Observable.of(...actions);
+        return (Observable as any).of(...actions);
       })
-      .catch(err =>
-        Observable.of(
-          setError(err),
-          stopLoading()
-        )
-      )
-    )
-);
+      .catch(err => (Observable as any).of(setError(err), stopLoading()))
+  );
 
-const fetchTotalReposLengthEpic = (action$) => (
-  action$
-    .ofType(FETCH_TOTAL_REPO_STARRED)
-    .flatMap(({ username }) => (
-      get({
-        endpoint: `users/${username}/starred`,
-        params: { per_page: 1 },
-        resHeader: true
-      })
+const fetchTotalReposLengthEpic = action$ =>
+  action$.ofType(FETCH_TOTAL_REPO_STARRED).flatMap(({ username }) =>
+    get({
+      endpoint: `users/${username}/starred`,
+      params: { per_page: 1 },
+      resHeader: true
+    })
       .map(headers => {
         const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
         const len = parseInt(headers.get('link').match(reg)[1], 10);
         return append('starred', len);
       })
-      .catch(err =>
-        Observable.of(
-          setError(err),
-          stopLoading()
-        )
-      )
-    ))
-);
+      .catch(err => (Observable as any).of(setError(err), stopLoading()))
+  );
 
-const fetchAllRepos = (action$, { getState }) => (
-  action$
-    .ofType(FETCH_ALL_REPOS)
-    .flatMap(({ username, startPage }) => {
-      const userTotalRepos = getState().getIn([ 'user', 'starred' ]);
-      const totalPages = Math.ceil(userTotalRepos / 30) + 1;
+const fetchAllRepos = (action$, { getState }) =>
+  action$.ofType(FETCH_ALL_REPOS).flatMap(({ username, startPage }) => {
+    const userTotalRepos = getState().getIn(['user', 'starred']);
+    const totalPages = Math.ceil(userTotalRepos / 30) + 1;
 
-      return Observable.forkJoin(
+    return (Observable as any)
+      .forkJoin(
         ...Range(startPage, totalPages)
-          .map((page) =>
+          .map(page =>
             get({
               endpoint: `users/${username}/starred`,
               params: { page }
@@ -86,13 +66,11 @@ const fetchAllRepos = (action$, { getState }) => (
           .toArray()
       )
       .map(repos => AddRepos(List(repos).flatten(1)))
-      .catch(err =>
-        Observable.of(
-          setError(err),
-          stopLoading()
-        )
-      );
-    })
-);
+      .catch(err => (Observable as any).of(setError(err), stopLoading()));
+  });
 
-export default combineEpics(fetchReposEpic, fetchTotalReposLengthEpic, fetchAllRepos);
+export default combineEpics(
+  fetchReposEpic,
+  fetchTotalReposLengthEpic,
+  fetchAllRepos
+);

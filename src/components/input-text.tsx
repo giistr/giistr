@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Colors } from '../style';
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: 'flex',
     borderBottom: `1px solid ${Colors.borderGrey}`,
@@ -29,10 +29,9 @@ interface MainProps {
   onChange?: Function;
   style?: Object;
   placeholder?: string;
-};
+}
 
 class Input extends React.Component<MainProps, any> {
-
   private onChange = (...args) => {
     const { onChange } = this.props;
     if (typeof onChange === 'function') {
@@ -45,12 +44,13 @@ class Input extends React.Component<MainProps, any> {
 
     return (
       <div style={Object.assign({}, styles.container, style)} ref="container">
-        <img style={styles.cross} src="/assets/search.svg"/>
+        <img style={styles.cross} src="/assets/search.svg" />
         <input
           type="text"
           style={styles.input}
           onChange={this.onChange}
-          placeholder={placeholder}/>
+          placeholder={placeholder}
+        />
       </div>
     );
   }

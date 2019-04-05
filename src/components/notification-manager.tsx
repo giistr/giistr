@@ -4,9 +4,9 @@ import { Colors } from '../style';
 
 interface MainProps {
   error: any;
-};
+}
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'fixed',
     left: 0,
@@ -23,7 +23,6 @@ const styles = {
 };
 
 class NotificationManager extends React.Component<MainProps, any> {
-
   public render() {
     const { error } = this.props;
 
@@ -31,16 +30,13 @@ class NotificationManager extends React.Component<MainProps, any> {
       return null;
     }
 
-    return (
-      <div style={styles.container}>
-        {
-          error.message
-        }
-      </div>
-    );
+    return <div style={styles.container}>{error.message}</div>;
   }
 }
 
-export default connect((state, props) => ({
-  error: state.getIn(['config', 'error'])
-}), null)(NotificationManager);
+export default connect(
+  (state: any) => ({
+    error: state.config.get('error')
+  }),
+  null
+)(NotificationManager);

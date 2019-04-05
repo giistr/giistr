@@ -12,7 +12,7 @@ export const clear = () => ({
   type: CLEAR_USER
 });
 
-export const append = (key, value) => ({
+export const append = (key: string, value: any) => ({
   type: APPEND_TO_USER,
   payload: {
     key,

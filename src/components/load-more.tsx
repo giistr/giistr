@@ -6,9 +6,9 @@ import Button from './button';
 interface MainProps {
   onClickMore: MouseEventHandler;
   onClickAll: MouseEventHandler;
-};
+}
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -40,18 +40,16 @@ class LoadMore extends React.Component<MainProps, any> {
     return (
       <div style={styles.container}>
         <div style={styles.notice}>
-          <img src="/assets/warning.svg"/>
-          <div style={styles.sentence}>Psst! you can load more repositories</div>
+          <img src="/assets/warning.svg" />
+          <div style={styles.sentence}>
+            Psst! you can load more repositories
+          </div>
         </div>
         <div>
-          <Button
-            style={styles.more}
-            onClick={onClickMore}>
+          <Button style={styles.more} onClick={onClickMore}>
             See more
           </Button>
-          <Button
-            style={styles.more}
-            onClick={onClickAll}>
+          <Button style={styles.more} onClick={onClickAll}>
             See all
           </Button>
         </div>

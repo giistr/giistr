@@ -15,7 +15,8 @@ const labels = fromJS([
     }
   },
   {
-    url: 'https://api.github.com/repos/andrewdavey/immutable-devtools/labels/enhancement',
+    url:
+      'https://api.github.com/repos/andrewdavey/immutable-devtools/labels/enhancement',
     name: 'enhancement',
     color: '4fbaf7',
     id: '1ea222e004a6e222f8606ab0f1a97eda0ac8ed24',
@@ -38,7 +39,7 @@ const labels = fromJS([
   }
 ]);
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'absolute',
     top: 0,
@@ -51,11 +52,9 @@ const styles = {
 export function TagCloud() {
   return (
     <div style={styles.container}>
-      {
-        labels.map((label, index) =>
-          <Tag key={index} style={label.get('style').toJS()} label={label}/>
-        )
-      }
+      {labels.map((label, index) => (
+        <Tag key={index} style={label.get('style').toJS()} label={label} />
+      ))}
     </div>
   );
 }

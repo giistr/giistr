@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     transform: 'translateX(100%)',
     background: '#48e79a',
@@ -15,12 +15,14 @@ const styles = {
   loading: {
     display: 'block',
     animation: 'shift-rightwards 1s ease-in-out infinite',
-    animationDelay: 0.8
+    animationDelay: '0.8'
   }
 };
 
-export default class TopLoader extends React.PureComponent<{ loading: boolean; }, any> {
-
+export default class TopLoader extends React.PureComponent<
+  { loading: boolean },
+  any
+> {
   public render() {
     let style = styles.container;
 
@@ -28,9 +30,6 @@ export default class TopLoader extends React.PureComponent<{ loading: boolean; }
       style = Object.assign({}, style, styles.loading);
     }
 
-    return (
-      <div style={style}>
-      </div>
-    );
+    return <div style={style} />;
   }
 }

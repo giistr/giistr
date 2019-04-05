@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Colors } from '../style';
 
 const container = {
-  position: 'absolute',
+  position: 'absolute' as 'absolute',
   overflow: 'hidden',
   left: 0,
   top: 0,
@@ -10,7 +10,6 @@ const container = {
 };
 
 export class BackgroundCover extends React.PureComponent<any, any> {
-
   public refs: {
     [T: string]: any;
     canvas: any;
@@ -35,15 +34,20 @@ export class BackgroundCover extends React.PureComponent<any, any> {
     const ww = window.innerWidth;
 
     draw(cw / 1.5, ch, ww / 5);
-    draw(cw - (cw / 1.2) , ch / 1.1, ww / 2.8);
-    draw(cw / 3 , ch - (ch / 1.4), ww / 3.5);
-    draw(cw / 1.1 , ch + ch / 5, ww / 5);
+    draw(cw - cw / 1.2, ch / 1.1, ww / 2.8);
+    draw(cw / 3, ch - ch / 1.4, ww / 3.5);
+    draw(cw / 1.1, ch + ch / 5, ww / 5);
   }
 
   public render() {
     return (
       <div>
-        <canvas ref="canvas" style={container} width={window.innerWidth} height={window.innerHeight}/>
+        <canvas
+          ref="canvas"
+          style={container}
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
       </div>
     );
   }

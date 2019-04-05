@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Set } from 'immutable';
 import { Colors } from '../style';
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
-    position: 'relative',
+    position: 'relative' as 'relative',
     display: 'inline-block'
   },
   input: {
@@ -56,10 +56,9 @@ interface MainProps {
   placeholder?: string;
   selectedIndex?: string;
   list: Set<string>;
-};
+}
 
-class Input extends React.Component<MainProps, { focus: boolean; }> {
-
+class Input extends React.Component<MainProps, { focus: boolean }> {
   public state = {
     focus: false
   };
@@ -77,7 +76,7 @@ class Input extends React.Component<MainProps, { focus: boolean; }> {
     document.removeEventListener('click', this.handleClickOutside, true);
   }
 
-  private handleClickOutside = (e) => {
+  private handleClickOutside = e => {
     const domNode = this.refs.container;
     if (!domNode || !domNode.contains(e.target)) {
       this.setState({ focus: false });
@@ -124,24 +123,26 @@ class Input extends React.Component<MainProps, { focus: boolean; }> {
           style={styles.input}
           onFocus={this.onFocus}
           onChange={this.onChange}
-          placeholder={placeholder}/>
-        <img style={styles.cross} src="/assets/arrow.svg" onClick={this.onFocus}/>
-        {
-          list && focus && (
-            <ul style={styles.listContainer}>
-            {
-              list.map((el, index) => (
-                <li
-                  key={index}
-                  style={styles.listItem}
-                  onClick={this.onChangeSelect.bind(this, index)}>
-                  { el }
-                </li>
-              ))
-            }
-            </ul>
-          )
-        }
+          placeholder={placeholder}
+        />
+        <img
+          style={styles.cross}
+          src="/assets/arrow.svg"
+          onClick={this.onFocus}
+        />
+        {list && focus && (
+          <ul style={styles.listContainer}>
+            {list.map((el, index) => (
+              <li
+                key={index}
+                style={styles.listItem}
+                onClick={this.onChangeSelect.bind(this, index)}
+              >
+                {el}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     );
   }

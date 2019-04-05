@@ -1,48 +1,35 @@
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/concatMap';
 import { get, post } from '../fetcher';
 import { combineEpics } from 'redux-observable';
-import {
-  FETCH_USER,
-  OAUTH_USER,
-  FETCH_GITHUB_TOKEN
-} from '../constants/user';
+import { FETCH_USER, OAUTH_USER, FETCH_GITHUB_TOKEN } from '../constants/user';
 import { oauthUser, addUser } from '../actions/user';
 
-const fetchTokenEpic = (action$) => (
+const fetchTokenEpic = action$ =>
   action$
     .ofType(FETCH_GITHUB_TOKEN)
-    .flatMap(({ code }) =>
+    .mergeMap(({ code }) =>
       post({
         fullEndpoint: '/api/github-login',
         preventBody: true,
         params: { code }
       })
     )
-    .map(res => oauthUser(res.get('access_token')))
-);
+    .map(res => oauthUser(res.get('access_token')));
 
-const oauthUserEpic = (action$) => (
-  action$
-    .ofType(OAUTH_USER)
-    .concatMap(({ token }) =>
-      get({
-        endpoint: 'user',
-        params: { access_token: token }
-      })
-      .map((user) =>
-        addUser(
-          user.set('access_token', token)
-        )
-      )
-    )
-);
+const oauthUserEpic = action$ =>
+  action$.ofType(OAUTH_USER).concatMap(({ token }) =>
+    get({
+      endpoint: 'user',
+      params: { access_token: token }
+    }).map(user => addUser(user.set('access_token', token)))
+  );
 
-const fetchUserEpic = (action$) => (
+const fetchUserEpic = action$ =>
   action$
     .ofType(FETCH_USER)
-    .flatMap(({ username }) =>
-      get({ endpoint: `users/${username}` })
-    )
-    .map(addUser)
-);
+    .mergeMap(({ username }) => get({ endpoint: `users/${username}` }))
+    .map(addUser);
 
 export default combineEpics(fetchTokenEpic, oauthUserEpic, fetchUserEpic);

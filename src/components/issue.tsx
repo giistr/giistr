@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Colors } from '../style';
 import { Map } from 'immutable';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Tag } from './tag';
 
 interface MainProps {
   issue: Map<string, any>;
   isLast: Boolean;
-};
+}
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   issueItem: {
     borderBottom: `1px solid ${Colors.borderGrey}`,
     margin: '0px 20px',
@@ -77,9 +77,11 @@ const styles = {
 };
 
 export class Issue extends React.PureComponent<MainProps, any> {
-
   public shouldComponentUpdate(nextProps) {
-    return !nextProps.issue.equals(this.props.issue) || nextProps.isLast !== this.props.isLast;
+    return (
+      !nextProps.issue.equals(this.props.issue) ||
+      nextProps.isLast !== this.props.isLast
+    );
   }
 
   private onClickIssue(url) {
@@ -98,40 +100,35 @@ export class Issue extends React.PureComponent<MainProps, any> {
     return (
       <li
         onClick={this.onClickIssue.bind(this, issue.get('html_url'))}
-        style={style}>
-        <h2 style={styles.title2}>{ issue.get('title') }</h2>
+        style={style}
+      >
+        <h2 style={styles.title2}>{issue.get('title')}</h2>
         <div style={styles.line}>
           <div style={styles.column}>
-            {
-              issue.get('state') === 'open' && (
-                <div style={styles.light}></div>
-              )
-            }
-            <div style={styles.updatedValue}>Updated: <span>{ updated }</span></div>
-            {
-              issue.get('pull_request') && (
-                <div style={styles.pr}>(Pull request)</div>
-              )
-            }
+            {issue.get('state') === 'open' && <div style={styles.light} />}
+            <div style={styles.updatedValue}>
+              Updated: <span>{updated}</span>
+            </div>
+            {issue.get('pull_request') && (
+              <div style={styles.pr}>(Pull request)</div>
+            )}
           </div>
           <div style={styles.secondColumn}>
             <div style={styles.item}>
-              <img style={styles.icon} src="/assets/user.svg"/>
-              { issue.get('assignees').size }
+              <img style={styles.icon} src="/assets/user.svg" />
+              {issue.get('assignees').size}
             </div>
             <div style={styles.item}>
-              <img style={styles.icon} src="/assets/convers.svg"/>
-              { issue.get('comments') }
+              <img style={styles.icon} src="/assets/convers.svg" />
+              {issue.get('comments')}
             </div>
           </div>
         </div>
         <div style={styles.secondLine}>
           <div style={styles.tagContainer}>
-            {
-              issue.get('labelsIds').map((label, key) =>
-                <Tag label={label} key={key}/>
-              )
-            }
+            {issue.get('labelsIds').map((label, key) => (
+              <Tag label={label} key={key} />
+            ))}
           </div>
         </div>
       </li>

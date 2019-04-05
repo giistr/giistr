@@ -4,9 +4,9 @@ import Button from './button';
 
 interface MainProps {
   onClickLogin: Function;
-};
+}
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -23,13 +23,12 @@ const styles = {
   }
 };
 
-class TokenLogin extends React.Component<MainProps, { query: string; }> {
-
+class TokenLogin extends React.Component<MainProps, { query: string }> {
   public state = {
     query: ''
   };
 
-  private onChangeToken = (evt) => {
+  private onChangeToken = evt => {
     this.setState({
       query: evt.target.value
     });
@@ -44,9 +43,9 @@ class TokenLogin extends React.Component<MainProps, { query: string; }> {
           style={styles.input}
           onChange={this.onChangeToken}
           type="text"
-          placeholder="Enter your dev token"/>
-        <Button
-          onClick={onClickLogin.bind(this, this.state.query.trim())}>
+          placeholder="Enter your dev token"
+        />
+        <Button onClick={onClickLogin.bind(this, this.state.query.trim())}>
           Let's Start
         </Button>
       </div>

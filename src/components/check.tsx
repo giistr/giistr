@@ -15,13 +15,13 @@ const base = {
   width: 18,
   height: 18,
   borderRadius: '50%',
-  position: 'relative',
+  position: 'relative' as 'relative',
   marginRight: 10,
   cursor: 'pointer'
 };
 
 const light = {
-  position: 'absolute',
+  position: 'absolute' as 'absolute',
   backgroundColor: Colors.blue,
   width: 10,
   height: 10,
@@ -38,24 +38,18 @@ export function Check({
   inactive,
   style
 }: {
-  onSelect?: MouseEventHandler,
-  inactive?: Boolean,
-  style?: Object
+  onSelect?: MouseEventHandler;
+  inactive?: Boolean;
+  style?: Object;
 }) {
-
   const final = Object.assign({}, container, style);
 
   return (
     <div style={final}>
       <div style={base} onClick={onSelect}>
-        {
-          !inactive && (
-            <div style={light}>
-            </div>
-          )
-        }
+        {!inactive && <div style={light} />}
       </div>
-      { inactive ? 'Off' : 'On' }
+      {inactive ? 'Off' : 'On'}
     </div>
   );
 }

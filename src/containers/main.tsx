@@ -2,16 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { OrderedMap } from 'immutable';
-import { fetchRepos, fetchAllRepos, fetchTotalReposLength } from '../actions/repositories';
-import { browserHistory } from 'react-router';
+import {
+  fetchRepos,
+  fetchAllRepos,
+  fetchTotalReposLength
+} from '../actions/repositories';
 import Layout from '../components/layout';
 import { Colors } from '../style';
 import { startLoading } from '../actions/config';
+import { push } from 'connected-react-router';
 
-import {
-  applyRepositoryFilters,
-  applyIssueFilters
-} from '../filters';
+import { applyRepositoryFilters, applyIssueFilters } from '../filters';
 
 import { User } from '../reducers/user';
 
@@ -45,15 +46,21 @@ interface MainProps {
   location?: any;
   page: number;
   limit: boolean;
-};
+  push: typeof push;
+}
 
 class Main extends React.Component<MainProps, any> {
-
   public componentWillMount() {
-    const { user, repositories, fetchTotalReposLength, page } = this.props;
+    const {
+      user,
+      repositories,
+      fetchTotalReposLength,
+      page,
+      push
+    } = this.props;
 
     if (!user.size) {
-      browserHistory.push('/');
+      push('/');
     }
 
     if (user.size && !repositories.size) {
@@ -63,10 +70,7 @@ class Main extends React.Component<MainProps, any> {
   }
 
   private onGetRepository(page, user: User = this.props.user) {
-    const {
-      fetchRepos,
-      startLoading
-    } = this.props;
+    const { fetchRepos, startLoading } = this.props;
 
     startLoading();
     fetchRepos(user.get('login'), page);
@@ -78,16 +82,11 @@ class Main extends React.Component<MainProps, any> {
   };
 
   private onAll = () => {
-    const {
-      fetchAllRepos,
-      user,
-      startLoading,
-      page
-    } = this.props;
+    const { fetchAllRepos, user, startLoading, page } = this.props;
 
     startLoading();
     fetchAllRepos(user.get('login'), page);
-  }
+  };
 
   public render() {
     const {
@@ -105,45 +104,51 @@ class Main extends React.Component<MainProps, any> {
           user={user}
           location={location}
           total={totalRepositories}
-          after={repositories.size}/>
+          after={repositories.size}
+        />
         <div style={styles.mainList}>
           <Layout
             hasNext={!limit}
             onClickAll={this.onAll}
             onClickMore={this.onNext}
-            repositories={repositories}/>
-          <ToolBar
-            filters={filters}/>
+            repositories={repositories}
+          />
+          <ToolBar filters={filters} />
         </div>
       </div>
     );
   }
 }
 
-export default
-connect((state, props) => {
-  const groupedIssues = state.get('issues').groupBy(issue => issue.get('repositoryId'));
+export default connect(
+  (state: any) => {
+    const groupedIssues = state.issues.groupBy(issue =>
+      issue.get('repositoryId')
+    );
 
-  return {
-    totalRepositories: state.get('repository').size,
-    repositories: state
-      .get('repository')
-      .map(repo =>
-        repo.set('issues',
-          groupedIssues
-            .get(repo.get('id'), OrderedMap())
-            .filter(applyIssueFilters(state.get('filters')))
+    return {
+      totalRepositories: state.repository.size,
+      repositories: state.repository
+        .map(repo =>
+          repo.set(
+            'issues',
+            groupedIssues
+              .get(repo.get('id'), OrderedMap())
+              .filter(applyIssueFilters(state.filters))
+          )
         )
-      )
-      .filter(applyRepositoryFilters(state.get('filters'))),
-    user: state.get('user'),
-    filters: state.get('filters'),
-    page: state.getIn(['config', 'page']),
-    limit: state.getIn(['config', 'limit'])
-  };
-}, dispatch => ({
-  fetchRepos: bindActionCreators(fetchRepos, dispatch),
-  fetchAllRepos: bindActionCreators(fetchAllRepos, dispatch),
-  fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch),
-  startLoading: bindActionCreators(startLoading, dispatch)
-}))(Main);
+        .filter(applyRepositoryFilters(state.filters)),
+      user: state.user,
+      filters: state.filters,
+      page: state.config.get('page'),
+      limit: state.config.get('limit')
+    };
+  },
+  dispatch => ({
+    fetchRepos: bindActionCreators(fetchRepos, dispatch),
+    fetchAllRepos: bindActionCreators(fetchAllRepos, dispatch),
+    fetchTotalReposLength: bindActionCreators(fetchTotalReposLength, dispatch),
+    startLoading: bindActionCreators(startLoading, dispatch),
+    push: bindActionCreators(push, dispatch)
+  })
+)(Main);

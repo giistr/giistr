@@ -10,7 +10,7 @@ export const clear = () => ({
   type: CLEAR_REPO
 });
 
-export const AddRepos = repos => ({
+export const AddRepos = (repos: any) => ({
   payload: repos,
   type: ADD_REPO
 });

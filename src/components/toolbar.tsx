@@ -6,23 +6,34 @@ import Input from './input-autocomplete';
 import InputText from './input-text';
 import { Colors } from '../style';
 import LabelsFilter from './labels-filter';
-import { FILTER_KEYS, pOptions, languageDefaultOption } from '../constants/filters';
+import {
+  FILTER_KEYS,
+  pOptions,
+  languageDefaultOption
+} from '../constants/filters';
 import { remove, add, replace, reset, resetAll } from '../actions/filters';
 import { Check } from './check';
 import { RawButton } from './raw-button';
 
-const [ languages, period, labels, withIssues, withoutAssignee, searchIssue ] = FILTER_KEYS;
+const [
+  languages,
+  period,
+  labels,
+  withIssues,
+  withoutAssignee,
+  searchIssue
+] = FILTER_KEYS;
 
 interface MainProps {
   languages: Set<string>;
   labels: any;
-  filters: Map<string, any>;
+  filters: any;
   remove: any;
   add: any;
   replace: any;
   reset: any;
   resetAll: any;
-};
+}
 
 const styles = {
   container: {
@@ -117,13 +128,12 @@ class Toolbar extends React.Component<MainProps, any> {
 
     return (
       <div style={styles.container}>
-        <h3 style={styles.filterTitle}>
-          Filters
-        </h3>
+        <h3 style={styles.filterTitle}>Filters</h3>
         <div style={styles.section}>
           <InputText
             onChange={this.onSearchIssue}
-            placeholder="Search on issues"/>
+            placeholder="Search on issues"
+          />
         </div>
         <div style={styles.section}>
           <h3>Updated before</h3>
@@ -131,28 +141,37 @@ class Toolbar extends React.Component<MainProps, any> {
             onSelect={this.onSelectPeriod}
             selectedIndex={filters.get('period').first() || pOptions[0]}
             style={styles.languageFilter}
-            list={periodOptions}/>
+            list={periodOptions}
+          />
         </div>
         <div style={styles.section}>
           <h3>Languages</h3>
           <Input
             onSelect={this.onSelectLanguage}
-            selectedIndex={filters.get('languages').first() || languageDefaultOption}
+            selectedIndex={
+              filters.get('languages').first() || languageDefaultOption
+            }
             style={styles.languageFilter}
-            list={this.props.languages}/>
+            list={this.props.languages}
+          />
         </div>
         <div style={Object.assign({}, styles.section, styles.checkSection)}>
           <div>
             <h3>Without assignees</h3>
             <Check
-              onSelect={this.onToggleAssignee.bind(this, filters.get(withoutAssignee))}
-              inactive={!filters.get(withoutAssignee)}/>
+              onSelect={this.onToggleAssignee.bind(
+                this,
+                filters.get(withoutAssignee)
+              )}
+              inactive={!filters.get(withoutAssignee)}
+            />
           </div>
           <div>
             <h3>With open issues</h3>
             <Check
               onSelect={this.onToggleIssues.bind(this, filters.get(withIssues))}
-              inactive={!filters.get(withIssues)}/>
+              inactive={!filters.get(withIssues)}
+            />
           </div>
         </div>
         <div style={styles.section}>
@@ -160,13 +179,15 @@ class Toolbar extends React.Component<MainProps, any> {
           <LabelsFilter
             selected={filters.get(labels)}
             labels={this.props.labels}
-            onToggleTag={this.onToggleTag}/>
+            onToggleTag={this.onToggleTag}
+          />
         </div>
 
         <div style={styles.defaultSection}>
           <RawButton
             style={styles.defaultFilters}
-            onClick={this.onResetFilters}>
+            onClick={this.onResetFilters}
+          >
             Default filters
           </RawButton>
         </div>
@@ -175,21 +196,22 @@ class Toolbar extends React.Component<MainProps, any> {
   }
 }
 
-export default
-connect((state, props) => ({
-  labels: state.get('label'),
-  languages: Set<string>(
-    state
-      .get('repository')
-      .map(repo => repo.get('language'))
-      .toList()
-      .push(languageDefaultOption)
-      .filter(Boolean)
-  )
-}), dispatch => ({
-  remove: bindActionCreators(remove, dispatch),
-  add: bindActionCreators(add, dispatch),
-  replace: bindActionCreators(replace, dispatch),
-  reset: bindActionCreators(reset, dispatch),
-  resetAll: bindActionCreators(resetAll, dispatch)
-}))(Toolbar);
+export default connect(
+  (state: any) => ({
+    labels: state.label,
+    languages: Set<string>(
+      state.repository
+        .map(repo => repo.get('language'))
+        .toList()
+        .push(languageDefaultOption)
+        .filter(Boolean)
+    )
+  }),
+  dispatch => ({
+    remove: bindActionCreators(remove, dispatch),
+    add: bindActionCreators(add, dispatch),
+    replace: bindActionCreators(replace, dispatch),
+    reset: bindActionCreators(reset, dispatch),
+    resetAll: bindActionCreators(resetAll, dispatch)
+  })
+)(Toolbar);

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { Colors } from '../style';
 import { Map } from 'immutable';
-import * as moment from 'moment';
+import moment from 'moment';
 
 const borderSwitch = [
   `1px solid ${Colors.borderGrey}`,
   `1px solid ${Colors.blueDarkBorder}`
 ];
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   mainRepo: {
     margin: '0px 20px',
     backgroundColor: 'white'
@@ -77,8 +77,10 @@ const styles = {
   }
 };
 
-export class Repository extends React.PureComponent<{ repo: Map<string, any>; }, { borderIndex: number; }> {
-
+export class Repository extends React.PureComponent<
+  { repo: Map<string, any> },
+  { borderIndex: number }
+> {
   private interval = undefined;
 
   public state = {
@@ -98,7 +100,10 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
   }
 
   public shouldComponentUpdate(nextProps, nextState) {
-    return !nextProps.repo.equals(this.props.repo) || nextState.borderIndex !== this.state.borderIndex;
+    return (
+      !nextProps.repo.equals(this.props.repo) ||
+      nextState.borderIndex !== this.state.borderIndex
+    );
   }
 
   private onUpdateBorder(repo) {
@@ -121,41 +126,42 @@ export class Repository extends React.PureComponent<{ repo: Map<string, any>; },
 
     return (
       <div style={styles.mainRepo}>
-        <div
-          style={styles.repoContainer}>
+        <div style={styles.repoContainer}>
           <div style={styles.line}>
             <div style={styles.fullName}>
-              <h1 style={styles.font}>{repo.getIn([ 'owner', 'login' ])}</h1>
-              {
-                repo.size > 0 && (
-                  <a href={repo.get('html_url')} target="_blank">
-                    <h1 style={styles.name}>
-                      <span style={styles.slash}>/</span><span style={styles.font}>{ repo.get('name') }</span>
-                    </h1>
-                  </a>
-                )
-              }
+              <h1 style={styles.font}>{repo.getIn(['owner', 'login'])}</h1>
+              {repo.size > 0 && (
+                <a href={repo.get('html_url')} target="_blank">
+                  <h1 style={styles.name}>
+                    <span style={styles.slash}>/</span>
+                    <span style={styles.font}>{repo.get('name')}</span>
+                  </h1>
+                </a>
+              )}
             </div>
           </div>
-          <div style={styles.description}>
-            { repo.get('description') }
-          </div>
+          <div style={styles.description}>{repo.get('description')}</div>
           <div style={Object.assign({}, styles.line, styles.second, border)}>
-            {
-              repo.size > 0 && (
-                <div style={styles.subline}>
-                  <div style={styles.first}>
-                    <div>{ repo.get('language') }</div>
-                    <div style={styles.item}>Issues: { repo.get('open_issues') }</div>
-                    <div style={styles.item}>Updated: { moment(repo.get('updated_at')).format('DD/MM/YYYY') }</div>
+            {repo.size > 0 && (
+              <div style={styles.subline}>
+                <div style={styles.first}>
+                  <div>{repo.get('language')}</div>
+                  <div style={styles.item}>
+                    Issues: {repo.get('open_issues')}
                   </div>
-                  <div>
-                    <span>Star</span>
-                    <span style={styles.counter}>{ repo.get('stargazers_count') }</span>
+                  <div style={styles.item}>
+                    Updated:{' '}
+                    {moment(repo.get('updated_at')).format('DD/MM/YYYY')}
                   </div>
                 </div>
-              )
-            }
+                <div>
+                  <span>Star</span>
+                  <span style={styles.counter}>
+                    {repo.get('stargazers_count')}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

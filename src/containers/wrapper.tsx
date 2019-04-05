@@ -5,26 +5,25 @@ import NotificationManager from '../components/notification-manager';
 
 interface MainProps {
   loading: boolean;
-};
+}
 
 class Wrapper extends React.Component<MainProps, any> {
-
   public render() {
     const { children, loading } = this.props;
 
     return (
       <div>
-        <TopLoader loading={loading}/>
-        <NotificationManager/>
-        {
-          children
-        }
+        <TopLoader loading={loading} />
+        <NotificationManager />
+        {children}
       </div>
     );
   }
 }
 
-export default
-connect((state, props) => ({
-  loading: state.getIn([ 'config', 'loading' ])
-}), null)(Wrapper);
+export default connect(
+  (state: any) => ({
+    loading: state.config.get('loading')
+  }),
+  null
+)(Wrapper);

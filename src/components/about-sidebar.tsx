@@ -54,73 +54,94 @@ const styles = {
 };
 
 function redirectTo(url: string) {
-  window.open(url, '_blank').focus();
+  window.open(url, '_blank')!.focus();
 }
 
 export function AboutSidebar() {
-
   return (
     <div style={styles.container}>
-      <h1 style={styles.mainTitle}><span style={styles.slash}>/</span>We built the platform</h1>
+      <h1 style={styles.mainTitle}>
+        <span style={styles.slash}>/</span>We built the platform
+      </h1>
       <div>
         <div style={styles.user}>
-          <h1 style={styles.userTitle}>Alexandre_Rieux<span style={styles.second}>/developer</span></h1>
+          <h1 style={styles.userTitle}>
+            Alexandre_Rieux<span style={styles.second}>/developer</span>
+          </h1>
           <div style={styles.description}>
-            Front-end developer, creativity and tech addict into Functional Reactive Programming.
+            Front-end developer, creativity and tech addict into Functional
+            Reactive Programming.
           </div>
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://github.com/alex3165')}>
+              onClick={redirectTo.bind(null, 'https://github.com/alex3165')}
+            >
               Github
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'https://twitter.com/alex_picprod')}>
+              onClick={redirectTo.bind(
+                null,
+                'https://twitter.com/alex_picprod'
+              )}
+            >
               Twitter
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'http://alexrieux.fr')}>
+              onClick={redirectTo.bind(null, 'http://alexrieux.fr')}
+            >
               Website
             </RawButton>
           </div>
         </div>
 
         <div style={styles.userNext}>
-          <h1 style={styles.userTitle}>Jason_Boyer<span style={styles.second}>/designer</span></h1>
+          <h1 style={styles.userTitle}>
+            Jason_Boyer<span style={styles.second}>/designer</span>
+          </h1>
           <div style={styles.description}>
-            Jason is interested in everything about creativity,
-            design and learning. He also recently started to be addict at tea.
+            Jason is interested in everything about creativity, design and
+            learning. He also recently started to be addict at tea.
           </div>
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://dribbble.com/jason_boyer')}>
+              onClick={redirectTo.bind(
+                null,
+                'https://dribbble.com/jason_boyer'
+              )}
+            >
               Dribbble
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'https://twitter.com/jason_boyer')}>
+              onClick={redirectTo.bind(null, 'https://twitter.com/jason_boyer')}
+            >
               Twitter
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'http://jasonboyer.fr')}>
+              onClick={redirectTo.bind(null, 'http://jasonboyer.fr')}
+            >
               Website
             </RawButton>
           </div>
         </div>
 
         <div style={styles.userNext}>
-          <h1 style={styles.userTitle}>Guillaume_de_Jabrun<span style={styles.second}>/developer</span></h1>
+          <h1 style={styles.userTitle}>
+            Guillaume_de_Jabrun<span style={styles.second}>/developer</span>
+          </h1>
           <div style={styles.description}>
             Versatile developer (mainly front-end), and open source enthusiast.
           </div>
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://github.com/Wykks')}>
+              onClick={redirectTo.bind(null, 'https://github.com/Wykks')}
+            >
               Github
             </RawButton>
           </div>
@@ -131,7 +152,11 @@ export function AboutSidebar() {
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://github.com/giistr/giistr/graphs/contributors')}>
+              onClick={redirectTo.bind(
+                null,
+                'https://github.com/giistr/giistr/graphs/contributors'
+              )}
+            >
               Github
             </RawButton>
           </div>

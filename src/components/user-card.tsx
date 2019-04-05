@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { User } from '../reducers/user';
 import { Colors } from '../style';
-import { browserHistory } from 'react-router';
+import { push } from 'connected-react-router';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import { fromJS } from 'immutable';
+import { connect } from 'react-redux';
 
 const styles = {
   container: {
@@ -67,12 +68,20 @@ interface MainProps {
   user: User;
   onLogout: Function;
   location: any;
-};
+  push: typeof push;
+}
 
-class UserCard extends React.PureComponent<MainProps, { active: number; }> {
-
+class UserCard extends React.PureComponent<MainProps, { active: number }> {
   public state = {
     active: this.getActiveRoute(this.props.location)
+  };
+
+  private onClickHome = () => {
+    this.props.push('/');
+  };
+
+  private onClickAbout = () => {
+    this.props.push('/about');
   };
 
   private menu = fromJS([
@@ -104,14 +113,6 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
     return !nextProps.user.equals(this.props.user);
   }
 
-  private onClickAbout() {
-    browserHistory.push('/about');
-  }
-
-  private onClickHome() {
-    browserHistory.push('/');
-  }
-
   public render() {
     const { user } = this.props;
 
@@ -123,25 +124,28 @@ class UserCard extends React.PureComponent<MainProps, { active: number; }> {
             target="_blank"
             style={Object.assign({}, styles.avatar, {
               backgroundImage: `url('${user.get('avatar_url')}')`
-            })}/>
+            })}
+          />
         </div>
 
         <div style={styles.menu}>
-          {
-            this.menu.map((el, index) =>
-              <div
-                key={index}
-                style={index === this.state.active ? styles.active : {}}
-                className={css(improvedStyle.item)}
-                onClick={el.get('action')}>
-                { el.get('title') }
-              </div>
-            )
-          }
+          {this.menu.map((el, index) => (
+            <div
+              key={index}
+              style={index === this.state.active ? styles.active : {}}
+              className={css(improvedStyle.item)}
+              onClick={el.get('action')}
+            >
+              {el.get('title')}
+            </div>
+          ))}
         </div>
       </div>
     );
   }
 }
 
-export default UserCard;
+export default connect(
+  undefined,
+  { push }
+)(UserCard);

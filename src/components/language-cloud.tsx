@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Colors } from '../style';
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'absolute',
     top: 0,

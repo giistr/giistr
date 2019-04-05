@@ -12,7 +12,7 @@ interface MainProps {
   onClickAll: MouseEventHandler;
   loaded: boolean;
   hasNext: boolean;
-};
+}
 
 const styles = {
   container: {
@@ -34,8 +34,7 @@ const fakeRepos = OrderedMap<number, any>({
   123190283031: Map<string, any>()
 });
 
-class Layout extends React.Component<MainProps, { column: number; }> {
-
+class Layout extends React.Component<MainProps, { column: number }> {
   public state = {
     column: window.innerWidth >= 1440 ? 2 : 1
   };
@@ -65,14 +64,18 @@ class Layout extends React.Component<MainProps, { column: number; }> {
 
     return (
       <div style={styles.singleContainer}>
-        <RepoColumn repositories={repositories}/>
+        <RepoColumn repositories={repositories} />
       </div>
     );
   }
 
   private renderDoubleColumn(repositories, loaded) {
-    let firstColumn = repositories.take(Math.ceil(repositories.size / 2)).toOrderedMap();
-    let secondColumn = repositories.takeLast(repositories.size / 2).toOrderedMap();
+    let firstColumn = repositories
+      .take(Math.ceil(repositories.size / 2))
+      .toOrderedMap();
+    let secondColumn = repositories
+      .takeLast(repositories.size / 2)
+      .toOrderedMap();
 
     if (!loaded) {
       firstColumn = firstColumn.merge(fakeRepos);
@@ -81,36 +84,37 @@ class Layout extends React.Component<MainProps, { column: number; }> {
 
     return (
       <div style={styles.doubleContainer}>
-        <RepoColumn repositories={firstColumn}/>
-        <RepoColumn repositories={secondColumn}/>
+        <RepoColumn repositories={firstColumn} />
+        <RepoColumn repositories={secondColumn} />
       </div>
     );
   }
 
   public render() {
-    const { repositories, onClickMore, onClickAll, loaded, hasNext } = this.props;
+    const {
+      repositories,
+      onClickMore,
+      onClickAll,
+      loaded,
+      hasNext
+    } = this.props;
     const { column } = this.state;
 
     return (
       <div style={styles.container}>
-        {
-          column === 1 && this.renderSingleColumn(repositories, loaded)
-        }
-        {
-          column === 2 && this.renderDoubleColumn(repositories, loaded)
-        }
-        {
-          loaded && hasNext && (
-            <LoadMore
-              onClickAll={onClickAll}
-              onClickMore={onClickMore}/>
-          )
-        }
+        {column === 1 && this.renderSingleColumn(repositories, loaded)}
+        {column === 2 && this.renderDoubleColumn(repositories, loaded)}
+        {loaded && hasNext && (
+          <LoadMore onClickAll={onClickAll} onClickMore={onClickMore} />
+        )}
       </div>
     );
   }
 }
 
-export default connect((state, props) => ({
-  loaded: !state.getIn([ 'config', 'loading' ], false)
-}), null)(Layout);
+export default connect(
+  (state: any) => ({
+    loaded: !state.config.get('loading')
+  }),
+  null
+)(Layout);

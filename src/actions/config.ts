@@ -14,7 +14,7 @@ export const stopLoading = () => ({
   type: STOP_LOADING
 });
 
-export const setError = err => ({
+export const setError = (err: any) => ({
   type: ERROR,
   payload: err
 });

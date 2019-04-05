@@ -1,8 +1,8 @@
 import { fromJS } from 'immutable';
 import * as qs from 'qs';
 import { get as getFromStorage } from './localStorage';
-import { Observable } from 'rxjs/Observable';
-const config = fromJS(require('!json!./config.json')); // tslint:disable-line
+import { Observable } from 'rxjs';
+import { config } from './config';
 
 interface Args {
   endpoint?: string;
@@ -10,23 +10,22 @@ interface Args {
   fullEndpoint?: string;
   resHeader?: boolean;
   preventBody?: boolean;
-};
+}
 
 interface ReqArgs extends Args {
   method: string;
-};
+}
 
 function makeUrl(endpoint: string, url?: string): string {
   const base = url || config.get('mainUrl');
   return endpoint ? base + `/${endpoint}?` : base + '?';
 }
 
-const shallowRequest = (method: string) => (
+const shallowRequest = (method: string) =>
   method === 'GET' ||
   method === 'HEAD' ||
   method === 'REMOVE' ||
-  method === 'DELETE'
-);
+  method === 'DELETE';
 
 export function request(args: ReqArgs) {
   const shallow = shallowRequest(args.method);
@@ -41,7 +40,7 @@ export function request(args: ReqArgs) {
     url += qs.stringify(args.params);
   }
 
-  let rawHeader: { [index: string]: string; } = {
+  let rawHeader: { [index: string]: string } = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Accept-Charset': 'utf-8'
@@ -61,21 +60,19 @@ export function request(args: ReqArgs) {
     body
   });
 
-  return Observable.fromPromise(fetch(req)
-    .then(res => {
-      if (res.status >= 400) {
-        throw res;
-      }
+  return (Observable as any).fromPromise(
+    fetch(req)
+      .then(res => {
+        if (res.status >= 400) {
+          throw res;
+        }
 
-      return Promise.all([
-        res.json(),
-        Promise.resolve(res.headers)
-      ]);
-    })
-    .then(x => {
-      const res = fromJS(x[0]);
-      return args.resHeader ? x[1] : res;
-    })
+        return Promise.all([res.json(), Promise.resolve(res.headers)]);
+      })
+      .then(x => {
+        const res = fromJS(x[0]);
+        return args.resHeader ? x[1] : res;
+      })
   );
 }
 

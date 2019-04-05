@@ -10,9 +10,9 @@ import { RawButton } from '../components/raw-button';
 interface MainProps {
   user: User;
   location: any;
-};
+}
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   main: {
     display: 'flex',
     margin: '0px auto',
@@ -81,7 +81,6 @@ const styles = {
 };
 
 class About extends React.Component<MainProps, any> {
-
   private onClickProjectLink() {
     window.open('https://github.com/giistr/giistr', '_blank').focus();
   }
@@ -91,43 +90,72 @@ class About extends React.Component<MainProps, any> {
 
     return (
       <div>
-        <NavigationBar location={location} user={user}/>
+        <NavigationBar location={location} user={user} />
         <div style={styles.main}>
           <div style={styles.column}>
-            <h1 style={styles.title}><span style={styles.slash}>/</span>About</h1>
-            <h1 style={styles.subtitle}>An easy way to pick a task from a repository you like and contribute to it</h1>
+            <h1 style={styles.title}>
+              <span style={styles.slash}>/</span>About
+            </h1>
+            <h1 style={styles.subtitle}>
+              An easy way to pick a task from a repository you like and
+              contribute to it
+            </h1>
             <div style={styles.text}>
-              Giistr is a tool that help developers to quickly find a task which fit with their profile.
-              The app display all the repositories you starred on github and their issues in one view so you can
-              apply filters and find an issue you are happy with.
-              Our purpose is to help open-source projects growth faster and get more stability.
-              Open-source libraries are a big part of our every day life as a developer, let's make it better.
+              Giistr is a tool that help developers to quickly find a task which
+              fit with their profile. The app display all the repositories you
+              starred on github and their issues in one view so you can apply
+              filters and find an issue you are happy with. Our purpose is to
+              help open-source projects growth faster and get more stability.
+              Open-source libraries are a big part of our every day life as a
+              developer, let's make it better.
             </div>
             <div>
-              <h1 style={styles.secondTitle}><span style={styles.slash}>/</span>How it works</h1>
+              <h1 style={styles.secondTitle}>
+                <span style={styles.slash}>/</span>How it works
+              </h1>
               <ul style={styles.listContainer}>
-                <li><span style={styles.bold}>Filter</span> the issues easily per date, labels or language</li>
-                <li><span style={styles.bold}>Find</span> an issue that fit your skills</li>
-                <li><span style={styles.bold}>Contribute</span> to the issue you picked</li>
+                <li>
+                  <span style={styles.bold}>Filter</span> the issues easily per
+                  date, labels or language
+                </li>
+                <li>
+                  <span style={styles.bold}>Find</span> an issue that fit your
+                  skills
+                </li>
+                <li>
+                  <span style={styles.bold}>Contribute</span> to the issue you
+                  picked
+                </li>
               </ul>
               <div style={styles.thirdTitle}>
-                Built for the developer community with passion, this app is open-source on
-                <RawButton onClick={this.onClickProjectLink} style={styles.link}>Github</RawButton>
+                Built for the developer community with passion, this app is
+                open-source on
+                <RawButton
+                  onClick={this.onClickProjectLink}
+                  style={styles.link}
+                >
+                  Github
+                </RawButton>
               </div>
               <div style={styles.strap}>
-                Feel free to reach and follow us, we will keep you updated about the project.<br/>
-                If you find any issue or have any suggestion to do, you can open an issue on our github
+                Feel free to reach and follow us, we will keep you updated about
+                the project.
+                <br />
+                If you find any issue or have any suggestion to do, you can open
+                an issue on our github
               </div>
             </div>
           </div>
-          <AboutSidebar/>
+          <AboutSidebar />
         </div>
       </div>
     );
   }
 }
 
-export default
-connect((state, props) => ({
-  user: state.get('user')
-}), null)(About);
+export default connect(
+  (state: any) => ({
+    user: state.user
+  }),
+  null
+)(About);
