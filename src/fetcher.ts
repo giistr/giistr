@@ -1,9 +1,9 @@
-import 'rxjs/add/observable/fromPromise';
-import { fromJS } from 'immutable';
-import * as qs from 'qs';
-import { get as getFromStorage } from './localStorage';
-import { Observable } from 'rxjs';
-import { config } from './config';
+import "rxjs/add/observable/fromPromise";
+import { fromJS } from "immutable";
+import * as qs from "qs";
+import { get as getFromStorage } from "./localStorage";
+import { config } from "./config";
+import { fromPromise } from "rxjs/internal-compatibility";
 
 interface Args {
   endpoint?: string;
@@ -18,15 +18,15 @@ interface ReqArgs extends Args {
 }
 
 function makeUrl(endpoint: string, url?: string): string {
-  const base = url || config.get('mainUrl');
-  return endpoint ? base + `/${endpoint}?` : base + '?';
+  const base = url || config.get("mainUrl");
+  return endpoint ? base + `/${endpoint}?` : base + "?";
 }
 
 const shallowRequest = (method: string) =>
-  method === 'GET' ||
-  method === 'HEAD' ||
-  method === 'REMOVE' ||
-  method === 'DELETE';
+  method === "GET" ||
+  method === "HEAD" ||
+  method === "REMOVE" ||
+  method === "DELETE";
 
 export function request(args: ReqArgs) {
   const shallow = shallowRequest(args.method);
@@ -42,14 +42,14 @@ export function request(args: ReqArgs) {
   }
 
   let rawHeader: { [index: string]: string } = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    'Accept-Charset': 'utf-8'
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "Accept-Charset": "utf-8"
   };
 
-  if (getFromStorage('user')) {
+  if (getFromStorage("user")) {
     rawHeader = Object.assign({}, rawHeader, {
-      Authorization: `token ${getFromStorage('user').access_token}`
+      Authorization: `token ${getFromStorage("user").access_token}`
     });
   }
 
@@ -61,7 +61,7 @@ export function request(args: ReqArgs) {
     body
   });
 
-  return Observable.fromPromise(
+  return fromPromise(
     fetch(req)
       .then(res => {
         if (res.status >= 400) {
@@ -78,19 +78,19 @@ export function request(args: ReqArgs) {
 }
 
 export function get(args: Args) {
-  return request(Object.assign({}, args, { method: 'GET' }));
+  return request(Object.assign({}, args, { method: "GET" }));
 }
 
 export function post(args: Args) {
-  return request(Object.assign({}, args, { method: 'POST' }));
+  return request(Object.assign({}, args, { method: "POST" }));
 }
 
 export function put(args: Args) {
-  return request(Object.assign({}, args, { method: 'PUT' }));
+  return request(Object.assign({}, args, { method: "PUT" }));
 }
 
 export function remove(args: Args) {
-  return request(Object.assign({}, args, { method: 'DELETE' }));
+  return request(Object.assign({}, args, { method: "DELETE" }));
 }
 
 export default request;
