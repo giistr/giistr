@@ -1,14 +1,14 @@
-import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/take';
-import { combineEpics } from 'redux-observable';
-import { ERROR } from '../constants/config';
-import { stopError } from '../actions/config';
+import { combineEpics, ofType } from "redux-observable";
+import { ERROR } from "../constants/config";
+import { stopError } from "../actions/config";
+import { delay, take, map } from "rxjs/operators";
 
 const errorHandlingEpics = action$ =>
-  action$
-    .ofType(ERROR)
-    .delay(3000)
-    .take(1)
-    .map(stopError);
+  action$.pipe(
+    ofType(ERROR),
+    delay(3000),
+    take(1),
+    map(stopError)
+  );
 
 export default combineEpics(errorHandlingEpics);
