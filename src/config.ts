@@ -1,6 +1,6 @@
-import { fromJS } from 'immutable';
+import { fromJS } from "immutable";
 
 export const config = fromJS({
-  clientId: '1e7e4f4c82f85f710103',
-  mainUrl: 'https://api.github.com'
+  clientId: "edf3057390bc4bd4ac77",
+  mainUrl: "https://api.github.com"
 });
