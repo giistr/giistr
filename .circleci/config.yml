@@ -23,6 +23,7 @@ jobs:
           at: build
       - run: aws configure set default.region eu-west-2
       - run: aws s3 sync build/* $S3_BUCKET --delete
+      - run: aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"
 
 workflows:
   version: 2
