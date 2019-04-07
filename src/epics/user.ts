@@ -26,7 +26,7 @@ const oauthUserEpic = action$ =>
       get({
         endpoint: "user",
         params: { access_token: token }
-      }).map(user => addUser(user.set("access_token", token)))
+      }).pipe(map(user => addUser(user.set("access_token", token))))
     )
   );
 

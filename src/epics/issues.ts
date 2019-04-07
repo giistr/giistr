@@ -53,21 +53,25 @@ const fetchMapIssues = (reposIds: List<string>, state: any, page: number) =>
         })
       )
       .toArray()
-  ).map(issues => {
-    return List(issues)
-      .map((issueArr: any, index) => {
-        return issueArr.map(issue =>
-          issue.set("repositoryId", reposIds.get(index))
-        );
-      })
-      .flatten(1);
-  });
+  ).pipe(
+    map(issues => {
+      return List(issues)
+        .map((issueArr: any, index) => {
+          return issueArr.map(issue =>
+            issue.set("repositoryId", reposIds.get(index))
+          );
+        })
+        .flatten(1);
+    })
+  );
 
 const fetchMapIssue = (repoId: string, state: any, page: number) =>
   get({
     endpoint: `repos/${state.repository.getIn([repoId, "full_name"])}/issues`,
     params: { page }
-  }).map(issues => issues.map(issue => issue.set("repositoryId", repoId)));
+  }).pipe(
+    map(issues => issues.map(issue => issue.set("repositoryId", repoId)))
+  );
 
 const fetchIssuesEpic = (action$, store) =>
   action$.pipe(

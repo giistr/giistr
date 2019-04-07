@@ -17,7 +17,7 @@ import {
   incrementPagination,
   setReposLimit
 } from "../actions/config";
-import { flatMap } from "rxjs/operators";
+import { flatMap, map, catchError } from "rxjs/operators";
 
 const fetchReposEpic = action$ =>
   action$.pipe(
@@ -36,8 +36,8 @@ const fetchReposEpic = action$ =>
       }
 
       return of(...actions);
-    })
-    //.catch(err => of(setError(err), stopLoading()))
+    }),
+    catchError(err => of(setError(err), stopLoading()))
   );
 
 const fetchTotalReposLengthEpic = action$ =>
@@ -48,21 +48,22 @@ const fetchTotalReposLengthEpic = action$ =>
         endpoint: `users/${username}/starred`,
         params: { per_page: 1 },
         resHeader: true
-      })
-        .map(headers => {
+      }).pipe(
+        map(headers => {
           const reg = /rel="next", <.*&page=(\d+)>; rel="last"/i;
           const len = parseInt(headers.get("link").match(reg)[1], 10);
           return append("starred", len);
-        })
-        .catch(err => of(setError(err), stopLoading()))
+        }),
+        catchError(err => of(setError(err), stopLoading()))
+      )
     )
   );
 
-const fetchAllRepos = (action$, { getState }) =>
+const fetchAllReposEpic = (action$, store) =>
   action$.pipe(
     ofType(FETCH_ALL_REPOS),
     flatMap(({ username, startPage }) => {
-      const userTotalRepos = getState().user.get("starred");
+      const userTotalRepos = store.value.user.get("starred");
       const totalPages = Math.ceil(userTotalRepos / 30) + 1;
 
       return forkJoin(
@@ -74,14 +75,15 @@ const fetchAllRepos = (action$, { getState }) =>
             })
           )
           .toArray()
-      )
-        .map(repos => AddRepos(List(repos).flatten(1)))
-        .catch(err => of(setError(err), stopLoading()));
+      ).pipe(
+        map(repos => AddRepos(List(repos).flatten(1))),
+        catchError(err => of(setError(err), stopLoading()))
+      );
     })
   );
 
 export default combineEpics(
   fetchReposEpic,
   fetchTotalReposLengthEpic,
-  fetchAllRepos
+  fetchAllReposEpic
 );
