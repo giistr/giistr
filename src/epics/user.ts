@@ -15,7 +15,7 @@ const fetchTokenEpic = action$ =>
         params: { code }
       })
     ),
-    map((res: any) => oauthUser(res.get('access_token')))
+    map((res: any) => oauthUser(res.getIn(['body', 'access_token'])))
   );
 
 const oauthUserEpic = action$ =>
