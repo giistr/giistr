@@ -1,21 +1,22 @@
-import 'rxjs/add/operator/map';
+import "rxjs/add/operator/map";
 
-import { get } from '../fetcher';
-import { combineEpics, ofType } from 'redux-observable';
-import { FETCH_USER, OAUTH_USER, FETCH_GITHUB_TOKEN } from '../constants/user';
-import { oauthUser, addUser } from '../actions/user';
-import { mergeMap, map, concatMap } from 'rxjs/operators';
+import { get } from "../fetcher";
+import { combineEpics, ofType } from "redux-observable";
+import { FETCH_USER, OAUTH_USER, FETCH_GITHUB_TOKEN } from "../constants/user";
+import { oauthUser, addUser } from "../actions/user";
+import { mergeMap, map, concatMap } from "rxjs/operators";
 
 const fetchTokenEpic = action$ =>
   action$.pipe(
     ofType(FETCH_GITHUB_TOKEN),
     mergeMap(({ code }) =>
       get({
-        fullEndpoint: '/api/github-login',
+        fullEndpoint:
+          "https://taqs07g694.execute-api.us-east-1.amazonaws.com/prod/github-login",
         params: { code }
       })
     ),
-    map((res: any) => oauthUser(res.getIn(['body', 'access_token'])))
+    map((res: any) => oauthUser(res.getIn(["body", "access_token"])))
   );
 
 const oauthUserEpic = action$ =>
@@ -23,9 +24,9 @@ const oauthUserEpic = action$ =>
     ofType(OAUTH_USER),
     concatMap(({ token }) =>
       get({
-        endpoint: 'user',
+        endpoint: "user",
         params: { access_token: token }
-      }).pipe(map(user => addUser(user.set('access_token', token))))
+      }).pipe(map(user => addUser(user.set("access_token", token))))
     )
   );
 
