@@ -11,11 +11,11 @@ const fetchTokenEpic = action$ =>
     ofType(FETCH_GITHUB_TOKEN),
     mergeMap(({ code }) =>
       get({
-        fullEndpoint: "https://api.giistr.com/prod/github-login",
+        fullEndpoint: "https://api.giistr.com/github-login",
         params: { code }
       })
     ),
-    map((res: any) => oauthUser(res.getIn(["body", "access_token"])))
+    map((res: any) => oauthUser(res.get("access_token")))
   );
 
 const oauthUserEpic = action$ =>
