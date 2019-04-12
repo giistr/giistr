@@ -11,8 +11,7 @@ const fetchTokenEpic = action$ =>
     ofType(FETCH_GITHUB_TOKEN),
     mergeMap(({ code }) =>
       get({
-        fullEndpoint:
-          "https://taqs07g694.execute-api.us-east-1.amazonaws.com/prod/github-login",
+        fullEndpoint: "https://api.giistr.com/prod/github-login",
         params: { code }
       })
     ),
