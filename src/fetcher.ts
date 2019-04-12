@@ -58,6 +58,8 @@ export function request(args: ReqArgs) {
   const req = new Request(url, {
     method: args.method,
     headers,
+    mode: "no-cors",
+    cache: "no-cache",
     body
   });
 
