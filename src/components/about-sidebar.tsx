@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { RawButton } from './raw-button';
-import { Colors } from '../style';
+import * as React from "react";
+import { RawButton } from "./raw-button";
+import { Colors } from "../style";
 
 const styles = {
   container: {
@@ -12,7 +12,7 @@ const styles = {
     fontWeight: 400,
     color: Colors.grey,
     fontSize: 14,
-    fontFamily: 'Droid Sans Mono'
+    fontFamily: "Droid Sans Mono"
   },
   user: {
     marginTop: 30
@@ -24,12 +24,12 @@ const styles = {
     fontWeight: 400,
     color: Colors.grey,
     fontSize: 14,
-    fontFamily: 'Droid Sans Mono'
+    fontFamily: "Droid Sans Mono"
   },
   second: {
     color: Colors.blue,
     backgroundColor: Colors.blueBackground,
-    padding: '2px 4px',
+    padding: "2px 4px",
     borderRadius: 4
   },
   slash: {
@@ -37,16 +37,16 @@ const styles = {
   },
   description: {
     fontSize: 13,
-    lineHeight: '18px',
+    lineHeight: "18px",
     color: Colors.lightGrey,
     marginTop: 14
   },
   links: {
-    display: 'flex',
+    display: "flex",
     marginTop: 5
   },
   link: {
-    padding: '0px 5px'
+    padding: "0px 5px"
   },
   firstLink: {
     paddingRight: 5
@@ -54,7 +54,7 @@ const styles = {
 };
 
 function redirectTo(url: string) {
-  window.open(url, '_blank')!.focus();
+  window.open(url, "_blank")!.focus();
 }
 
 export function AboutSidebar() {
@@ -75,7 +75,7 @@ export function AboutSidebar() {
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://github.com/alex3165')}
+              onClick={redirectTo.bind(null, "https://github.com/alex3165")}
             >
               Github
             </RawButton>
@@ -83,14 +83,14 @@ export function AboutSidebar() {
               style={styles.link}
               onClick={redirectTo.bind(
                 null,
-                'https://twitter.com/alex_picprod'
+                "https://twitter.com/alex_picprod"
               )}
             >
               Twitter
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'http://alexrieux.fr')}
+              onClick={redirectTo.bind(null, "https://alexrieux.com")}
             >
               Website
             </RawButton>
@@ -110,20 +110,20 @@ export function AboutSidebar() {
               style={styles.firstLink}
               onClick={redirectTo.bind(
                 null,
-                'https://dribbble.com/jason_boyer'
+                "https://dribbble.com/jason_boyer"
               )}
             >
               Dribbble
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'https://twitter.com/jason_boyer')}
+              onClick={redirectTo.bind(null, "https://twitter.com/jason_boyer")}
             >
               Twitter
             </RawButton>
             <RawButton
               style={styles.link}
-              onClick={redirectTo.bind(null, 'http://jasonboyer.fr')}
+              onClick={redirectTo.bind(null, "http://jasonboyer.fr")}
             >
               Website
             </RawButton>
@@ -140,7 +140,7 @@ export function AboutSidebar() {
           <div style={styles.links}>
             <RawButton
               style={styles.firstLink}
-              onClick={redirectTo.bind(null, 'https://github.com/Wykks')}
+              onClick={redirectTo.bind(null, "https://github.com/Wykks")}
             >
               Github
             </RawButton>
@@ -154,7 +154,7 @@ export function AboutSidebar() {
               style={styles.firstLink}
               onClick={redirectTo.bind(
                 null,
-                'https://github.com/giistr/giistr/graphs/contributors'
+                "https://github.com/giistr/giistr/graphs/contributors"
               )}
             >
               Github
