@@ -142,7 +142,7 @@ class About extends React.Component<MainProps, any> {
                 the project.
                 <br />
                 If you find any issues or have any suggestions, you can open
-                an issue on our GitHub
+                an issue on our GitHub.
               </div>
             </div>
           </div>
