@@ -101,13 +101,13 @@ class About extends React.Component<MainProps, any> {
               contribute to it
             </h1>
             <div style={styles.text}>
-              Giistr is a tool that help developers to quickly find a task which
-              fit with their profile. The app display all the repositories you
-              starred on github and their issues in one view so you can apply
+              Giistr is a tool that helps developers quickly find a task which
+              fits with their profile. The app displays all the repositories you
+              starred on GitHub and their issues in one view so you can apply
               filters and find an issue you are happy with. Our purpose is to
-              help open-source projects growth faster and get more stability.
-              Open-source libraries are a big part of our every day life as a
-              developer, let's make it better.
+              help open-source projects grow faster and get more stability.
+              Open-source libraries are a big part of our every day lives as
+              developers. Let's make it better.
             </div>
             <div>
               <h1 style={styles.secondTitle}>
@@ -141,8 +141,8 @@ class About extends React.Component<MainProps, any> {
                 Feel free to reach and follow us, we will keep you updated about
                 the project.
                 <br />
-                If you find any issue or have any suggestion to do, you can open
-                an issue on our github
+                If you find any issues or have any suggestions, you can open
+                an issue on our GitHub
               </div>
             </div>
           </div>
